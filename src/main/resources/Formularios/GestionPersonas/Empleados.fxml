@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="574.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrEmpleado">
+   <children>
+      <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="16.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/buscar.png" />
+         </image></ImageView>
+      <TextField fx:id="cajaBusqueda" layoutX="44.0" layoutY="14.0" prefHeight="30.0" prefWidth="476.0" promptText="Búsqueda..." styleClass="buscar" stylesheets="@../../otros.css" />
+      <TableView fx:id="tablaEmpleados" layoutX="14.0" layoutY="54.0" prefHeight="221.0" prefWidth="690.0">
+        <columns>
+          <TableColumn fx:id="columnDNI" prefWidth="75.00001335144043" text="DNI" />
+          <TableColumn fx:id="columnNombre" prefWidth="81.79999542236328" text="Nombre" />
+            <TableColumn fx:id="columnApellidos" prefWidth="87.79998779296875" text="Apellidos" />
+            <TableColumn fx:id="columnSalario" prefWidth="83.4000244140625" text="Salario" />
+            <TableColumn fx:id="columnCargo" prefWidth="96.0" text="Cargo" />
+            <TableColumn fx:id="columnCodigo" prefWidth="103.19998168945312" text="Código" />
+            <TableColumn fx:id="columnEstado" prefWidth="67.5999755859375" text="Estado" />
+            <TableColumn fx:id="columnHorasTrabajo" prefWidth="86.0" text="Horas" />
+        </columns>
+      </TableView>
+      <AnchorPane layoutX="14.0" layoutY="287.0" prefHeight="257.0" prefWidth="690.0" styleClass="anchor-pane" stylesheets="@../../otros.css">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="19.0" prefWidth="246.0" text="Agregar o modificar empleados:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="24.0" layoutY="71.0" prefHeight="19.0" prefWidth="38.0" text="DNI:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="cajaDNI" layoutX="148.0" layoutY="67.0" prefHeight="26.0" prefWidth="188.0" />
+            <Label layoutX="352.0" layoutY="49.0" prefHeight="19.0" prefWidth="66.0" text="Nombre:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="24.0" layoutY="106.0" prefHeight="19.0" prefWidth="119.0" text="Apellido Paterno:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="24.0" layoutY="141.0" prefHeight="19.0" prefWidth="119.0" text="Apellido Materno:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="cajaNombre" layoutX="474.0" layoutY="45.0" prefHeight="26.0" prefWidth="170.0" />
+            <TextField fx:id="cajaApellidoPat" layoutX="148.0" layoutY="102.0" prefHeight="26.0" prefWidth="188.0" />
+            <TextField fx:id="cajaApellidoMat" layoutX="148.0" layoutY="140.0" prefHeight="26.0" prefWidth="188.0" />
+            <Label layoutX="352.0" layoutY="121.0" prefHeight="19.0" prefWidth="119.0" text="Salario:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="cajaSalarioE" layoutX="475.0" layoutY="117.0" prefHeight="26.0" prefWidth="170.0" />
+            <Button fx:id="btnCambiarEstado" layoutX="448.0" layoutY="203.0" mnemonicParsing="false" onAction="#cambiarEstado" stylesheets="@../../otros.css" text="Cambiar Estado" />
+            <Button fx:id="btnModificarDatos" layoutX="152.0" layoutY="203.0" mnemonicParsing="false" onAction="#agregarEmpleado" stylesheets="@../../otros.css" text="Modificar Datos" />
+            <Button fx:id="btnAgregar" layoutX="319.0" layoutY="203.0" mnemonicParsing="false" stylesheets="@../../otros.css" text="Agregar" />
+            <Label layoutX="352.0" layoutY="83.0" prefHeight="19.0" prefWidth="119.0" text="Cargo Empleado:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="354.0" layoutY="155.0" prefHeight="19.0" prefWidth="119.0" text="Horas de Trabajo:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="cajaHorasTrabajo" layoutX="476.0" layoutY="152.0" prefHeight="26.0" prefWidth="170.0" />
+            <ImageView fitHeight="26.0" fitWidth="22.0" layoutX="127.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/editar.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="26.0" fitWidth="30.0" layoutX="293.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/agregar-usuario.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="35.0" layoutX="417.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/cambiar.png" />
+               </image>
+            </ImageView>
+            <ComboBox fx:id="comboBoxCargo" layoutX="476.0" layoutY="80.0" prefHeight="26.0" prefWidth="170.0" />
+         </children>
+      </AnchorPane>
+      <ComboBox fx:id="comboBoxEstado" layoutX="571.0" layoutY="15.0" prefHeight="26.0" prefWidth="130.0" />
+      <Label layoutX="524.0" layoutY="20.0" text="Estado:" />
+   </children>
+</AnchorPane>

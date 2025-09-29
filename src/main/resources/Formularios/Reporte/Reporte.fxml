@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="572.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrReporte">
+   <children>
+      <AnchorPane layoutX="30.0" layoutY="14.0" prefHeight="97.0" prefWidth="160.0" styleClass="layout" stylesheets="@../../style.css">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="48.0" layoutX="26.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/cocinero.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="9.0" layoutY="72.0" text="Cantidad de Empleados">
+               <font>
+                  <Font name="Britannic Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTotalAlumnos" alignment="TOP_LEFT" layoutX="80.0" layoutY="22.0" prefHeight="32.0" prefWidth="65.0" text="0" textAlignment="CENTER">
+               <font>
+                  <Font name="Britannic Bold" size="30.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <AnchorPane layoutX="20.0" layoutY="136.0" prefHeight="409.0" prefWidth="486.0" stylesheets="@../../inicioSesion.css">
+         <children>
+            <BarChart fx:id="graficoAlumnos" layoutX="-41.0" layoutY="-7.0" prefHeight="419.0" prefWidth="466.0" styleClass="anchor-pane" stylesheets="@../../otros.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <xAxis>
+                  <CategoryAxis side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis side="LEFT" />
+               </yAxis>
+            </BarChart>
+            <Label layoutX="126.0" layoutY="11.0" text="Cantidad de Ventas Por Mes">
+               <font>
+                  <Font name="Cambria Bold" size="14.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <AnchorPane layoutX="198.0" layoutY="14.0" prefHeight="97.0" prefWidth="160.0" styleClass="layout" stylesheets="@../../style.css">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="48.0" layoutX="26.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/usuarios.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="20.0" layoutY="74.0" text="Cantidad de Clientes">
+               <font>
+                  <Font name="Britannic Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTotalAlumnos1" alignment="TOP_LEFT" layoutX="80.0" layoutY="22.0" prefHeight="32.0" prefWidth="65.0" text="0" textAlignment="CENTER">
+               <font>
+                  <Font name="Britannic Bold" size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="364.0" layoutY="14.0" prefHeight="98.0" prefWidth="153.0" styleClass="layout" stylesheets="@../../style.css">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="48.0" layoutX="26.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/bolsa-de-dinero.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="32.0" layoutY="74.0" text="Total de Ventas">
+               <font>
+                  <Font name="Britannic Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTotalAlumnos11" alignment="TOP_LEFT" layoutX="80.0" layoutY="22.0" prefHeight="32.0" prefWidth="48.0" text="0" textAlignment="CENTER">
+               <font>
+                  <Font name="Britannic Bold" size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="525.0" layoutY="14.0" prefHeight="98.0" prefWidth="153.0" styleClass="layout" stylesheets="@../../style.css">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="48.0" layoutX="26.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/plato.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="22.0" layoutY="73.0" text="Cantidad de Platos">
+               <font>
+                  <Font name="Britannic Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTotalAlumnos111" alignment="TOP_LEFT" layoutX="80.0" layoutY="22.0" prefHeight="32.0" prefWidth="48.0" text="0" textAlignment="CENTER">
+               <font>
+                  <Font name="Britannic Bold" size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="524.0" layoutY="210.0" prefHeight="122.0" prefWidth="154.0" styleClass="layout-2" stylesheets="@../../style.css">
+         <children>
+            <ImageView fitHeight="109.0" fitWidth="66.0" layoutX="14.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/plato.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="26.0" layoutY="14.0" text="Plato Más Vendido">
+               <font>
+                  <Font name="Britannic Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="94.0" layoutY="59.0" text="Lomo">
+               <font>
+                  <Font name="Britannic Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="94.0" layoutY="76.0" text="Saltado">
+               <font>
+                  <Font name="Britannic Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="524.0" layoutY="339.0" prefHeight="122.0" prefWidth="154.0" styleClass="layout-2" stylesheets="@../../style.css">
+         <children>
+            <ImageView fitHeight="109.0" fitWidth="66.0" layoutX="14.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/jefe.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="9.0" layoutY="14.0" text="Cliente Más Frecuente">
+               <font>
+                  <Font name="Britannic Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="94.0" layoutY="59.0" text="Nombre">
+               <font>
+                  <Font name="Britannic Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="94.0" layoutY="76.0" text="Cliente">
+               <font>
+                  <Font name="Britannic Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

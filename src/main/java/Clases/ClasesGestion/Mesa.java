@@ -2,12 +2,19 @@ package Clases.ClasesGestion;
 
 public class Mesa {
     private int idMesa;
-    private int cantidad;
+    private int idMesero;
+    private int numeroMesa;
+    private int capacidad;
     private String estadoMesa;
 
-    public Mesa(int cantidad, String estadoMesa) {
-        this.cantidad = cantidad;
+    public Mesa(int idMesero, int numeroMesa, int capacidad, String estadoMesa) {
+        this.idMesero = idMesero;
+        this.numeroMesa = numeroMesa;
+        this.capacidad = capacidad;
         this.estadoMesa = estadoMesa;
+    }
+
+    public Mesa() {
     }
 
     public int getIdMesa() {
@@ -18,12 +25,28 @@ public class Mesa {
         this.idMesa = idMesa;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public int getIdMesero() {
+        return idMesero;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setIdMesero(int idMesero) {
+        this.idMesero = idMesero;
+    }
+
+    public int getNumeroMesa() {
+        return numeroMesa;
+    }
+
+    public void setNumeroMesa(int numeroMesa) {
+        this.numeroMesa = numeroMesa;
+    }
+
+    public int getCapacidad() {
+        return capacidad;
+    }
+
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
     }
 
     public String getEstadoMesa() {

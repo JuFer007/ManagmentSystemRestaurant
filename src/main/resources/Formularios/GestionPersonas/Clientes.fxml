@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="574.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrCliente">
+   <children>
+      <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="16.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/buscar.png" />
+         </image></ImageView>
+      <TextField fx:id="cajaBusqueda" layoutX="44.0" layoutY="14.0" prefHeight="30.0" prefWidth="653.0" promptText="Búsqueda..." styleClass="buscar" stylesheets="@../../otros.css" />
+      <TableView fx:id="tablaClientes" layoutX="14.0" layoutY="61.0" prefHeight="315.0" prefWidth="682.0">
+        <columns>
+          <TableColumn fx:id="columnDNI" prefWidth="138.9999942779541" text="DNI" />
+          <TableColumn fx:id="columnNombre" prefWidth="221.80001831054688" text="Nombre" />
+            <TableColumn fx:id="columnApellido" prefWidth="322.0000305175781" text="Apellidos" />
+        </columns>
+      </TableView>
+      <AnchorPane layoutX="12.0" layoutY="392.0" prefHeight="161.0" prefWidth="665.0" styleClass="anchor-pane" stylesheets="@../../otros.css">
+         <children>
+            <Label layoutX="21.0" layoutY="14.0" prefHeight="19.0" prefWidth="246.0" text="Agregar o modificar cliente:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="324.0" layoutY="53.0" prefHeight="19.0" prefWidth="38.0" text="DNI:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="cajaDNI" layoutX="402.0" layoutY="49.0" prefHeight="26.0" prefWidth="194.0" />
+            <Label layoutX="21.0" layoutY="53.0" prefHeight="19.0" prefWidth="66.0" text="Nombre:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="21.0" layoutY="96.0" prefHeight="19.0" prefWidth="73.0" text="Apellidos:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="cajaNombre" layoutX="97.0" layoutY="49.0" prefHeight="26.0" prefWidth="194.0" />
+            <TextField fx:id="cajaApellidos" layoutX="99.0" layoutY="92.0" prefHeight="26.0" prefWidth="194.0" />
+            <Button fx:id="btnModificarDatos" layoutX="349.0" layoutY="90.0" mnemonicParsing="false" stylesheets="@../../otros.css" text="Modificar Datos" />
+            <Button fx:id="btnAgregarCliente" layoutX="518.0" layoutY="88.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="128.0" stylesheets="@../../otros.css" text="Agregar Cliente" />
+            <ImageView fitHeight="26.0" fitWidth="22.0" layoutX="324.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/editar.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="26.0" fitWidth="30.0" layoutX="490.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/agregar-usuario.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="574.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrNuevoPedido">
+   <children>
+      <Label layoutX="81.0" layoutY="67.0" prefHeight="19.0" prefWidth="133.0" text="Nombre del cliente:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField layoutX="206.0" layoutY="64.0" prefHeight="26.0" prefWidth="231.0" />
+      <ComboBox layoutX="464.0" layoutY="64.0" prefHeight="26.0" prefWidth="173.0" promptText="Clientes" />
+      <Label layoutX="284.0" layoutY="24.0" prefHeight="19.0" prefWidth="146.0" text="Agregar Nuevo Pedido">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="418.0" layoutY="154.0" prefHeight="19.0" prefWidth="66.0" text="Cantidad:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField layoutX="484.0" layoutY="150.0" prefHeight="26.0" prefWidth="90.0" />
+      <Button layoutX="44.0" layoutY="509.0" mnemonicParsing="false" stylesheets="@../../otros.css" text="Finalizar Pedido">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/finalizarPedido.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="15.0" layoutY="117.0" prefHeight="19.0" prefWidth="134.0" text="Resumen del Pedido:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Button layoutX="580.0" layoutY="146.0" mnemonicParsing="false" stylesheets="@../../otros.css" text="Agregar">
+         <font>
+            <Font size="10.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/boton-mas.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="213.0" layoutY="508.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="154.0" stylesheets="@../../otros.css" text="Eliminar Plato">
+         <graphic>
+            <ImageView fitHeight="19.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Icons/borrarUno.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Label layoutX="566.0" layoutY="533.0" prefHeight="19.0" prefWidth="48.0" text="Total: ">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField layoutX="608.0" layoutY="529.0" prefHeight="26.0" prefWidth="90.0" />
+      <TableView layoutX="12.0" layoutY="146.0" prefHeight="350.0" prefWidth="393.0">
+        <columns>
+          <TableColumn prefWidth="110.20001411437988" text="Plato" />
+          <TableColumn prefWidth="95.20000457763672" text="Cantidad" />
+            <TableColumn prefWidth="84.0" text="Precio" />
+            <TableColumn prefWidth="100.0" text="Sub Total" />
+        </columns>
+      </TableView>
+      <ListView layoutX="418.0" layoutY="192.0" prefHeight="323.0" prefWidth="283.0" />
+   </children>
+</AnchorPane>

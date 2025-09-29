@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="574.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrPago">
+   <children>
+      <TableView layoutX="12.0" layoutY="111.0" prefHeight="386.0" prefWidth="690.0">
+        <columns>
+          <TableColumn prefWidth="68.0" text="N° Pedido" />
+          <TableColumn prefWidth="62.0" text="N° Pago" />
+            <TableColumn prefWidth="68.0" text="N° Mesa" />
+            <TableColumn prefWidth="122.0" text="Cliente" />
+            <TableColumn prefWidth="124.0" text="Estado pedido" />
+            <TableColumn prefWidth="85.0" text="Total" />
+            <TableColumn prefWidth="82.0" text="Fecha" />
+            <TableColumn prefWidth="78.0" text="Metodo" />
+        </columns>
+      </TableView>
+      <Button layoutX="502.0" layoutY="517.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="186.0" stylesheets="@../../otros.css" text="Imprimir Comprobante" />
+      <Button layoutX="270.0" layoutY="515.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="186.0" stylesheets="@../../otros.css" text="Registrar Pago" />
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="467.0" layoutY="515.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/Comprobante.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="35.0" layoutX="237.0" layoutY="515.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/pago.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="304.0" layoutY="23.0" prefHeight="19.0" prefWidth="110.0" text="Gestión de Pagos">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField layoutX="42.0" layoutY="67.0" prefHeight="30.0" prefWidth="453.0" styleClass="buscar" stylesheets="@../../otros.css" />
+      <ImageView fitHeight="26.0" fitWidth="23.0" layoutX="14.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Icons/buscar.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="522.0" layoutY="72.0" text="Mes: " />
+      <ComboBox layoutX="551.0" layoutY="68.0" prefWidth="150.0" />
+      <Label layoutX="29.0" layoutY="522.0" text="Método:" />
+      <ComboBox layoutX="81.0" layoutY="518.0" prefHeight="26.0" prefWidth="143.0" />
+   </children>
+</AnchorPane>

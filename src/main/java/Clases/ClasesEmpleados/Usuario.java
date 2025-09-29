@@ -5,13 +5,14 @@ public class Usuario {
     private int idEmpleado;
     private String nombreUsuario;
     private String contraseñaUsuario;
-    private String rolUsuario ;
 
-    public Usuario(int idPersona, String nombreUsuario, String contraseñaUsuario, String rolUsuario) {
-        this.idEmpleado = idPersona;
+    public Usuario(int idEmpleado, String nombreUsuario, String contraseñaUsuario) {
+        this.idEmpleado = idEmpleado;
         this.nombreUsuario = nombreUsuario;
         this.contraseñaUsuario = contraseñaUsuario;
-        this.rolUsuario = rolUsuario;
+    }
+
+    public Usuario() {
     }
 
     public int getIdUsuario() {
@@ -44,13 +45,5 @@ public class Usuario {
 
     public void setContraseñaUsuario(String contraseñaUsuario) {
         this.contraseñaUsuario = contraseñaUsuario;
-    }
-
-    public String getRolUsuario() {
-        return rolUsuario;
-    }
-
-    public void setRolUsuario(String rolUsuario) {
-        this.rolUsuario = rolUsuario;
     }
 }

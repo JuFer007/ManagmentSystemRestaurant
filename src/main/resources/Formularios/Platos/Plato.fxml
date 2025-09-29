@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="574.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Forms.fmrPlato">
+   <children>
+      <Label layoutX="14.0" layoutY="23.0" prefHeight="19.0" prefWidth="91.0" text="Lista de Platos">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <ListView fx:id="listPlatos" layoutX="25.0" layoutY="57.0" prefHeight="314.0" prefWidth="242.0" />
+      <AnchorPane layoutX="276.0" layoutY="33.0" prefHeight="314.0" prefWidth="420.0" styleClass="panePlato" stylesheets="@../../otros.css">
+         <children>
+            <Label fx:id="nombrePlato" layoutX="184.0" layoutY="26.0" prefHeight="19.0" prefWidth="130.0" text="Nombre Plato" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="249.0" layoutY="80.0" text="Precio:" />
+            <TextField fx:id="precioPlato" layoutX="249.0" layoutY="108.0" prefHeight="26.0" prefWidth="141.0" />
+            <Label layoutX="249.0" layoutY="146.0" text="Disponibilidad:" />
+            <TextField fx:id="disponibilidadPlato" layoutX="249.0" layoutY="174.0" prefHeight="26.0" prefWidth="141.0" />
+            <Button fx:id="btnGuardar" layoutX="268.0" layoutY="222.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="104.0" stylesheets="@../../otros.css" text="Guardar">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Icons/guardar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnEditar" layoutX="268.0" layoutY="268.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="104.0" stylesheets="@../../otros.css" text="Editar">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Icons/editar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <AnchorPane fx:id="AnchorPane" layoutX="10.0" layoutY="63.0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="imgPlato" fitHeight="264.0" fitWidth="208.0" pickOnBounds="true" preserveRatio="true" />
+               </children></AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="25.0" layoutY="387.0" prefHeight="140.0" prefWidth="671.0" styleClass="anchor-pane" stylesheets="@../../otros.css">
+         <children>
+            <Label layoutX="27.0" layoutY="22.0" prefHeight="19.0" prefWidth="142.0" text="Agregar nuevo plato:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="75.0" layoutY="56.0" text="Nombre:" />
+            <TextField fx:id="nombreNuevoPlato" layoutX="75.0" layoutY="94.0" prefHeight="26.0" prefWidth="208.0" />
+            <Label layoutX="301.0" layoutY="56.0" text="Precio:" />
+            <TextField fx:id="nuevoPrecioPlato" layoutX="301.0" layoutY="94.0" prefHeight="26.0" prefWidth="141.0" />
+            <Button fx:id="btnSubirImg" layoutX="467.0" layoutY="55.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="142.0" stylesheets="@../../otros.css" text="Subir Imagen">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Icons/subir.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnAgregarPlato" layoutX="467.0" layoutY="98.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="142.0" stylesheets="@../../otros.css" text="Agregar Plato">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Icons/boton-mas.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -1,8 +1,8 @@
 .left-form {
     -fx-background-color: linear-gradient(
             from 100% 0% to 0% 100%,
-            #e56d1d 20%, /* Naranja suave */
-            #d77c36 90% /* Marrón anaranjado */
+            #e56d1d 20%,
+            #d77c36 90%
     );
     -fx-border-color: #000;
     -fx-border-width: 0.4px 0px 0.4px 0.4px;
@@ -16,29 +16,27 @@
     -fx-text-fill: black;
 }
 
-.btn{
-    -fx-background-color:linear-gradient(to bottom, #64754d, #4c6043);
-    -fx-background-radius:4px;
-    -fx-cursor:hand;
-    -fx-text-fill: #000000;
-    -fx-font-size:14px;
-    -fx-font-family:"Arial";
-}
-
-.login-btn:hover{
-    -fx-background-color:linear-gradient(to bottom, #64754d, #4c6043);
-}
-
-.layout {
-    -fx-background-color: linear-gradient(
-            from 100% 0% to 0% 100%,
-            #acc08f 30%,
-            #849d7a 90%
-    );
-    -fx-border-color: #849d7a;
-    -fx-border-width: 2px;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
+.botonCerrarSesion {
+    -fx-background-color: #f6e9d6;
     -fx-text-fill: black;
-    -fx-border-radius: 4px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0.3, 0, 2);
+}
+
+.botonCerrarSesion:hover {
+    -fx-background-color: #f6e9d6;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0.4, 0, 3);
+    -fx-text-fill: white;
+}
+
+.botonCerrarSesion:pressed {
+    -fx-background-color: #f6e9d6;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 2, 0.2, 0, 1);
+    -fx-translate-y: 1;
 }

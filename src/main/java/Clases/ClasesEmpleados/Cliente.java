@@ -2,12 +2,17 @@ package Clases.ClasesEmpleados;
 
 public class Cliente {
     private int idCliente;
+    private String dniCliente;
     private String nombreCliente;
     private String apellidosCliente;
 
-    public Cliente(String nombreCliente, String apellidosCliente) {
+    public Cliente(String dniCliente, String nombreCliente, String apellidosCliente) {
+        this.dniCliente = dniCliente;
         this.nombreCliente = nombreCliente;
         this.apellidosCliente = apellidosCliente;
+    }
+
+    public Cliente() {
     }
 
     public int getIdCliente() {
@@ -16,6 +21,14 @@ public class Cliente {
 
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
+    }
+
+    public String getDniCliente() {
+        return dniCliente;
+    }
+
+    public void setDniCliente(String dniCliente) {
+        this.dniCliente = dniCliente;
     }
 
     public String getNombreCliente() {

@@ -3,13 +3,24 @@ package Clases.ClasesGestion;
 public class Plato {
     private int idPlato;
     private String nombrePlato;
-    private String precioPlato;
-    private String estadoPlato;
+    private Double precioPlato;
+    private String disponibilidad;
+    private String rutaImagen;
 
-    public Plato(String nombrePlato, String precioPlato, String estadoPlato) {
+    public Plato(String nombrePlato, Double precioPlato, String disponibilidad, String rutaImagen) {
         this.nombrePlato = nombrePlato;
         this.precioPlato = precioPlato;
-        this.estadoPlato = estadoPlato;
+        this.disponibilidad = disponibilidad;
+        this.rutaImagen = rutaImagen;
+    }
+
+    public Plato(String nombrePlato, Double precioPlato, String disponibilidad) {
+        this.nombrePlato = nombrePlato;
+        this.precioPlato = precioPlato;
+        this.disponibilidad = disponibilidad;
+    }
+
+    public Plato() {
     }
 
     public int getIdPlato() {
@@ -28,19 +39,27 @@ public class Plato {
         this.nombrePlato = nombrePlato;
     }
 
-    public String getPrecioPlato() {
+    public Double getPrecioPlato() {
         return precioPlato;
     }
 
-    public void setPrecioPlato(String precioPlato) {
+    public void setPrecioPlato(Double precioPlato) {
         this.precioPlato = precioPlato;
     }
 
-    public String getEstadoPlato() {
-        return estadoPlato;
+    public String getDisponibilidad() {
+        return disponibilidad;
     }
 
-    public void setEstadoPlato(String estadoPlato) {
-        this.estadoPlato = estadoPlato;
+    public void setDisponibilidad(String disponibilidad) {
+        this.disponibilidad = disponibilidad;
+    }
+
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
     }
 }

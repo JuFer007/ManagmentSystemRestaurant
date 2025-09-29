@@ -9,46 +9,48 @@
    <children>
       <AnchorPane prefHeight="601.0" prefWidth="286.0" styleClass="left-form" stylesheets="@../../inicioSesion.css">
          <children>
-            <ImageView fitHeight="50.0" fitWidth="48.0" layoutX="119.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="50.0" fitWidth="48.0" layoutX="119.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../Icons/trabajo-en-equipo.png" />
                </image>
             </ImageView>
-            <Label layoutX="73.0" layoutY="116.0" text="¡Bienvenido ">
+            <Label layoutX="73.0" layoutY="121.0" text="¡Bienvenido ">
                <font>
                   <Font name="Cambria Bold Italic" size="25.0" />
                </font>
             </Label>
-            <Label layoutX="81.0" layoutY="155.0" text="Al Sistema!">
+            <Label layoutX="81.0" layoutY="160.0" text="Al Sistema!">
                <font>
                   <Font name="Cambria Bold Italic" size="25.0" />
                </font>
             </Label>
-            <ImageView fitHeight="195.0" fitWidth="207.0" layoutX="45.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="195.0" fitWidth="207.0" layoutX="45.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../Icons/logoRestaurante.png" />
                </image>
             </ImageView>
-            <Label layoutX="48.0" layoutY="415.0" text="The Grill House">
+            <Label layoutX="48.0" layoutY="420.0" text="The Grill House">
                <font>
                   <Font name="Cooper Black" size="24.0" />
                </font>
             </Label>
-            <Label layoutX="27.0" layoutY="445.0" text="Restaurant System">
+            <Label layoutX="27.0" layoutY="450.0" text="Restaurant System">
                <font>
                   <Font name="Cooper Black" size="24.0" />
                </font>
             </Label>
-            <Button fx:id="btnCerrarSesion" layoutX="106.0" layoutY="520.0" mnemonicParsing="false" styleClass="botonCerrarSesion" stylesheets="@../../style.css" text="Cerrar Sesión">
+            <Button fx:id="btnCerrarSesion" layoutX="71.0" layoutY="509.0" mnemonicParsing="false" styleClass="botonCerrarSesion" stylesheets="@../../inicioSesion.css" text="Cerrar Sesión">
                <font>
                   <Font name="Impact" size="17.0" />
                </font>
+               <graphic>
+                  <ImageView fitHeight="31.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../Icons/salida.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
-            <ImageView fitHeight="31.0" fitWidth="36.0" layoutX="72.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../Icons/salida.png" />
-               </image>
-            </ImageView>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="286.0" prefHeight="600.0" prefWidth="715.0">
@@ -56,7 +58,7 @@
             <MenuBar layoutY="1.0" prefHeight="26.0" prefWidth="687.0">
                <menus>
                   <!-- Menu: Empleados -->
-                  <Menu fx:id="menuGestionarEmpleados" mnemonicParsing="false" text="Gestion Empleados">
+                  <Menu fx:id="menuGestionarEmpleados" mnemonicParsing="false" text="Gestion Personas">
                      <graphic>
                         <ImageView fitHeight="16" fitWidth="16">
                            <image>
@@ -65,7 +67,7 @@
                         </ImageView>
                      </graphic>
                      <items>
-                        <MenuItem fx:id="menuGestionarAdministradores" mnemonicParsing="false" text="Gestionar Administradores">
+                        <MenuItem fx:id="menuGestionEmpelados" mnemonicParsing="false" text="Gestionar Empleados">
                            <graphic>
                               <ImageView fitHeight="16" fitWidth="16">
                                  <image>
@@ -74,29 +76,11 @@
                               </ImageView>
                            </graphic>
                         </MenuItem>
-                        <MenuItem fx:id="menuGestionarRepartidores" mnemonicParsing="false" text="Gestionar Repartidores">
+                        <MenuItem fx:id="menuGestionClientes" mnemonicParsing="false" text="Gestionar Clientes">
                            <graphic>
                               <ImageView fitHeight="16" fitWidth="16">
                                  <image>
-                                    <Image url="@../../Icons/repartidor.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                        <MenuItem fx:id="menuGestionarCocineros" mnemonicParsing="false" text="Gestionar Cocineros">
-                           <graphic>
-                              <ImageView fitHeight="16" fitWidth="16">
-                                 <image>
-                                    <Image url="@../../Icons/cocinero.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                        <MenuItem fx:id="menuGestionMeseros" mnemonicParsing="false" text="Gestionar Meseros">
-                           <graphic>
-                              <ImageView fitHeight="16" fitWidth="16">
-                                 <image>
-                                    <Image url="@../../Icons/mesero.png" />
+                                    <Image url="@../../Icons/usuarios.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -127,15 +111,6 @@
                               <ImageView fitHeight="16" fitWidth="16">
                                  <image>
                                     <Image url="@../../Icons/NuevoPedido.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
-                        <MenuItem fx:id="menuDeliverys" mnemonicParsing="false" text="Informacion Deliverys">
-                           <graphic>
-                              <ImageView fitHeight="16" fitWidth="16">
-                                 <image>
-                                    <Image url="@../../Icons/delivery.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -203,29 +178,22 @@
                               </ImageView>
                            </graphic>
                         </MenuItem>
-                        <MenuItem fx:id="menuReporteVentas" mnemonicParsing="false" text="Reporte de Ventas">
-                           <graphic>
-                              <ImageView fitHeight="16" fitWidth="16">
-                                 <image>
-                                    <Image url="@../../Icons/reporte-de-ventas.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </MenuItem>
                      </items>
                   </Menu>
                </menus>
             </MenuBar>
             <AnchorPane layoutX="690.0" layoutY="1.0" prefHeight="26.0" prefWidth="21.0">
                <children>
-                  <Button fx:id="btnCerrarVentana" layoutX="4.0" mnemonicParsing="false" stylesheets="@../../style.css" />
-                  <ImageView fitHeight="19.0" fitWidth="20.0" layoutX="3.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Icons/cross_14875490.png" />
-                     </image>
-                  </ImageView>
+                  <Button fx:id="btnCerrarVentana" layoutX="4.0" mnemonicParsing="false" styleClass="btnCerrar" stylesheets="@../../otros.css">
+                     <graphic>
+                        <ImageView fitHeight="19.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Icons/cross_14875490.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
                </children></AnchorPane>
-            <AnchorPane layoutY="27.0" prefHeight="574.0" prefWidth="715.0" />
+            <AnchorPane fx:id="contenedorPantallas" layoutY="27.0" prefHeight="574.0" prefWidth="715.0" />
          </children>
       </AnchorPane>
    </children>

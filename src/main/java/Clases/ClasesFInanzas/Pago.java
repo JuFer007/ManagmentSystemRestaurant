@@ -3,16 +3,19 @@ import java.sql.Date;
 
 public class Pago {
     private int idPago;
+    private int idPedido;
     private double montoPago;
     private String metodoPago;
     private Date fechaPago;
-    private int idPedido;
 
-    public Pago(double montoPago, String metodoPago, Date fechaPago, int idPedido) {
+    public Pago(int idPedido, double montoPago, String metodoPago, Date fechaPago) {
+        this.idPedido = idPedido;
         this.montoPago = montoPago;
         this.metodoPago = metodoPago;
         this.fechaPago = fechaPago;
-        this.idPedido = idPedido;
+    }
+
+    public Pago() {
     }
 
     public int getIdPago() {
@@ -21,6 +24,14 @@ public class Pago {
 
     public void setIdPago(int idPago) {
         this.idPago = idPago;
+    }
+
+    public int getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(int idPedido) {
+        this.idPedido = idPedido;
     }
 
     public double getMontoPago() {
@@ -45,13 +56,5 @@ public class Pago {
 
     public void setFechaPago(Date fechaPago) {
         this.fechaPago = fechaPago;
-    }
-
-    public int getIdPedido() {
-        return idPedido;
-    }
-
-    public void setIdPedido(int idPedido) {
-        this.idPedido = idPedido;
     }
 }
