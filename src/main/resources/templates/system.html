@@ -74,9 +74,7 @@
             </div>
         </div>
     </nav>
-    <button class="logout-btn" onclick="logout()">
-        <i class="ri-logout-box-r-line"></i> <span>Cerrar Sesión</span>
-    </button>
+    <a class="logout-btn" th:href="@{/login}" onclick="logout(); return false;"><i class="ri-logout-box-r-line"></i><span>Cerrar Sesion</span></a>
 </aside>
 
 <main class="main-content">
@@ -92,10 +90,6 @@
     </header>
 
     <div class="content" id="content">
-        <div id="dashboardDiv" class="page-section">
-            <h2>Dashboard Principal</h2>
-            <p>Bienvenido al sistema de gestión del restaurante.</p>
-        </div>
 
         <div id="clientesDiv" class="page-section" style="display:none;">
             <!-- Tabla de clientes -->
