@@ -1,6 +1,6 @@
 package com.app.SystemRestaurant.Service;
 
-import com.app.SystemRestaurant.Model.ClasesEmpleados.Empleado;
+import com.app.SystemRestaurant.Repository.EmpleadoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class EmpleadoService {
 
-    private final EmpleadoService empleadoRepository;
+    private final EmpleadoRepository empleadoRepository;
 
 
 }

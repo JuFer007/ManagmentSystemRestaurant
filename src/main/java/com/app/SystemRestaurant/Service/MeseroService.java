@@ -29,7 +29,8 @@ public class MeseroService{
     }
 
     //ENCONTRAR MESERO POR ID
-
-
+    public Optional<Mesero> encontrarMeseroPorId(Integer id) {
+        return meseroRepository.findById(id);
+    }
 
 }
