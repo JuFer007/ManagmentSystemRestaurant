@@ -4,6 +4,7 @@ import com.app.SystemRestaurant.Model.ClasesEmpleados.Mesero;
 import jakarta.persistence.*;
 import lombok.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -12,24 +13,26 @@ import java.sql.Date;
 @Setter
 @Builder
 @Table(name = "pedido")
-
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPedido;
-
+    
     @OneToOne
     @JoinColumn(name = "idMesa")
     private Mesa idMesa;
-
+    
     @ManyToOne
     @JoinColumn(name = "idMesero")
     private Mesero idMesero;
-
+    
     @ManyToOne
     @JoinColumn(name = "idCliente")
     private Cliente idCliente;
-
+    
+    @OneToMany(mappedBy = "idPedido", cascade = CascadeType.ALL)
+    private List<DetallePedido> detalles; 
+    
     private Date fecha;
     private String estadoPedido;
     private String codigoPedido;

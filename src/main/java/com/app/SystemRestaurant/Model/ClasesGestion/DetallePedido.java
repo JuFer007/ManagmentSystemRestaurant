@@ -15,7 +15,7 @@ public class DetallePedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idDetallePedido;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idPedido")
     private Pedido idPedido;
 
