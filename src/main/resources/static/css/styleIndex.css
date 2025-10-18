@@ -196,7 +196,7 @@ body {
 }
 
 .header-title h1 {
-    font-size: 24px;
+    font-size: 16px !important;
     color: var(--text-dark);
     font-weight: 700;
 }
@@ -236,7 +236,6 @@ body {
 }
 
 .page-title {
-    font-size: 26px;
     font-weight: 700;
     color: var(--text-dark);
     margin-bottom: 8px;

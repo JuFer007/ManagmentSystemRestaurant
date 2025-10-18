@@ -2,16 +2,21 @@
 // NAVEGACIÓN ENTRE SECCIONES
 // =============================
 
-// Mostrar/Ocultar submenús del sidebar
+//Mostrar o ocultar modulos del sidebar
 function toggleSubmenu(element) {
     const submenu = element.nextElementSibling;
     const arrow = element.querySelector('.arrow');
 
     document.querySelectorAll('.submenu').forEach(s => {
-        if (s !== submenu) s.classList.remove('open');
+        if (s !== submenu) {
+            s.classList.remove('open');
+        }
     });
     document.querySelectorAll('.nav-group-title').forEach(g => {
-        if (g !== element) g.classList.remove('open');
+        if (g !== element) {
+            g.classList.remove('open');
+            g.querySelector('.arrow').style.transform = 'rotate(0deg)';
+        }
     });
 
     submenu.classList.toggle('open');
