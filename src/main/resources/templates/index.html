@@ -213,16 +213,17 @@
             <!-- Página de Empleados -->
             <section id="page-empleados" class="page-content" style="display: none;">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="card-title mb-0 text-dark">Gestión de Empleados</h5>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#modalEmpleado">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="d-flex align-items-center flex-grow-1 me-3">
+                            <i class="ri-search-line me-2 text-muted fs-5"></i>
+                            <input type="text" class="form-control" placeholder="Buscar empleado..."
+                            onkeyup="filterTable(this.value, 'tablaEmpleados')">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="abrirFormularioEmpleado()">
                             <i class="ri-add-line"></i> Nuevo Empleado
                         </button>
                     </div>
                     <div class="card-body">
-                        <input type="text" class="form-control mb-3" placeholder="Buscar empleado..."
-                            onkeyup="filterTable(this.value, 'tablaEmpleados')">
                         <div class="table-container">
                             <table class="table" id="tablaEmpleados">
                                 <thead>
@@ -247,49 +248,46 @@
                 <div class="modal fade" id="modalEmpleado" tabindex="-1" aria-labelledby="modalEmpleadoLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalEmpleadoLabel">Agregar Nuevo Empleado</h5>
+                        <div class="modal-content" style="border: none; border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);">
+                            <div class="modal-header" style="background: #d66a24; border-radius: 16px 16px 0 0; border: none; padding: 20px 25px; color: white;">
+                                <h5 class="modal-title" id="modalEmpleadoLabel"  style="color: white; font-weight: 700; font-size: 20px;">Agregar Nuevo Empleado</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
+                                <input type="hidden" id="idEmpleado">
                                 <form id="formEmpleado">
                                     <!-- DNI y Nombre -->
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label class="form-label">DNI</label>
                                             <div class="input-icon-wrapper">
-                                                <i class="fas fa-id-card input-icon"></i>
-                                                <input type="text" class="form-control" placeholder="Ingrese el DNI"
+                                                <input type="text" class="form-control" id="dniEmpleado" name="dniEmpleado" placeholder="Ingrese el DNI"
                                                     required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label">Nombre</label>
                                             <div class="input-icon-wrapper">
-                                                <i class="fas fa-user input-icon"></i>
-                                                <input type="text" class="form-control" placeholder="Ingrese el nombre"
+                                                <input type="text" class="form-control" id="nombreEmpleado" name="nombreEmpleado" placeholder="Ingrese el nombre"
                                                     required>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Apellidos -->
-                                    <div class="row mb-3">
+                                    <div class="row mb-3">                                        
                                         <div class="col-md-6">
                                             <label class="form-label">Apellido Paterno</label>
                                             <div class="input-icon-wrapper">
-                                                <i class="fa-solid fa-pen input-icon"></i>
-                                                <input type="text" class="form-control"
+                                                <input type="text" class="form-control" id="apellidoPaternoEmpleado" name="apellidoPaternoEmpleado"
                                                 placeholder="Ingrese el apellido paterno" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label">Apellido Materno</label>
-                                            <div class="input-icon-wrapper">
-                                                <i class="fa-solid fa-pen input-icon"></i>
-                                                <input type="text" class="form-control"
+                                            <div class="input-icon-wrapper">                                                
+                                                <input type="text" class="form-control" id="apellidoMaternoEmpleado" name="apellidoMaternoEmpleado"
                                                 placeholder="Ingrese el apellido materno" required>
                                             </div>
                                         </div>
@@ -300,19 +298,18 @@
                                         <div class="col-md-6">
                                             <label class="form-label">Cargo</label>
                                             <div class="input-icon-wrapper">
-                                                <select class="form-select" id="cargo" required>
+                                                <select class="form-select" id="cargoEmpleado" name="cargoEmpleado" required>
                                                     <option value="" selected disabled>Seleccione un cargo</option>
                                                     <option value="Administrador">Administrador</option>
-                                                    <option value="Vendedor">Vendedor</option>
-                                                    <option value="Supervisor">Supervisor</option>
+                                                    <option value="Mesero">Mesero</option>
+                                                    <option value="Cocinero">Cocinero</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label">Salario</label>
                                             <div class="input-icon-wrapper">
-                                                <i class="fas fa-money-bill input-icon"></i>
-                                                <input type="number" class="form-control"
+                                                <input type="number" class="form-control" id="salarioEmpleado" name="salarioEmpleado"
                                                     placeholder="Ingrese el salario" required>
                                             </div>
                                         </div>
@@ -322,7 +319,7 @@
                                         <div class="col-12">
                                             <label class="form-label">Estado</label>
                                             <div class="col-md-6">
-                                                <select class="form-select" id="estado" required>
+                                                <select class="form-select" id="estadoEmpleado" name="estadoEmpleado" required>
                                                     <option value="" selected disabled>Estado del Empleado</option>
                                                     <option value="Activo">Activo</option>
                                                     <option value="Inactivo">Inactivo</option>
@@ -337,8 +334,8 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary"
                                     data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-primary"
-                                    onclick="guardarEmpleado()">Guardar</button>
+                                <button type="submit" form="formEmpleado" id="btnGuardarEmpleado" class="btn btn-primary">
+                                    Guardar</button>
                             </div>
                         </div>
                     </div>
