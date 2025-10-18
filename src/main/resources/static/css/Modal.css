@@ -1,0 +1,130 @@
+.modal-content {
+    background: #ffffff;
+    border: none;
+    border-radius: 12px;
+    color: #000000;
+}
+
+.modal-header {
+    border-bottom: 2px solid orange;
+    padding: 1.5rem;
+    background: linear-gradient(90deg,rgba(232, 127, 14, 1) 10%, rgba(232, 127, 14, 1) 90%);
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.btn-close {
+    color: #000000;
+    opacity: 0.7;
+}
+
+.btn-close:hover {
+    opacity: 1;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.form-label {
+    color: #000000;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.form-control {
+    color: #fff;
+    padding: 0.75rem 1rem;
+    padding-left: 2.75rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.form-control::placeholder {
+    color: #6c7584;
+}
+
+.form-control:focus {
+    border-color: #5a8dee;
+    color: #000000;
+    box-shadow: 0 0 0 0.2rem rgba(90, 141, 238, 0.25);
+}
+
+.input-icon-wrapper {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #000000;
+    z-index: 10;
+}
+
+.form-check-input {
+    background-color: #ffffff;
+    border-color: #3a4552;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.form-check-input:checked {
+    background-color: #5a8dee;
+    border-color: #5a8dee;
+}
+
+.form-check-label {
+    color: #e8e8e8;
+    margin-left: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.modal-footer {
+    border-top: none;
+    padding: 0 2rem 2rem;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.btn-cancelar {
+    background: #3a4552;
+    border: none;
+    color: #fff;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.btn-cancelar:hover {
+    background: #4a5562;
+    color: #fff;
+}
+
+.btn-guardar {
+    background: #5a8dee;
+    border: none;
+    color: #fff;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.btn-guardar:hover {
+    background: #4a7dde;
+}
+
+.row {
+    margin-bottom: 1.5rem;
+}
+
+.row:last-child {
+    margin-bottom: 0;
+}

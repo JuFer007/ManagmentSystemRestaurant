@@ -23,6 +23,10 @@ function toggleSubmenu(element) {
 
 //Cambiar entre páginas del sistema
 function loadPage(page, element) {
+    if(page) {
+        sessionStorage.setItem('currentPage', page);
+    }
+
     document.querySelectorAll(".page-content").forEach(sec => sec.style.display = "none");
     document.querySelectorAll(".nav-item.active").forEach(i => i.classList.remove("active"));
 
@@ -48,8 +52,15 @@ function loadPage(page, element) {
     if (page === "clientes" && typeof cargarClientes === "function") {
         cargarClientes();
     }
+    if (page === "empleados" && typeof cargarEmpleados === "function") {
+        cargarEmpleados();
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    loadPage("dashboard", document.querySelector(".nav-item.active"));
+    const savedPage = sessionStorage.getItem('currentPage') || 'dashboard';
+    const navLink = document.querySelector(`[onclick*="loadPage('${savedPage}'"]`);
+
+    const navItem = navLink ? navLink.closest('.nav-item') : document.querySelector('.nav-item.active');
+    loadPage(savedPage, navItem);
 });
