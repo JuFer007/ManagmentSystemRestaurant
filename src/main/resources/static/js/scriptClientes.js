@@ -29,6 +29,8 @@ async function cargarClientes() {
 // ========== ABRIR MODAL NUEVO CLIENTE ==========
 function abrirFormulario() {
     document.getElementById("formCliente").reset();
+    const dniInput = document.getElementById("dniCliente");
+    dniInput.disabled = false;
     document.getElementById("idCliente").value = "";
     
     const modalTitle = document.querySelector("#modalCliente .modal-title");
@@ -59,12 +61,30 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
 
             const idCliente = document.getElementById("idCliente").value;
+            const dniCliente = document.getElementById("dniCliente").value.trim();
+            const nombreCliente = document.getElementById("nombreCliente").value.trim();
+            const apellidosCliente = document.getElementById("apellidosCliente").value.trim();
+
+            if (!idCliente && !/^\d{8}$/.test(dniCliente)) {
+                mostrarToast("El DNI debe contener exactamente 8 dígitos numéricos.", "warning");
+                return;
+            }
+
+            if (!/^[a-zA-Z\s]+$/.test(nombreCliente)) {
+                mostrarToast("El nombre solo debe contener letras y espacios.", "warning");
+                return;
+            }
+
+            if (apellidosCliente.split(' ').filter(word => word.length > 0).length < 2) {
+                mostrarToast("Debe ingresar al menos dos apellidos.", "warning");
+                return;
+            }
 
             const cliente = {
                 idCliente: idCliente ? parseInt(idCliente) : null,
-                dniCliente: document.getElementById("dniCliente").value.trim(),
-                nombreCliente: document.getElementById("nombreCliente").value.trim(),
-                apellidosCliente: document.getElementById("apellidosCliente").value.trim()
+                dniCliente: dniCliente,
+                nombreCliente: nombreCliente,
+                apellidosCliente: apellidosCliente
             };
 
             const url = idCliente
@@ -92,6 +112,8 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .catch(err => {
                 console.error("Error al guardar cliente:", err);
+                const mensajeError = err.message.includes("could not execute statement") ? "El DNI ya está registrado." : "No se pudo guardar el cliente.";
+                mostrarToast(mensajeError, "danger");
             });
         });
     }
@@ -100,20 +122,24 @@ document.addEventListener("DOMContentLoaded", () => {
 // ========== EDITAR CLIENTE ==========
 function editarCliente(id) {
     fetch(`/system/clientes/buscar/${id}`)
-        .then(res => {
+        .then(async res => {
             if (!res.ok) {
-                throw new Error('No se pudo encontrar el cliente.');
+                throw new Error(`Error del servidor: ${res.status}`);
             }
-            return res.json();
+            const text = await res.text();
+            if (!text) {
+                throw new Error('El cliente no existe o ha sido eliminado.');
+            }
+            return JSON.parse(text);
         })
         .then(c => {
-            if (!c) {
-                throw new Error('El cliente no existe o fue eliminado.');
-            }
             document.getElementById("idCliente").value = c.idCliente;
             document.getElementById("dniCliente").value = c.dniCliente;
             document.getElementById("nombreCliente").value = c.nombreCliente;
             document.getElementById("apellidosCliente").value = c.apellidosCliente;
+
+            const dniInput = document.getElementById("dniCliente");
+            dniInput.disabled = true;
 
             document.querySelector("#modalCliente .modal-title").innerHTML = '<i class="ri-edit-2-line me-2"></i>Editar Cliente';
             document.getElementById("btnGuardarCliente").innerHTML = '<i class="ri-save-line me-1"></i>Guardar Cambios';
@@ -123,7 +149,7 @@ function editarCliente(id) {
         })
         .catch(err => {
             console.error("Error al cargar datos para editar:", err);
-            alert(err.message || "Error al cargar los datos del cliente.");
+            mostrarToast(err.message || "Error al cargar los datos del cliente.", "danger");
         });
 }
 
