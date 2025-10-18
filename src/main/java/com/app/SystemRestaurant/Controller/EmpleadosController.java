@@ -3,12 +3,12 @@ package com.app.SystemRestaurant.Controller;
 import com.app.SystemRestaurant.Model.ClasesEmpleados.Empleado;
 import com.app.SystemRestaurant.Service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/system/empleados")
 public class EmpleadosController {
 
@@ -27,9 +27,15 @@ public class EmpleadosController {
         return empleadoService.agregarEmpleado(empleado);
     }
 
-    @GetMapping("/buscar/{dni}")
+    @PostMapping("/actualizar")
     @ResponseBody
-    public Empleado buscarEmpleadoByDni(@PathVariable String dni){
-        return empleadoService.buscarPorDni(dni);
+    public Empleado actualizarEmpleado(@RequestBody Empleado empleado) {
+        return empleadoService.actualizarEmpleado(empleado);
+    }
+
+    @GetMapping("/buscar/{id}")
+    @ResponseBody
+    public Optional<Empleado> buscarEmpleadoById(@PathVariable int id){
+        return empleadoService.buscarPorId(id);
     }
 }
