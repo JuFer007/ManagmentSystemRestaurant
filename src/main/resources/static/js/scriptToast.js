@@ -33,7 +33,7 @@ function mostrarToast(mensaje, tipo = "success") {
                 ${icono}
                 <span>${mensaje}</span>
             </div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" 
+            <button type="button" class="btn-close btn-close-white me-2 m-auto"
                     data-bs-dismiss="toast" aria-label="Cerrar"></button>
         </div>
     `;

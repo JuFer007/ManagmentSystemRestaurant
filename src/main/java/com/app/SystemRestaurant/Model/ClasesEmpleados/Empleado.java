@@ -16,7 +16,10 @@ public class Empleado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idEmpleado;
 
+    @Column(unique = true)
     private String dniEmpleado;
+
+    @Column(unique = true)
     private String codigoEmpleado;
     private String nombreEmpleado;
     private String apellidoPaternoEmpleado;
@@ -25,5 +28,4 @@ public class Empleado {
     private int horasTrabajo;
     private double salarioEmpleado;
     private String cargoEmpleado;
-
 }

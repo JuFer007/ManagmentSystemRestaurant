@@ -18,6 +18,10 @@ public class Administrador {
     @OneToOne
     @JoinColumn(name = "idEmpleado")
     private Empleado empleado;
+
+    @Column(unique = true)
     private String telefono;
+
+    @Column(unique = true)
     private String correoElectronico;
 }

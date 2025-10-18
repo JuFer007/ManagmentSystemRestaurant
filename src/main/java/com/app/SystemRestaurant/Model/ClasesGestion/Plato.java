@@ -1,5 +1,4 @@
 package com.app.SystemRestaurant.Model.ClasesGestion;
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +13,9 @@ import lombok.*;
 public class Plato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idPlato;
+    private Integer idPlato;
+
+    @Column(unique = true, nullable = false)
     private String nombrePlato;
     private Double precioPlato;
     private String disponibilidad;

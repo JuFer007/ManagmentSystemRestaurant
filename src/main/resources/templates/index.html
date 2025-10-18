@@ -155,7 +155,8 @@
 
                                     <!-- Campo DNI -->
                                     <div class="mb-4">
-                                        <label for="dniCliente" class="form-label" style="color: #2e2e2e; font-weight: 600; font-size: 14px;">DNI</label>
+                                        <label for="dniCliente" class="form-label" style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
+                                        <i class="ri-pass-valid-line"></i> DNI</label>
                                         <input type="text"
                                                class="form-control"
                                                id="dniCliente"
@@ -166,7 +167,8 @@
 
                                     <!-- Campo Nombre -->
                                     <div class="mb-4">
-                                        <label for="nombreCliente" class="form-label" style="color: #2e2e2e; font-weight: 600; font-size: 14px;">Nombre</label>
+                                        <label for="nombreCliente" class="form-label" style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
+                                        <i class="ri-user-fill"></i> Nombre</label>
                                         <input type="text"
                                                class="form-control"
                                                id="nombreCliente"
@@ -177,7 +179,8 @@
 
                                     <!-- Campo Apellidos -->
                                     <div class="mb-4">
-                                        <label for="apellidosCliente" class="form-label" style="color: #000000; font-weight: 600; font-size: 14px;">Apellidos</label>
+                                        <label for="apellidosCliente" class="form-label" style="color: #000000; font-weight: 600; font-size: 14px;">
+                                        <i class="ri-user-fill"></i> Apellidos</label>
                                         <input type="text"
                                                class="form-control"
                                                id="apellidosCliente"
@@ -346,22 +349,147 @@
 
             </section>
 
-            <!-- Placeholder para otras páginas -->
+            <!-- Pedidos -->
             <section id="page-pedidos" class="page-content" style="display: none;">
                 <div class="card">
                     <div class="card-body">Contenido de Pedidos...</div>
                 </div>
             </section>
+
+            <!-- Nuevo pedido -->
             <section id="page-nuevo-pedido" class="page-content" style="display: none;">
                 <div class="card">
                     <div class="card-body">Contenido de Nuevo Pedido...</div>
                 </div>
             </section>
+
+            <!-- Platos -->
             <section id="page-platos" class="page-content" style="display: none;">
                 <div class="card">
-                    <div class="card-body">Contenido de Platos...</div>
+                    <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="d-flex align-items-center flex-grow-1 me-3">
+                            <i class="ri-search-line me-2 text-muted fs-5"></i>
+                            <input type="text" class="form-control" placeholder="Buscar plato..." onkeyup="filterTarjetas(this.value, 'contenedorTarjetasPlatos')">
+                        </div>
+                        <button class="btn btn-primary mt-2 mt-md-0" onclick="abrirFormularioPlato()">
+                            <i class="ri-add-line"></i> Nuevo Plato
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div id="contenedorTarjetasPlatos" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+                            <!-- Las tarjetas se cargarán dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal de Platos -->
+                <div class="modal fade" id="modalPlato" tabindex="-1" aria-labelledby="tituloModalPlato" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content" style="border: none; border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);">
+
+                            <!-- Header del Modal -->
+                            <div class="modal-header" style="background: #d66a24; border-radius: 16px 16px 0 0; border: none; padding: 20px 25px;">
+                                <h5 class="modal-title" id="tituloModalPlato" style="color: white; font-weight: 700; font-size: 20px;">Agregar Nuevo Plato</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: brightness(0) invert(1);"></button>
+                            </div>
+
+                            <!-- Body del Modal -->
+                            <div class="modal-body" style="padding: 30px 25px;">
+                                <form id="formPlato" enctype="multipart/form-data">
+                                    <input type="hidden" id="idPlato">
+
+                                    <!-- Campo Nombre -->
+                                    <div class="mb-4">
+                                        <label for="nombrePlato" class="form-label" style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
+                                            <i class="ri-restaurant-line me-1"></i>Nombre del Plato
+                                        </label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="nombrePlato"
+                                               name="nombrePlato"
+                                               placeholder="Ingrese nombre de plato.."
+                                               required
+                                               style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease; color: #000000 !important;">
+                                    </div>
+
+                                    <div class="row">
+                                        <!-- Campo Precio -->
+                                        <div class="col-md-6 mb-4">
+                                            <label for="precioPlato" class="form-label" style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
+                                                <i class="ri-money-dollar-circle-line me-1"></i>Precio (S/.)
+                                            </label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   id="precioPlato"
+                                                   name="precioPlato"
+                                                   placeholder="0.00"
+                                                   step="0.01"
+                                                   min="0"
+                                                   required
+                                                   style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease; color: #000000 !important;">
+                                        </div>
+
+                                        <!-- Campo Disponibilidad -->
+                                        <div class="col-md-6 mb-4">
+                                            <label for="disponibilidad" class="form-label" style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
+                                                <i class="ri-toggle-line me-1"></i>Disponibilidad
+                                            </label>
+                                            <select class="form-select"
+                                                    id="disponibilidad"
+                                                    name="disponibilidad"
+                                                    required
+                                                    style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease; color: #000000 !important;">
+                                                <option value="" selected disabled>Seleccione disponibilidad</option>
+                                                <option value="Disponible">Disponible</option>
+                                                <option value="No Disponible">No Disponible</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Campo Imagen -->
+                                    <div class="mb-4">
+                                        <label for="imagen" class="form-label" style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
+                                            <i class="ri-image-line me-1"></i>Imagen del Plato
+                                        </label>
+                                        <input type="file"
+                                               class="form-control"
+                                               id="imagen"
+                                               name="imagen"
+                                               accept="image/*"
+                                               onchange="previsualizarImagen(this)"
+                                               style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease;">
+                                        <small class="text-muted">Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 5MB</small>
+                                    </div>
+
+                                    <!-- Previsualización de Imagen -->
+                                    <div id="previsualizacion" class="mb-4 text-center" style="display: none;">
+                                        <img id="imagenPreview" src="" alt="Vista previa" style="max-width: 100%; max-height: 300px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Footer del Modal -->
+                            <div class="modal-footer" style="border-top: 2px solid #f3f4f6; padding: 20px 25px; background: #fafafa; border-radius: 0 0 16px 16px;">
+                                <button type="button"
+                                        class="btn btn-secondary"
+                                        data-bs-dismiss="modal"
+                                        style="padding: 10px 24px; border-radius: 10px; font-weight: 600; font-size: 14px;">
+                                    <i class="ri-close-line me-1"></i>Cancelar
+                                </button>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        onclick="guardarPlato()"
+                                        id="btnGuardarPlato"
+                                        style="background: #d66a24; border: none; padding: 10px 24px; border-radius: 10px; font-weight: 600; font-size: 14px; box-shadow: 0 4px 10px rgba(217, 99, 26, 0.3);">
+                                    <i class="ri-save-line me-1"></i>Guardar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
+
+            <!-- Pagos  -->
             <section id="page-pagos" class="page-content" style="display: none;">
                 <div class="card">
                     <div class="card-body">Contenido de Pagos...</div>
@@ -376,13 +504,15 @@
     <!-- Script bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Script toast -->
-    <script src="/js/scriptToast"></script>
+    <script src="/js/scriptToast.js"></script>
     <!-- Script principal -->
     <script src="/js/scriptPrincipal.js"></script>
     <!-- Script clientes -->
     <script src="/js/scriptClientes.js"></script>
-    <!--Script de Empleados-->
+    <!-- Script de Empleados-->
     <script src="/js/scriptEmpleados.js"></script>
+    <!-- Script de platos -->
+    <script src="/js/scriptPlatos.js"></script>
 </body>
 
 </html>
