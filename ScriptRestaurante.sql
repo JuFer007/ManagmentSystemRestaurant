@@ -73,21 +73,14 @@ INSERT INTO mesa (id_mesero, numero_mesa, capacidad, estado_mesa) VALUES
 -- 7. INSERTAR PLATOS
 -- ============================================
 INSERT INTO plato (nombre_plato, precio_plato, disponibilidad, imagenurl) VALUES
-('Ceviche de Pescado', 35.00, 'Disponible', 'https://example.com/images/ceviche.jpg'),
-('Lomo Saltado', 38.00, 'Disponible', 'https://example.com/images/lomo.jpg'),
-('Arroz con Mariscos', 42.00, 'Disponible', 'https://example.com/images/arroz_mariscos.jpg'),
-('Ají de Gallina', 28.00, 'Disponible', 'https://example.com/images/aji_gallina.jpg'),
-('Causa Limeña', 22.00, 'Disponible', 'https://example.com/images/causa.jpg'),
-('Anticuchos', 25.00, 'Disponible', 'https://example.com/images/anticuchos.jpg'),
-('Tiradito', 32.00, 'Disponible', 'https://example.com/images/tiradito.jpg'),
-('Seco de Cabrito', 45.00, 'No Disponible', 'https://example.com/images/seco.jpg'),
-('Tacu Tacu', 30.00, 'Disponible', 'https://example.com/images/tacu.jpg'),
-('Chicharrón de Pescado', 36.00, 'Disponible', 'https://example.com/images/chicharron.jpg'),
-('Pachamanca', 48.00, 'Disponible', 'https://example.com/images/pachamanca.jpg'),
-('Rocoto Relleno', 26.00, 'Disponible', 'https://example.com/images/rocoto.jpg'),
-('Suspiro Limeño', 15.00, 'Disponible', 'https://example.com/images/suspiro.jpg'),
-('Mazamorra Morada', 12.00, 'Disponible', 'https://example.com/images/mazamorra.jpg'),
-('Picarones', 18.00, 'Disponible', 'https://example.com/images/picarones.jpg');
+('Ceviche de Pescado', 35.00, 'Disponible', 'imagenesPlatos/ceviche_de_pescado.jpg'),
+('Lomo Saltado', 38.00, 'Disponible', 'imagenesPlatos/lomo_saltado.jpg'),
+('Arroz con Mariscos', 42.00, 'Disponible', 'imagenesPlatos/arroz_con_mariscos.jpg'),
+('Ají de Gallina', 28.00, 'Disponible', 'imagenesPlatos/ají_de_gallina.jpg'),
+('Causa Limeña', 22.00, 'Disponible', 'imagenesPlatos/causa_limeña.jpg'),
+('Anticuchos', 25.00, 'Disponible', 'imagenesPlatos/anticuchos.jpg'),
+('Tacu Tacu', 30.00, 'Disponible', 'imagenesPlatos/tacu_tacu.jpeg'),
+('Chicharrón de Pescado', 36.00, 'Disponible', 'imagenesPlatos/chicharrón_pescado.jpeg');
 
 -- ============================================
 -- 8. INSERTAR CLIENTES
@@ -122,42 +115,47 @@ INSERT INTO pedido (id_mesa, id_mesero, id_cliente, fecha, estado_pedido, codigo
 (10, NULL, 10, '2025-10-15', 'Completado', 'PED010', 118.00);
 
 -- ============================================
--- 10. INSERTAR DETALLES DE PEDIDO (ManyToOne con Pedido, ManyToOne con Plato)
+-- 10. INSERTAR DETALLES DE PEDIDO (CORREGIDO)
 -- ============================================
 INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
 -- Pedido 1 (PED001) - Total: 70.00
 (1, 1, 2, 70.00),
+
 -- Pedido 2 (PED002) - Total: 110.00
 (2, 2, 2, 76.00),
 (2, 5, 1, 22.00),
-(2, 14, 1, 12.00),
+(2, 6, 1, 12.00),
+
 -- Pedido 3 (PED003) - Total: 156.00
 (3, 3, 2, 84.00),
-(3, 10, 2, 72.00),
+(3, 7, 2, 72.00),
+
 -- Pedido 4 (PED004) - Total: 90.00
 (4, 6, 2, 50.00),
-(4, 9, 1, 30.00),
-(4, 14, 1, 10.00),
+(4, 8, 1, 36.00),
+
 -- Pedido 5 (PED005) - Total: 84.00
 (5, 4, 3, 84.00),
+
 -- Pedido 6 (PED006) - Total: 125.00
-(6, 11, 2, 96.00),
-(6, 7, 1, 29.00),
+(6, 2, 2, 76.00),
+(6, 7, 1, 30.00),
+
 -- Pedido 7 (PED007) - Total: 82.00
 (7, 5, 2, 44.00),
 (7, 1, 1, 35.00),
-(7, 13, 1, 3.00),
+
 -- Pedido 8 (PED008) - Total: 96.00
-(8, 12, 2, 52.00),
-(8, 5, 2, 44.00),
+(8, 8, 2, 72.00),
+(8, 5, 1, 22.00),
+
 -- Pedido 9 (PED009) - Total: 134.00
-(9, 3, 1, 42.00),
-(9, 2, 2, 76.00),
-(9, 13, 1, 16.00),
+(9, 3, 2, 84.00),
+(9, 2, 1, 38.00),
+
 -- Pedido 10 (PED010) - Total: 118.00
-(10, 1, 1, 35.00),
-(10, 11, 1, 48.00),
-(10, 1, 1, 35.00);
+(10, 1, 2, 70.00),
+(10, 4, 2, 48.00);
 
 -- ============================================
 -- 11. INSERTAR PAGOS (OneToOne con Pedido)
