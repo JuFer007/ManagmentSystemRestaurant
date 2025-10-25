@@ -21,7 +21,8 @@
     <aside class="sidebar">
         <div class="logo-section text-center mt-2" style="margin-top: 30px !important;">
             <div class="logo-icon">
-                <img src="imagenes/logoRestaurante.png" style="height: 120px; width: 120px; margin-bottom: 20px !important" alt="Logo The Grill House">
+                <img src="imagenes/logoRestaurante.png"
+                    style="height: 120px; width: 120px; margin-bottom: 20px !important" alt="Logo The Grill House">
             </div>
             <h4 class="text-white fw-bold mb-0" style="margin-top: 30px !important;">The Grill House</h4>
             <p class="text-white-50 mb-2">Restaurant System</p>
@@ -113,7 +114,8 @@
                     <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
                         <div class="d-flex align-items-center flex-grow-1 me-3">
                             <i class="ri-search-line me-2 text-muted fs-5"></i>
-                            <input type="text" class="form-control" placeholder="Buscar cliente..." onkeyup="filterTable(this.value, 'tablaClientes')">
+                            <input type="text" class="form-control" placeholder="Buscar cliente..."
+                                onkeyup="filterTable(this.value, 'tablaClientes')">
                         </div>
                         <button class="btn btn-primary mt-2 mt-md-0" onclick="abrirFormulario()">
                             <i class="ri-add-line"></i> Nuevo Cliente
@@ -139,14 +141,19 @@
                 </div>
 
                 <!-- El modal de clientes también se mueve aquí -->
-                <div class="modal fade" id="modalCliente" tabindex="-1" aria-labelledby="tituloModal" aria-hidden="true">
+                <div class="modal fade" id="modalCliente" tabindex="-1" aria-labelledby="tituloModal"
+                    aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content" style="border: none; border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);">
+                        <div class="modal-content"
+                            style="border: none; border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);">
 
                             <!-- Header del Modal -->
-                            <div class="modal-header" style="background: #d66a24; border-radius: 16px 16px 0 0; border: none; padding: 20px 25px;">
-                                <h5 class="modal-title" id="tituloModal" style="color: white; font-weight: 700; font-size: 20px;">Nuevo Cliente</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: brightness(0) invert(1); color: white !important;"></button>
+                            <div class="modal-header"
+                                style="background: #d66a24; border-radius: 16px 16px 0 0; border: none; padding: 20px 25px;">
+                                <h5 class="modal-title" id="tituloModal"
+                                    style="color: white; font-weight: 700; font-size: 20px;">Nuevo Cliente</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                    style="filter: brightness(0) invert(1); color: white !important;"></button>
                             </div>
 
                             <!-- Body del Modal -->
@@ -156,55 +163,45 @@
 
                                     <!-- Campo DNI -->
                                     <div class="mb-4">
-                                        <label for="dniCliente" class="form-label" style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
-                                        <i class="ri-pass-valid-line"></i> DNI</label>
-                                        <input type="text"
-                                               class="form-control"
-                                               id="dniCliente"
-                                               placeholder="Ingrese el DNI"
-                                               required
-                                               style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease; color: #000000 !important;">
+                                        <label for="dniCliente" class="form-label"
+                                            style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
+                                            <i class="ri-pass-valid-line"></i> DNI</label>
+                                        <input type="text" class="form-control" id="dniCliente"
+                                            placeholder="Ingrese el DNI" required
+                                            style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease; color: #000000 !important;">
                                     </div>
 
                                     <!-- Campo Nombre -->
                                     <div class="mb-4">
-                                        <label for="nombreCliente" class="form-label" style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
-                                        <i class="ri-user-fill"></i> Nombre</label>
-                                        <input type="text"
-                                               class="form-control"
-                                               id="nombreCliente"
-                                               placeholder="Ingrese el nombre"
-                                               required
-                                               style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease; color: #000000 !important;">
+                                        <label for="nombreCliente" class="form-label"
+                                            style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
+                                            <i class="ri-user-fill"></i> Nombre</label>
+                                        <input type="text" class="form-control" id="nombreCliente"
+                                            placeholder="Ingrese el nombre" required
+                                            style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease; color: #000000 !important;">
                                     </div>
 
                                     <!-- Campo Apellidos -->
                                     <div class="mb-4">
-                                        <label for="apellidosCliente" class="form-label" style="color: #000000; font-weight: 600; font-size: 14px;">
-                                        <i class="ri-user-fill"></i> Apellidos</label>
-                                        <input type="text"
-                                               class="form-control"
-                                               id="apellidosCliente"
-                                               placeholder="Ingrese los apellidos"
-                                               required
-                                               style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease; color: #000000 !important;">
+                                        <label for="apellidosCliente" class="form-label"
+                                            style="color: #000000; font-weight: 600; font-size: 14px;">
+                                            <i class="ri-user-fill"></i> Apellidos</label>
+                                        <input type="text" class="form-control" id="apellidosCliente"
+                                            placeholder="Ingrese los apellidos" required
+                                            style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease; color: #000000 !important;">
                                     </div>
                                 </form>
                             </div>
 
                             <!-- Footer del Modal -->
-                            <div class="modal-footer" style="border-top: 2px solid #f3f4f6; padding: 20px 25px; background: #fafafa; border-radius: 0 0 16px 16px;">
-                                <button type="button"
-                                        class="btn btn-secondary"
-                                        data-bs-dismiss="modal"
-                                        style="padding: 10px 24px; border-radius: 10px; font-weight: 600; font-size: 14px;">
+                            <div class="modal-footer"
+                                style="border-top: 2px solid #f3f4f6; padding: 20px 25px; background: #fafafa; border-radius: 0 0 16px 16px;">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                    style="padding: 10px 24px; border-radius: 10px; font-weight: 600; font-size: 14px;">
                                     <i class="ri-close-line me-1"></i>Cancelar
                                 </button>
-                                <button type="submit"
-                                        class="btn btn-primary"
-                                        form="formCliente"
-                                        id="btnGuardarCliente"
-                                        style="background: #d66a24; border: none; padding: 10px 24px; border-radius: 10px; font-weight: 600; font-size: 14px; box-shadow: 0 4px 10px rgba(217, 99, 26, 0.3);">
+                                <button type="submit" class="btn btn-primary" form="formCliente" id="btnGuardarCliente"
+                                    style="background: #d66a24; border: none; padding: 10px 24px; border-radius: 10px; font-weight: 600; font-size: 14px; box-shadow: 0 4px 10px rgba(217, 99, 26, 0.3);">
                                     Agregar
                                 </button>
                             </div>
@@ -221,7 +218,7 @@
                         <div class="d-flex align-items-center flex-grow-1 me-3">
                             <i class="ri-search-line me-2 text-muted fs-5"></i>
                             <input type="text" class="form-control" placeholder="Buscar empleado..."
-                            onkeyup="filterTable(this.value, 'tablaEmpleados')">
+                                onkeyup="filterTable(this.value, 'tablaEmpleados')">
                         </div>
                         <button type="button" class="btn btn-primary" onclick="abrirFormularioEmpleado()">
                             <i class="ri-add-line"></i> Nuevo Empleado
@@ -252,9 +249,12 @@
                 <div class="modal fade" id="modalEmpleado" tabindex="-1" aria-labelledby="modalEmpleadoLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content" style="border: none; border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);">
-                            <div class="modal-header" style="background: #d66a24; border-radius: 16px 16px 0 0; border: none; padding: 20px 25px; color: white;">
-                                <h5 class="modal-title" id="modalEmpleadoLabel"  style="color: white; font-weight: 700; font-size: 20px;">Agregar Nuevo Empleado</h5>
+                        <div class="modal-content"
+                            style="border: none; border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);">
+                            <div class="modal-header"
+                                style="background: #d66a24; border-radius: 16px 16px 0 0; border: none; padding: 20px 25px; color: white;">
+                                <h5 class="modal-title" id="modalEmpleadoLabel"
+                                    style="color: white; font-weight: 700; font-size: 20px;">Agregar Nuevo Empleado</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -266,33 +266,35 @@
                                         <div class="col-md-6">
                                             <label class="form-label">DNI</label>
                                             <div class="input-icon-wrapper">
-                                                <input type="text" class="form-control" id="dniEmpleado" name="dniEmpleado" placeholder="Ingrese el DNI"
-                                                    required>
+                                                <input type="text" class="form-control" id="dniEmpleado"
+                                                    name="dniEmpleado" placeholder="Ingrese el DNI" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label">Nombre</label>
                                             <div class="input-icon-wrapper">
-                                                <input type="text" class="form-control" id="nombreEmpleado" name="nombreEmpleado" placeholder="Ingrese el nombre"
-                                                    required>
+                                                <input type="text" class="form-control" id="nombreEmpleado"
+                                                    name="nombreEmpleado" placeholder="Ingrese el nombre" required>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Apellidos -->
-                                    <div class="row mb-3">                                        
+                                    <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label class="form-label">Apellido Paterno</label>
                                             <div class="input-icon-wrapper">
-                                                <input type="text" class="form-control" id="apellidoPaternoEmpleado" name="apellidoPaternoEmpleado"
-                                                placeholder="Ingrese el apellido paterno" required>
+                                                <input type="text" class="form-control" id="apellidoPaternoEmpleado"
+                                                    name="apellidoPaternoEmpleado"
+                                                    placeholder="Ingrese el apellido paterno" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label">Apellido Materno</label>
-                                            <div class="input-icon-wrapper">                                                
-                                                <input type="text" class="form-control" id="apellidoMaternoEmpleado" name="apellidoMaternoEmpleado"
-                                                placeholder="Ingrese el apellido materno" required>
+                                            <div class="input-icon-wrapper">
+                                                <input type="text" class="form-control" id="apellidoMaternoEmpleado"
+                                                    name="apellidoMaternoEmpleado"
+                                                    placeholder="Ingrese el apellido materno" required>
                                             </div>
                                         </div>
                                     </div>
@@ -302,7 +304,8 @@
                                         <div class="col-md-6">
                                             <label class="form-label">Cargo</label>
                                             <div class="input-icon-wrapper">
-                                                <select class="form-select" id="cargoEmpleado" name="cargoEmpleado" required>
+                                                <select class="form-select" id="cargoEmpleado" name="cargoEmpleado"
+                                                    required>
                                                     <option value="" selected disabled>Seleccione un cargo</option>
                                                     <option value="Administrador">Administrador</option>
                                                     <option value="Mesero">Mesero</option>
@@ -313,8 +316,8 @@
                                         <div class="col-md-6">
                                             <label class="form-label">Salario</label>
                                             <div class="input-icon-wrapper">
-                                                <input type="number" class="form-control" id="salarioEmpleado" name="salarioEmpleado"
-                                                    placeholder="Ingrese el salario" required>
+                                                <input type="number" class="form-control" id="salarioEmpleado"
+                                                    name="salarioEmpleado" placeholder="Ingrese el salario" required>
                                             </div>
                                         </div>
                                     </div>
@@ -323,7 +326,8 @@
                                         <div class="col-12">
                                             <label class="form-label">Estado</label>
                                             <div class="col-md-6">
-                                                <select class="form-select" id="estadoEmpleado" name="estadoEmpleado" required>
+                                                <select class="form-select" id="estadoEmpleado" name="estadoEmpleado"
+                                                    required>
                                                     <option value="" selected disabled>Estado del Empleado</option>
                                                     <option value="Activo">Activo</option>
                                                     <option value="Inactivo">Inactivo</option>
@@ -338,7 +342,8 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary"
                                     data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" form="formEmpleado" id="btnGuardarEmpleado" class="btn btn-primary">
+                                <button type="submit" form="formEmpleado" id="btnGuardarEmpleado"
+                                    class="btn btn-primary">
                                     Guardar</button>
                             </div>
                         </div>
@@ -354,11 +359,11 @@
                         <div class="d-flex align-items-center flex-grow-1 me-3">
                             <i class="ri-search-line me-2 text-muted fs-5"></i>
                             <input type="text" class="form-control" placeholder="Buscar pedido..."
-                                   onkeyup="filtrarPedidos(this.value)">
+                                onkeyup="filtrarPedidos(this.value)">
                         </div>
                         <div class="d-flex gap-2 mt-2 mt-md-0">
                             <select class="form-select" id="filtroEstado" onchange="filtrarPorEstado(this.value)"
-                                    style="max-width: 200px;">
+                                style="max-width: 200px;">
                                 <option value="Todos">Todos</option>
                                 <option value="Completado">Completado</option>
                                 <option value="En proceso">En Proceso</option>
@@ -369,17 +374,17 @@
                         <div class="table-container">
                             <table class="table table-hover" id="tablaPedidos">
                                 <thead>
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Cliente</th>
-                                    <th>Fecha y Hora</th>
-                                    <th>Total</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
-                                </tr>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Cliente</th>
+                                        <th>Fecha y Hora</th>
+                                        <th>Total</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <!-- Cargar pedidos con js -->
+                                    <!-- Cargar pedidos con js -->
                                 </tbody>
                             </table>
                         </div>
@@ -387,16 +392,19 @@
                 </div>
 
                 <!-- Modal de Detalle del Pedido -->
-                <div class="modal fade" id="modalDetallePedido" tabindex="-1" aria-labelledby="tituloModalDetalle" aria-hidden="true">
+                <div class="modal fade" id="modalDetallePedido" tabindex="-1" aria-labelledby="tituloModalDetalle"
+                    aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content">
 
                             <!-- Header del Modal -->
                             <div class="modal-header" style="font-size: 22px !important;">
                                 <h5 class="modal-title" id="tituloModalDetalle" style="font-size: 22px !important;">
-                                    <i class="ri-file-list-3-line me-2"></i>Detalle del Pedido N° <span id="numeroPedidoModal"></span>
+                                    <i class="ri-file-list-3-line me-2"></i>Detalle del Pedido N° <span
+                                        id="numeroPedidoModal"></span>
                                 </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
 
                             <!-- Body del Modal -->
@@ -457,15 +465,15 @@
                                     <div class="table-responsive">
                                         <table class="table table-platos mb-0">
                                             <thead>
-                                            <tr>
-                                                <th>Plato</th>
-                                                <th class="text-center">Cantidad</th>
-                                                <th class="text-end">Precio Unit.</th>
-                                                <th class="text-end">Subtotal</th>
-                                            </tr>
+                                                <tr>
+                                                    <th>Plato</th>
+                                                    <th class="text-center">Cantidad</th>
+                                                    <th class="text-end">Precio Unit.</th>
+                                                    <th class="text-end">Subtotal</th>
+                                                </tr>
                                             </thead>
                                             <tbody id="listaPlatosDetalle">
-                                            <!-- Datos de platos -->
+                                                <!-- Datos de platos -->
                                             </tbody>
                                         </table>
                                     </div>
@@ -476,17 +484,21 @@
                                     <h5 class="total-label" style="font-size: 20px !important;">
                                         Total del Pedido
                                     </h5>
-                                    <h4 class="total-value" id="totalDetalle" style="font-size: 20px !important;">S/. 0.00</h4>
+                                    <h4 class="total-value" id="totalDetalle" style="font-size: 20px !important;">S/.
+                                        0.00</h4>
                                 </div>
                             </div>
 
                             <!-- Footer del Modal -->
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger text-dark" data-bs-dismiss="modal" style="background-color: #b9b9b9 !important; border:none !important;">
+                                <button type="button" class="btn btn-danger text-dark" data-bs-dismiss="modal"
+                                    style="background-color: #b9b9b9 !important; border:none !important;">
                                     <i class="ri-close-line"></i>
                                     <span>Cerrar</span>
                                 </button>
-                                <button type="button" class="btn btn-danger" onclick="cambiarEstado()" style="background-color: #d66c27 !important; border:none !important;" id="btnCambiarEstado">
+                                <button type="button" class="btn btn-danger" onclick="cambiarEstado()"
+                                    style="background-color: #d66c27 !important; border:none !important;"
+                                    id="btnCambiarEstado">
                                     <i class="ri-refresh-line"></i>
                                     <span>Cambiar Estado</span>
                                 </button>
@@ -502,7 +514,66 @@
             <!-- Nuevo pedido -->
             <section id="page-nuevo-pedido" class="page-content" style="display: none;">
                 <div class="card">
-                    <div class="card-body">Contenido de Nuevo Pedido...</div>
+                    <div class="card-header d-flex align-items-center flex-wrap gap-3">
+                        <label for="inputNuevoCliente" class="form-label mb-0 fw-bold">Nombre del Cliente:</label>
+                        <input type="text" class="form-control" id="inputNuevoCliente" placeholder="O registrar un nuevo cliente..." style="flex: 1 1 200px;">
+                        <span class="fw-bold">ó</span>
+                        <select class="form-select" id="selectClientePedido" name="selectClientePedido" required style="flex: 1 1 200px;">
+                            <option value="" selected disabled>Seleccione un cliente existente</option>
+                            <!-- Clientes se cargarán dinámicamente -->
+                        </select>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Columna de Lista de Platos -->
+                            <div class="col-md-7">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Lista de Platos</h5>
+                                    </div>
+                                    <div class="card-body" style="max-height: 600px; overflow-y: auto;">
+                                        <div id="contenedorListaPlatos" class="list-group">
+                                            <!-- Los platos se cargarán aquí dinámicamente -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Columna de Resumen de Pedido -->
+                            <div class="col-md-5">
+                                <div class="card">
+                                    <h5 class="card-header">
+                                        Resumen Pedido
+                                    </h5>
+                                    <div class="card-body">
+                                        <div class="table-container">
+                                            <table class="table" id="tablaResumenPedido">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Plato</th>
+                                                        <th>Cantidad</th>
+                                                        <th>Subtotal</th>
+                                                        <th>Acción</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- Los datos se cargarán aquí con JavaScript -->
+                                                </tbody>
+                                            </table>
+                                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                                <h5 class="mb-0">Total:</h5>
+                                                <h5 class="mb-0" id="totalPedido">S/. 0.00</h5>
+                                            </div>
+                                            <div class="d-grid gap-2 mt-3">
+                                                <button class="btn btn-success" onclick="finalizarPedido()">Finalizar Pedido</button>
+                                                <button class="btn btn-danger" onclick="limpiarPedido()">Limpiar Todo</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -512,28 +583,35 @@
                     <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
                         <div class="d-flex align-items-center flex-grow-1 me-3">
                             <i class="ri-search-line me-2 text-muted fs-5"></i>
-                            <input type="text" class="form-control" placeholder="Buscar plato..." onkeyup="filterTarjetas(this.value, 'contenedorTarjetasPlatos')">
+                            <input type="text" class="form-control" placeholder="Buscar plato..."
+                                onkeyup="filterTarjetas(this.value, 'contenedorTarjetasPlatos')">
                         </div>
                         <button class="btn btn-primary mt-2 mt-md-0" onclick="abrirFormularioPlato()">
                             <i class="ri-add-line"></i> Nuevo Plato
                         </button>
                     </div>
                     <div class="card-body">
-                        <div id="contenedorTarjetasPlatos" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+                        <div id="contenedorTarjetasPlatos"
+                            class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
                             <!-- Las tarjetas se cargarán dinámicamente -->
                         </div>
                     </div>
                 </div>
 
                 <!-- Modal de Platos -->
-                <div class="modal fade" id="modalPlato" tabindex="-1" aria-labelledby="tituloModalPlato" aria-hidden="true">
+                <div class="modal fade" id="modalPlato" tabindex="-1" aria-labelledby="tituloModalPlato"
+                    aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content" style="border: none; border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);">
+                        <div class="modal-content"
+                            style="border: none; border-radius: 16px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);">
 
                             <!-- Header del Modal -->
-                            <div class="modal-header" style="background: #d66a24; border-radius: 16px 16px 0 0; border: none; padding: 20px 25px;">
-                                <h5 class="modal-title" id="tituloModalPlato" style="color: white; font-weight: 700; font-size: 20px;">Agregar Nuevo Plato</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: brightness(0) invert(1);"></button>
+                            <div class="modal-header"
+                                style="background: #d66a24; border-radius: 16px 16px 0 0; border: none; padding: 20px 25px;">
+                                <h5 class="modal-title" id="tituloModalPlato"
+                                    style="color: white; font-weight: 700; font-size: 20px;">Agregar Nuevo Plato</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                    style="filter: brightness(0) invert(1);"></button>
                             </div>
 
                             <!-- Body del Modal -->
@@ -543,45 +621,36 @@
 
                                     <!-- Campo Nombre -->
                                     <div class="mb-4">
-                                        <label for="nombrePlato" class="form-label" style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
+                                        <label for="nombrePlato" class="form-label"
+                                            style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
                                             <i class="ri-restaurant-line me-1"></i>Nombre del Plato
                                         </label>
-                                        <input type="text"
-                                               class="form-control"
-                                               id="nombrePlato"
-                                               name="nombrePlato"
-                                               placeholder="Ingrese nombre de plato.."
-                                               required
-                                               style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease; color: #000000 !important;">
+                                        <input type="text" class="form-control" id="nombrePlato" name="nombrePlato"
+                                            placeholder="Ingrese nombre de plato.." required
+                                            style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease; color: #000000 !important;">
                                     </div>
 
                                     <div class="row">
                                         <!-- Campo Precio -->
                                         <div class="col-md-6 mb-4">
-                                            <label for="precioPlato" class="form-label" style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
+                                            <label for="precioPlato" class="form-label"
+                                                style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
                                                 <i class="ri-money-dollar-circle-line me-1"></i>Precio (S/.)
                                             </label>
-                                            <input type="number"
-                                                   class="form-control"
-                                                   id="precioPlato"
-                                                   name="precioPlato"
-                                                   placeholder="0.00"
-                                                   step="0.01"
-                                                   min="0"
-                                                   required
-                                                   style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease; color: #000000 !important;">
+                                            <input type="number" class="form-control" id="precioPlato"
+                                                name="precioPlato" placeholder="0.00" step="0.01" min="0" required
+                                                style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease; color: #000000 !important;">
                                         </div>
 
                                         <!-- Campo Disponibilidad -->
                                         <div class="col-md-6 mb-4">
-                                            <label for="disponibilidad" class="form-label" style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
+                                            <label for="disponibilidad" class="form-label"
+                                                style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
                                                 <i class="ri-toggle-line me-1"></i>Disponibilidad
                                             </label>
-                                            <select class="form-select"
-                                                    id="disponibilidad"
-                                                    name="disponibilidad"
-                                                    required
-                                                    style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease; color: #000000 !important;">
+                                            <select class="form-select" id="disponibilidad" name="disponibilidad"
+                                                required
+                                                style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease; color: #000000 !important;">
                                                 <option value="" selected disabled>Seleccione disponibilidad</option>
                                                 <option value="Disponible">Disponible</option>
                                                 <option value="No Disponible">No Disponible</option>
@@ -591,39 +660,35 @@
 
                                     <!-- Campo Imagen -->
                                     <div class="mb-4">
-                                        <label for="imagen" class="form-label" style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
+                                        <label for="imagen" class="form-label"
+                                            style="color: #2e2e2e; font-weight: 600; font-size: 14px;">
                                             <i class="ri-image-line me-1"></i>Imagen del Plato
                                         </label>
-                                        <input type="file"
-                                               class="form-control"
-                                               id="imagen"
-                                               name="imagen"
-                                               accept="image/*"
-                                               onchange="previsualizarImagen(this)"
-                                               style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease;">
-                                        <small class="text-muted">Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 5MB</small>
+                                        <input type="file" class="form-control" id="imagen" name="imagen"
+                                            accept="image/*" onchange="previsualizarImagen(this)"
+                                            style="border: 2px solid #e5e7eb; border-radius: 10px; padding: 12px 15px; font-size: 14px; transition: all 0.3s ease;">
+                                        <small class="text-muted">Formatos permitidos: JPG, PNG, GIF. Tamaño máximo:
+                                            5MB</small>
                                     </div>
 
                                     <!-- Previsualización de Imagen -->
                                     <div id="previsualizacion" class="mb-4 text-center" style="display: none;">
-                                        <img id="imagenPreview" src="" alt="Vista previa" style="max-width: 100%; max-height: 300px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                        <img id="imagenPreview" src="" alt="Vista previa"
+                                            style="max-width: 100%; max-height: 300px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                                     </div>
                                 </form>
                             </div>
 
                             <!-- Footer del Modal -->
-                            <div class="modal-footer" style="border-top: 2px solid #f3f4f6; padding: 20px 25px; background: #fafafa; border-radius: 0 0 16px 16px;">
-                                <button type="button"
-                                        class="btn btn-secondary"
-                                        data-bs-dismiss="modal"
-                                        style="padding: 10px 24px; border-radius: 10px; font-weight: 600; font-size: 14px;">
+                            <div class="modal-footer"
+                                style="border-top: 2px solid #f3f4f6; padding: 20px 25px; background: #fafafa; border-radius: 0 0 16px 16px;">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                    style="padding: 10px 24px; border-radius: 10px; font-weight: 600; font-size: 14px;">
                                     <i class="ri-close-line me-1"></i>Cancelar
                                 </button>
-                                <button type="button"
-                                        class="btn btn-primary"
-                                        onclick="guardarPlato()"
-                                        id="btnGuardarPlato"
-                                        style="background: #d66a24; border: none; padding: 10px 24px; border-radius: 10px; font-weight: 600; font-size: 14px; box-shadow: 0 4px 10px rgba(217, 99, 26, 0.3);">
+                                <button type="button" class="btn btn-primary" onclick="guardarPlato()"
+                                    id="btnGuardarPlato"
+                                    style="background: #d66a24; border: none; padding: 10px 24px; border-radius: 10px; font-weight: 600; font-size: 14px; box-shadow: 0 4px 10px rgba(217, 99, 26, 0.3);">
                                     <i class="ri-save-line me-1"></i>Guardar
                                 </button>
                             </div>
@@ -656,6 +721,8 @@
     <script src="/js/scriptEmpleados.js"></script>
     <!-- Script de platos -->
     <script src="/js/scriptPlatos.js"></script>
+    <!-- Script para NuevoPedido -->
+    <script src="/js/scriptNuevoPedido.js"></script>
 </body>
 
 </html>
