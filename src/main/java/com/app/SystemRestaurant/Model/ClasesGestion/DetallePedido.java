@@ -1,4 +1,5 @@
 package com.app.SystemRestaurant.Model.ClasesGestion;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +18,7 @@ public class DetallePedido {
 
     @ManyToOne
     @JoinColumn(name = "idPedido")
+    @JsonIgnore
     private Pedido idPedido;
 
     @ManyToOne

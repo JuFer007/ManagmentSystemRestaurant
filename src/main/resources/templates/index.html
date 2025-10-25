@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- Estilos -->
     <link rel="stylesheet" href="/css/styleIndex.css">
-    <link rel="stylesheet" href="/css/styleModal.css">
+    <!-- Modal de pedido-->
+    <link rel="stylesheet" href="/css/styleModalPedido.css">
 </head>
 
 <body>
@@ -20,9 +21,9 @@
     <aside class="sidebar">
         <div class="logo-section text-center mt-2" style="margin-top: 30px !important;">
             <div class="logo-icon">
-                <img src="imagenes/logoRestaurante.png" style="height: 120px; width: 120px;" alt="Logo The Grill House">
+                <img src="imagenes/logoRestaurante.png" style="height: 120px; width: 120px; margin-bottom: 20px !important" alt="Logo The Grill House">
             </div>
-            <h4 class="text-white fw-bold mb-0" style="margin-top: 30px;">The Grill House</h4>
+            <h4 class="text-white fw-bold mb-0" style="margin-top: 30px !important;">The Grill House</h4>
             <p class="text-white-50 mb-2">Restaurant System</p>
         </div>
 
@@ -96,7 +97,7 @@
         </header>
 
         <div class="content" id="content">
-            <!-- Página del Dashboard -->
+            <!-- Dashboard -->
             <section id="page-dashboard" class="page-content">
                 <div class="card">
                     <div class="card-body">
@@ -213,7 +214,7 @@
                 </div>
             </section>
 
-            <!-- Página de Empleados -->
+            <!-- Empleados -->
             <section id="page-empleados" class="page-content" style="display: none;">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
@@ -349,8 +350,153 @@
             <!-- Pedidos -->
             <section id="page-pedidos" class="page-content" style="display: none;">
                 <div class="card">
-                    <div class="card-body">Contenido de Pedidos...</div>
+                    <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="d-flex align-items-center flex-grow-1 me-3">
+                            <i class="ri-search-line me-2 text-muted fs-5"></i>
+                            <input type="text" class="form-control" placeholder="Buscar pedido..."
+                                   onkeyup="filtrarPedidos(this.value)">
+                        </div>
+                        <div class="d-flex gap-2 mt-2 mt-md-0">
+                            <select class="form-select" id="filtroEstado" onchange="filtrarPorEstado(this.value)"
+                                    style="max-width: 200px;">
+                                <option value="Todos">Todos</option>
+                                <option value="Completado">Completado</option>
+                                <option value="En proceso">En Proceso</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table class="table table-hover" id="tablaPedidos">
+                                <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Cliente</th>
+                                    <th>Fecha y Hora</th>
+                                    <th>Total</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- Cargar pedidos con js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Modal de Detalle del Pedido -->
+                <div class="modal fade" id="modalDetallePedido" tabindex="-1" aria-labelledby="tituloModalDetalle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+
+                            <!-- Header del Modal -->
+                            <div class="modal-header" style="font-size: 22px !important;">
+                                <h5 class="modal-title" id="tituloModalDetalle" style="font-size: 22px !important;">
+                                    <i class="ri-file-list-3-line me-2"></i>Detalle del Pedido N° <span id="numeroPedidoModal"></span>
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <!-- Body del Modal -->
+                            <div class="modal-body">
+                                <!-- Información del Cliente y Pedido -->
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-6">
+                                        <div class="info-card">
+                                            <div class="info-label">
+                                                <i class="ri-user-3-line"></i>
+                                                <span>Cliente</span>
+                                            </div>
+                                            <p class="info-value" id="clienteDetalle">-</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="info-card">
+                                            <div class="info-label">
+                                                <i class="ri-calendar-event-line"></i>
+                                                <span>Fecha y Hora</span>
+                                            </div>
+                                            <p class="info-value" id="fechaDetalle">-</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-6">
+                                        <div class="info-card">
+                                            <div class="info-label">
+                                                <i class="ri-user-settings-line"></i>
+                                                <span>Atendido por</span>
+                                            </div>
+                                            <p class="info-value" id="empleadoDetalle">-</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="info-card">
+                                            <div class="info-label">
+                                                <i class="ri-information-line"></i>
+                                                <span>Estado</span>
+                                            </div>
+                                            <p class="info-value">
+                                                <span id="estadoDetalle" class="badge badge-estado">-</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="divider">
+
+                                <!-- Lista de Platos -->
+                                <div class="mb-4">
+                                    <h6 class="section-title">
+                                        <i class="ri-restaurant-2-line"></i>
+                                        <span>Platos del Pedido</span>
+                                    </h6>
+                                    <div class="table-responsive">
+                                        <table class="table table-platos mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th>Plato</th>
+                                                <th class="text-center">Cantidad</th>
+                                                <th class="text-end">Precio Unit.</th>
+                                                <th class="text-end">Subtotal</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="listaPlatosDetalle">
+                                            <!-- Datos de platos -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Total -->
+                                <div class="total-box d-flex justify-content-between align-items-center">
+                                    <h5 class="total-label" style="font-size: 20px !important;">
+                                        Total del Pedido
+                                    </h5>
+                                    <h4 class="total-value" id="totalDetalle" style="font-size: 20px !important;">S/. 0.00</h4>
+                                </div>
+                            </div>
+
+                            <!-- Footer del Modal -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger text-dark" data-bs-dismiss="modal" style="background-color: #b9b9b9 !important; border:none !important;">
+                                    <i class="ri-close-line"></i>
+                                    <span>Cerrar</span>
+                                </button>
+                                <button type="button" class="btn btn-danger" onclick="cambiarEstado()" style="background-color: #d66c27 !important; border:none !important;" id="btnCambiarEstado">
+                                    <i class="ri-refresh-line"></i>
+                                    <span>Cambiar Estado</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script src="/js/scriptPedidosYdetalle.js"></script>
+
+
             </section>
 
             <!-- Nuevo pedido -->

@@ -106,13 +106,13 @@ INSERT INTO pedido (id_mesa, id_mesero, id_cliente, fecha, estado_pedido, codigo
 (1, 1, 1, '2025-10-15', 'Completado', 'PED001', 70.00),
 (2, 2, 2, '2025-10-16', 'Completado', 'PED002', 110.00),
 (3, 3, 3, '2025-10-17', 'En Proceso', 'PED003', 156.00),
-(4, 4, 4, '2025-10-17', 'Pendiente', 'PED004', 90.00),
-(5, NULL, 5, '2025-10-16', 'Completado', 'PED005', 84.00),
-(6, NULL, 6, '2025-10-17', 'Pendiente', 'PED006', 125.00),
-(7, NULL, 7, '2025-10-15', 'Completado', 'PED007', 82.00),
-(8, NULL, 8, '2025-10-16', 'Completado', 'PED008', 96.00),
-(9, NULL, 9, '2025-10-17', 'En Proceso', 'PED009', 134.00),
-(10, NULL, 10, '2025-10-15', 'Completado', 'PED010', 118.00);
+(4, 4, 4, '2025-10-17', 'En Proceso', 'PED004', 90.00),
+(5, 4, 5, '2025-10-16', 'Completado', 'PED005', 84.00),
+(6, 4, 6, '2025-10-17', 'En Proceso', 'PED006', 125.00),
+(7, 3, 7, '2025-10-15', 'Completado', 'PED007', 82.00),
+(8, 2, 8, '2025-10-16', 'Completado', 'PED008', 96.00),
+(9, 1, 9, '2025-10-17', 'En Proceso', 'PED009', 134.00),
+(10, 2, 10, '2025-10-15', 'Completado', 'PED010', 118.00);
 
 -- ============================================
 -- 10. INSERTAR DETALLES DE PEDIDO (CORREGIDO)
