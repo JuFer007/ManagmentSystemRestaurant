@@ -113,10 +113,53 @@ function eliminarDelPedido(index) {
 }
 
 
-// TODO: Implementar la lógica para finalizar y limpiar el pedido
-function finalizarPedido() {
-    // Aquí irá la lógica para enviar el pedido al backend
-    mostrarToast("Función 'Finalizar Pedido' no implementada.", "info");
+// Finaliza y guarda el pedido en la base de datos
+async function finalizarPedido() {
+    const idCliente = document.getElementById("selectClientePedido").value;
+    const totalTexto = document.getElementById("totalPedido").textContent;
+    const totalPedido = parseFloat(totalTexto.replace('S/. ', ''));
+
+    // Validaciones básicas
+    if (!idCliente) {
+        mostrarToast("Por favor, seleccione un cliente.", "warning");
+        return;
+    }
+    if (resumenPedido.length === 0) {
+        mostrarToast("El pedido está vacío. Agregue al menos un plato.", "warning");
+        return;
+    }
+
+    // Preparamos los datos para enviar
+    const pedidoData = {
+        idCliente: parseInt(idCliente),
+        idMesero: 1, // Temporal: Deberías tener una forma de seleccionar el mesero
+        idMesa: 1,   // Temporal: Deberías tener una forma de seleccionar la mesa
+        totalPedido: totalPedido,
+        detalles: resumenPedido.map(item => ({
+            idPlato: item.idPlato,
+            cantidad: item.cantidad
+        }))
+    };
+
+    try {
+        const response = await fetch('/pedidos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(pedidoData),
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al guardar el pedido. Código: ' + response.status);
+        }
+
+        mostrarToast("Pedido creado exitosamente.", "success");
+        limpiarPedido(); // Limpiamos la interfaz para un nuevo pedido
+    } catch (error) {
+        console.error('Error en finalizarPedido:', error);
+        mostrarToast("No se pudo crear el pedido. Revise la consola para más detalles.", "error");
+    }
 }
 
 function limpiarPedido() {
