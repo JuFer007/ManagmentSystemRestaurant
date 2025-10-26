@@ -115,23 +115,78 @@ function eliminarDelPedido(index) {
 
 // Finaliza y guarda el pedido en la base de datos
 async function finalizarPedido() {
-    const idCliente = document.getElementById("selectClientePedido").value;
+    const nombreNuevoCliente = document.getElementById("inputNuevoCliente").value.trim();
+    const idClienteExistente = document.getElementById("selectClientePedido").value;
     const totalTexto = document.getElementById("totalPedido").textContent;
     const totalPedido = parseFloat(totalTexto.replace('S/. ', ''));
 
-    // Validaciones básicas
-    if (!idCliente) {
-        mostrarToast("Por favor, seleccione un cliente.", "warning");
-        return;
-    }
     if (resumenPedido.length === 0) {
         mostrarToast("El pedido está vacío. Agregue al menos un plato.", "warning");
         return;
     }
 
+    let idClienteFinal;
+
+    try {
+        // Prioridad 1: Crear un nuevo cliente si se ingresó un nombre
+        if (nombreNuevoCliente) {
+            const nuevoCliente = await crearNuevoCliente(nombreNuevoCliente);
+            if (!nuevoCliente || !nuevoCliente.idCliente) {
+                throw new Error("No se pudo crear el nuevo cliente.");
+            }
+            idClienteFinal = nuevoCliente.idCliente;
+        } 
+        // Prioridad 2: Usar el cliente existente si está seleccionado
+        else if (idClienteExistente) {
+            idClienteFinal = parseInt(idClienteExistente);
+        } 
+        // Si no hay cliente, mostrar error
+        else {
+            mostrarToast("Por favor, ingrese un nuevo cliente o seleccione uno existente.", "warning");
+            return;
+        }
+
+        // Una vez que tenemos el ID del cliente, procedemos a crear el pedido
+        await crearPedido(idClienteFinal, totalPedido);
+
+    } catch (error) {
+        console.error('Error en el proceso de finalizar pedido:', error);
+        mostrarToast(error.message || "Ocurrió un error inesperado.", "error");
+    }
+}
+
+// Función auxiliar para crear un nuevo cliente
+async function crearNuevoCliente(nombreCompleto) {
+    // Dividimos el nombre para tener nombre y apellido (es una aproximación simple)
+    const partesNombre = nombreCompleto.split(' ');
+    const nombre = partesNombre.shift() || ''; // El primer elemento es el nombre
+    const apellidos = partesNombre.join(' ') || ''; // El resto son los apellidos
+
+    const clienteData = {
+        // Generamos un DNI temporal único para evitar conflictos en la BD.
+        // El backend podría mejorarlo.
+        dniCliente: `TEMP-${Date.now()}`, 
+        nombreCliente: nombre,
+        apellidosCliente: apellidos
+    };
+
+    const response = await fetch('/system/clientes/guardar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(clienteData)
+    });
+
+    if (!response.ok) {
+        throw new Error('Error al crear el nuevo cliente.');
+    }
+    return await response.json(); // Asumimos que el backend devuelve el cliente creado con su ID
+}
+
+// Función auxiliar para crear el pedido
+async function crearPedido(idCliente, totalPedido) {
     // Preparamos los datos para enviar
     const pedidoData = {
-        idCliente: parseInt(idCliente),
+        idCliente: idCliente,
         idMesero: 1, // Temporal: Deberías tener una forma de seleccionar el mesero
         idMesa: 1,   // Temporal: Deberías tener una forma de seleccionar la mesa
         totalPedido: totalPedido,
@@ -141,29 +196,26 @@ async function finalizarPedido() {
         }))
     };
 
-    try {
-        const response = await fetch('/pedidos', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(pedidoData),
-        });
+    const response = await fetch('/pedidos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(pedidoData),
+    });
 
-        if (!response.ok) {
-            throw new Error('Error al guardar el pedido. Código: ' + response.status);
-        }
-
-        mostrarToast("Pedido creado exitosamente.", "success");
-        limpiarPedido(); // Limpiamos la interfaz para un nuevo pedido
-    } catch (error) {
-        console.error('Error en finalizarPedido:', error);
-        mostrarToast("No se pudo crear el pedido. Revise la consola para más detalles.", "error");
+    if (!response.ok) {
+        const errorData = await response.text();
+        console.error("Error del servidor al crear pedido:", errorData);
+        throw new Error('Error al guardar el pedido. Código: ' + response.status);
     }
+
+    mostrarToast("Pedido creado exitosamente.", "success");
+    limpiarPedido(); // Limpiamos la interfaz para un nuevo pedido
 }
 
 function limpiarPedido() {
     resumenPedido = [];
     actualizarResumenTabla();
+    document.getElementById("inputNuevoCliente").value = "";
+    document.getElementById("selectClientePedido").selectedIndex = 0;
     mostrarToast("Pedido limpiado.", "info");
 }
