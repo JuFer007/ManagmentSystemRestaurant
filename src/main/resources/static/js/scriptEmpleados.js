@@ -16,6 +16,7 @@ function cargarEmpleados() {
                         <td>${e.estadoEmpleado}</td>
                         <td>
                             <button class="btn btn-warning btn-sm" onclick="editarEmpleado('${e.idEmpleado}')"><i class="ri-edit-2-line"></i> Editar</button>
+                            <button class="btn btn-danger btn-sm" onclick="estadoEmpleado('${e.idEmpleado}')"><i class="ri-refresh-line"></i> Estado</button>
                         </td>
                     </tr>`;
             });
