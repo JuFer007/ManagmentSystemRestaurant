@@ -5,7 +5,6 @@ import com.app.SystemRestaurant.Model.ClasesEmpleados.Cliente;
 import com.app.SystemRestaurant.Model.ClasesEmpleados.Mesero;
 import com.app.SystemRestaurant.Model.ClasesGestion.Pedido;
 import com.app.SystemRestaurant.Model.ClasesGestion.DetallePedido;
-import com.app.SystemRestaurant.Model.ClasesGestion.Mesa;
 import com.app.SystemRestaurant.Model.ClasesGestion.Plato;
 import com.app.SystemRestaurant.Repository.*;
 import lombok.AllArgsConstructor;
@@ -24,7 +23,7 @@ public class PedidoService {
     private final DetallePedidoRepository detallePedidoRepository;
     private final ClienteRepository clienteRepository;
     private final MeseroRepository meseroRepository;
-    private final MesaRepository mesaRepository; // Comentado temporalmente
+    //private final MesaRepository mesaRepository; // Comentado temporalmente
     private final PlatoRepository platoRepository;
 
     //Listar los pedidos convertidos
