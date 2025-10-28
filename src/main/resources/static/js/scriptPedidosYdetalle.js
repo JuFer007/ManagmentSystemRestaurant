@@ -1,7 +1,8 @@
 let tablaPedidosDT;
 
 document.addEventListener("DOMContentLoaded", () => {
-    
+    // Inicializamos la tabla vacía y se llena cuando se hace click en la pestaña
+    // Es para evitar errores si la #tablaEmpleados no exite.
 });
 
 function cargarPedidos() {

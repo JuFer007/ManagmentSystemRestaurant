@@ -1,8 +1,8 @@
 let tablaEmpleadosDT;
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Inicializamos la tabla vacía. Se llenará cuando se haga clic en la pestaña.
-    // Esto evita errores si el elemento #tablaEmpleados no existe al cargar la página.
+    // Inicializamos la tabla vacía y se llena cuando se hace click en la pestaña
+    // Es para evitar errores si la #tablaEmpleados no exite.
 });
 
 //CARGAR EMPLEADOS DESDE LA BD
@@ -178,7 +178,7 @@ async function cambiarEstadoEmpleado(idEmpleado) {
         });
 
         if (response.ok) {
-            tablaEmpleadosDT.ajax.reload(); // Recargamos la tabla con DataTables
+            tablaEmpleadosDT.ajax.reload();
             mostrarToast(`Estado cambiado.`, "info");
 
         } else {
