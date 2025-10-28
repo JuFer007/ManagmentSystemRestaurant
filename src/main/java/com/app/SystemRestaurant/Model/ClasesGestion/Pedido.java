@@ -1,5 +1,6 @@
 package com.app.SystemRestaurant.Model.ClasesGestion;
 import com.app.SystemRestaurant.Model.ClasesEmpleados.Cliente;
+import com.app.SystemRestaurant.Model.ClasesEmpleados.Empleado;
 import com.app.SystemRestaurant.Model.ClasesEmpleados.Mesero;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -20,13 +21,13 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPedido;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idMesa")
     private Mesa idMesa;
 
     @ManyToOne
-    @JoinColumn(name = "idMesero")
-    private Mesero idMesero;
+    @JoinColumn(name = "idEmpleado")
+    private Empleado idEmpleado;
 
     @ManyToOne
     @JoinColumn(name = "idCliente")

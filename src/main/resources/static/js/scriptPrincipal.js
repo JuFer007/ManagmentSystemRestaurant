@@ -2,16 +2,15 @@
 // NAVEGACIÓN ENTRE SECCIONES
 // =============================
 
-//Mostrar o ocultar modulos del sidebar
+// Mostrar u ocultar módulos del sidebar
 function toggleSubmenu(element) {
     const submenu = element.nextElementSibling;
     const arrow = element.querySelector('.arrow');
 
     document.querySelectorAll('.submenu').forEach(s => {
-        if (s !== submenu) {
-            s.classList.remove('open');
-        }
+        if (s !== submenu) s.classList.remove('open');
     });
+
     document.querySelectorAll('.nav-group-title').forEach(g => {
         if (g !== element) {
             g.classList.remove('open');
@@ -21,21 +20,18 @@ function toggleSubmenu(element) {
 
     submenu.classList.toggle('open');
     element.classList.toggle('open');
-    arrow.style.transform = submenu.classList.contains('open')
-        ? 'rotate(90deg)'
-        : 'rotate(0deg)';
+    arrow.style.transform = submenu.classList.contains('open') ? 'rotate(90deg)' : 'rotate(0deg)';
 }
 
-//Cambiar entre páginas del sistema
+// Cambiar entre páginas del sistema
 function loadPage(page, element) {
-    if(page) {
-        sessionStorage.setItem('currentPage', page);
-    }
+    if (page) sessionStorage.setItem('currentPage', page);
 
     document.querySelectorAll(".page-content").forEach(sec => sec.style.display = "none");
     document.querySelectorAll(".nav-item.active").forEach(i => i.classList.remove("active"));
 
     if (element) element.classList.add("active");
+
     const section = document.getElementById(`page-${page}`);
     if (section) section.style.display = "block";
 
@@ -54,18 +50,16 @@ function loadPage(page, element) {
         document.getElementById("pageDesc").textContent = titles[page][1];
     }
 
-    if (page === "clientes" && typeof cargarClientes === "function") {
-        cargarClientes();
-    }
-    if (page === "empleados" && typeof cargarEmpleados === "function") {
-        cargarEmpleados();
-    }
+    if (page === "clientes" && typeof cargarClientes === "function") cargarClientes();
+    if (page === "empleados" && typeof cargarEmpleados === "function") cargarEmpleados();
 }
 
+// =============================
+// CARGA INICIAL DE LA PÁGINA
+// =============================
 document.addEventListener("DOMContentLoaded", () => {
-    const savedPage = sessionStorage.getItem('currentPage') || 'dashboard';
+    const savedPage = 'dashboard';
     const navLink = document.querySelector(`[onclick*="loadPage('${savedPage}'"]`);
-
     const navItem = navLink ? navLink.closest('.nav-item') : document.querySelector('.nav-item.active');
     loadPage(savedPage, navItem);
 });

@@ -6,8 +6,8 @@ import java.util.List;
 @Data
 public class PedidoRequestDTO {
     private Integer idCliente;
-    private Integer idMesero; // Asumimos un mesero por defecto, podrías añadir un selector en el frontend
-    private Integer idMesa;   // Asumimos una mesa por defecto, podrías añadir un selector
+    private Integer idEmpleado;
+    private Integer idMesa;
     private double totalPedido;
     private List<DetalleRequestDTO> detalles;
 

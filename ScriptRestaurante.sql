@@ -57,17 +57,17 @@ INSERT INTO usuario (id_empleado, nombre_usuario, contraseña_usuario) VALUES
 -- ============================================
 -- 6. INSERTAR MESAS (OneToOne con Mesero)
 -- ============================================
-INSERT INTO mesa (id_mesero, numero_mesa, capacidad, estado_mesa) VALUES
-(1, 1, 4, 'Disponible'),
-(2, 2, 6, 'Disponible'),
-(3, 3, 8, 'Ocupada'),
-(4, 4, 4, 'Disponible'),
-(NULL, 5, 2, 'Disponible'),
-(NULL, 6, 4, 'Reservada'),
-(NULL, 7, 2, 'Disponible'),
-(NULL, 8, 6, 'Disponible'),
-(NULL, 9, 4, 'Disponible'),
-(NULL, 10, 8, 'Disponible');
+INSERT INTO mesa (numero_mesa, capacidad) VALUES
+(1, 4),
+(2, 6),
+(3, 8),
+(4, 4),
+(5, 2),
+(6, 4),
+(7, 2),
+(8, 6),
+(9, 4),
+(10, 8);
 
 -- ============================================
 -- 7. INSERTAR PLATOS
@@ -100,71 +100,294 @@ INSERT INTO cliente (dni_cliente, nombre_cliente, apellidos_cliente) VALUES
 ('78901245', 'Mónica', 'Salazar Díaz');
 
 -- ============================================
--- 9. INSERTAR PEDIDOS (OneToOne con Mesa, ManyToOne con Mesero y Cliente)
+-- 9. INSERTAR PEDIDOS (TODOS LOS MESES)
 -- ============================================
-INSERT INTO pedido (id_mesa, id_mesero, id_cliente, fecha, estado_pedido, codigo_pedido, total_pedido) VALUES
-(1, 1, 1, '2025-10-15', 'Completado', 'PED001', 70.00),
-(2, 2, 2, '2025-10-16', 'Completado', 'PED002', 110.00),
-(3, 3, 3, '2025-10-17', 'En Proceso', 'PED003', 156.00),
-(4, 4, 4, '2025-10-17', 'En Proceso', 'PED004', 90.00),
-(5, 4, 5, '2025-10-16', 'Completado', 'PED005', 84.00),
-(6, 4, 6, '2025-10-17', 'En Proceso', 'PED006', 125.00),
-(7, 3, 7, '2025-10-15', 'Completado', 'PED007', 82.00),
-(8, 2, 8, '2025-10-16', 'Completado', 'PED008', 96.00),
-(9, 1, 9, '2025-10-17', 'En Proceso', 'PED009', 134.00),
-(10, 2, 10, '2025-10-15', 'Completado', 'PED010', 118.00);
+
+-- PEDIDOS DE MAYO 2025
+INSERT INTO pedido (id_mesa, id_empleado, id_cliente, fecha, estado_pedido, codigo_pedido, total_pedido) VALUES
+(1, 4, 1, '2025-05-04', 'Completado', 'PED001', 132.00),
+(2, 5, 2, '2025-05-11', 'Completado', 'PED002', 88.00),
+(3, 6, 3, '2025-05-17', 'Completado', 'PED003', 148.00),
+(5, 4, 5, '2025-05-23', 'Completado', 'PED004', 102.00),
+(7, 5, 7, '2025-05-29', 'Completado', 'PED005', 120.00);
+
+-- PEDIDOS DE JUNIO 2025
+INSERT INTO pedido (id_mesa, id_empleado, id_cliente, fecha, estado_pedido, codigo_pedido, total_pedido) VALUES
+(4, 6, 4, '2025-06-05', 'Completado', 'PED006', 128.00),
+(6, 4, 6, '2025-06-12', 'Completado', 'PED007', 104.00),
+(8, 5, 8, '2025-06-18', 'Completado', 'PED008', 116.00),
+(10, 6, 10, '2025-06-24', 'Completado', 'PED009', 95.00);
+
+-- PEDIDOS DE JULIO 2025
+INSERT INTO pedido (id_mesa, id_empleado, id_cliente, fecha, estado_pedido, codigo_pedido, total_pedido) VALUES
+(2, 4, 2, '2025-07-02', 'Completado', 'PED010', 144.00),
+(3, 5, 3, '2025-07-09', 'Completado', 'PED011', 106.00),
+(5, 6, 5, '2025-07-15', 'Completado', 'PED012', 92.00),
+(7, 4, 7, '2025-07-21', 'Completado', 'PED013', 138.00),
+(9, 5, 9, '2025-07-28', 'Completado', 'PED014', 110.00);
+
+-- PEDIDOS DE AGOSTO 2025
+INSERT INTO pedido (id_mesa, id_empleado, id_cliente, fecha, estado_pedido, codigo_pedido, total_pedido) VALUES
+(4, 6, 4, '2025-08-03', 'Completado', 'PED015', 112.00),
+(6, 4, 6, '2025-08-10', 'Completado', 'PED016', 150.00),
+(8, 5, 8, '2025-08-14', 'Completado', 'PED017', 98.00),
+(10, 6, 10, '2025-08-20', 'Completado', 'PED018', 126.00),
+(1, 4, 11, '2025-08-25', 'Completado', 'PED019', 85.00);
+
+-- PEDIDOS DE SEPTIEMBRE 2025
+INSERT INTO pedido (id_mesa, id_empleado, id_cliente, fecha, estado_pedido, codigo_pedido, total_pedido) VALUES
+(1, 5, 1, '2025-09-05', 'Completado', 'PED020', 105.00),
+(3, 6, 3, '2025-09-08', 'Completado', 'PED021', 88.00),
+(5, 4, 5, '2025-09-12', 'Completado', 'PED022', 142.00),
+(7, 5, 7, '2025-09-18', 'Completado', 'PED023', 76.00),
+(2, 6, 2, '2025-09-22', 'Completado', 'PED024', 130.00),
+(9, 4, 9, '2025-09-25', 'Completado', 'PED025', 94.00);
+
+-- PEDIDOS DE OCTUBRE 2025
+INSERT INTO pedido (id_mesa, id_empleado, id_cliente, fecha, estado_pedido, codigo_pedido, total_pedido) VALUES
+(1, 5, 1, '2025-10-15', 'Completado', 'PED026', 70.00),
+(2, 6, 2, '2025-10-16', 'Completado', 'PED027', 110.00),
+(3, 4, 3, '2025-10-17', 'En Proceso', 'PED028', 156.00),
+(4, 5, 4, '2025-10-17', 'En Proceso', 'PED029', 90.00),
+(5, 6, 5, '2025-10-16', 'Completado', 'PED030', 84.00),
+(6, 4, 6, '2025-10-17', 'En Proceso', 'PED031', 125.00),
+(7, 5, 7, '2025-10-15', 'Completado', 'PED032', 82.00),
+(8, 6, 8, '2025-10-16', 'Completado', 'PED033', 96.00),
+(9, 4, 9, '2025-10-17', 'En Proceso', 'PED034', 134.00),
+(10, 5, 10, '2025-10-15', 'Completado', 'PED035', 118.00);
 
 -- ============================================
--- 10. INSERTAR DETALLES DE PEDIDO (CORREGIDO)
+-- 10. INSERTAR DETALLES DE PEDIDO
 -- ============================================
+
+-- DETALLES MAYO 2025
+-- Pedido 1 (PED001) - Total: 132.00
 INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
--- Pedido 1 (PED001) - Total: 70.00
-(1, 1, 2, 70.00),
+(1, 3, 2, 84.00),
+(1, 4, 1, 28.00),
+(1, 6, 1, 25.00);
 
--- Pedido 2 (PED002) - Total: 110.00
-(2, 2, 2, 76.00),
-(2, 5, 1, 22.00),
-(2, 6, 1, 12.00),
+-- Pedido 2 (PED002) - Total: 88.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(2, 5, 4, 88.00);
 
--- Pedido 3 (PED003) - Total: 156.00
+-- Pedido 3 (PED003) - Total: 148.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
 (3, 3, 2, 84.00),
-(3, 7, 2, 72.00),
+(3, 8, 1, 36.00),
+(3, 4, 1, 28.00);
 
--- Pedido 4 (PED004) - Total: 90.00
-(4, 6, 2, 50.00),
-(4, 8, 1, 36.00),
+-- Pedido 4 (PED004) - Total: 102.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(4, 2, 2, 76.00),
+(4, 6, 1, 25.00);
 
--- Pedido 5 (PED005) - Total: 84.00
-(5, 4, 3, 84.00),
+-- Pedido 5 (PED005) - Total: 120.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(5, 7, 4, 120.00);
 
--- Pedido 6 (PED006) - Total: 125.00
-(6, 2, 2, 76.00),
-(6, 7, 1, 30.00),
+-- DETALLES JUNIO 2025
+-- Pedido 6 (PED006) - Total: 128.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(6, 3, 2, 84.00),
+(6, 5, 2, 44.00);
 
--- Pedido 7 (PED007) - Total: 82.00
-(7, 5, 2, 44.00),
-(7, 1, 1, 35.00),
+-- Pedido 7 (PED007) - Total: 104.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(7, 8, 2, 72.00),
+(7, 4, 1, 28.00);
 
--- Pedido 8 (PED008) - Total: 96.00
-(8, 8, 2, 72.00),
-(8, 5, 1, 22.00),
+-- Pedido 8 (PED008) - Total: 116.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(8, 2, 2, 76.00),
+(8, 8, 1, 36.00);
 
--- Pedido 9 (PED009) - Total: 134.00
-(9, 3, 2, 84.00),
-(9, 2, 1, 38.00),
+-- Pedido 9 (PED009) - Total: 95.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(9, 1, 1, 35.00),
+(9, 7, 2, 60.00);
 
--- Pedido 10 (PED010) - Total: 118.00
-(10, 1, 2, 70.00),
-(10, 4, 2, 48.00);
+-- DETALLES JULIO 2025
+-- Pedido 10 (PED010) - Total: 144.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(10, 8, 4, 144.00);
+
+-- Pedido 11 (PED011) - Total: 106.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(11, 2, 2, 76.00),
+(11, 7, 1, 30.00);
+
+-- Pedido 12 (PED012) - Total: 92.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(12, 1, 2, 70.00),
+(12, 5, 1, 22.00);
+
+-- Pedido 13 (PED013) - Total: 138.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(13, 3, 2, 84.00),
+(13, 7, 1, 30.00),
+(13, 5, 1, 22.00);
+
+-- Pedido 14 (PED014) - Total: 110.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(14, 2, 2, 76.00),
+(14, 4, 1, 28.00);
+
+-- DETALLES AGOSTO 2025
+-- Pedido 15 (PED015) - Total: 112.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(15, 3, 2, 84.00),
+(15, 4, 1, 28.00);
+
+-- Pedido 16 (PED016) - Total: 150.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(16, 3, 3, 126.00),
+(16, 5, 1, 22.00);
+
+-- Pedido 17 (PED017) - Total: 98.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(17, 2, 2, 76.00),
+(17, 5, 1, 22.00);
+
+-- Pedido 18 (PED018) - Total: 126.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(18, 3, 3, 126.00);
+
+-- Pedido 19 (PED019) - Total: 85.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(19, 1, 1, 35.00),
+(19, 6, 2, 50.00);
+
+-- DETALLES SEPTIEMBRE 2025
+-- Pedido 20 (PED020) - Total: 105.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(20, 2, 2, 76.00),
+(20, 4, 1, 28.00);
+
+-- Pedido 21 (PED021) - Total: 88.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(21, 3, 2, 84.00);
+
+-- Pedido 22 (PED022) - Total: 142.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(22, 3, 2, 84.00),
+(22, 1, 1, 35.00),
+(22, 6, 1, 25.00);
+
+-- Pedido 23 (PED023) - Total: 76.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(23, 2, 2, 76.00);
+
+-- Pedido 24 (PED024) - Total: 130.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(24, 7, 3, 90.00),
+(24, 8, 1, 36.00);
+
+-- Pedido 25 (PED025) - Total: 94.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(25, 1, 2, 70.00),
+(25, 5, 1, 22.00);
+
+-- DETALLES OCTUBRE 2025
+-- Pedido 26 (PED026) - Total: 70.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(26, 1, 2, 70.00);
+
+-- Pedido 27 (PED027) - Total: 110.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(27, 2, 2, 76.00),
+(27, 5, 1, 22.00),
+(27, 6, 1, 12.00);
+
+-- Pedido 28 (PED028) - Total: 156.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(28, 3, 2, 84.00),
+(28, 7, 2, 72.00);
+
+-- Pedido 29 (PED029) - Total: 90.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(29, 6, 2, 50.00),
+(29, 8, 1, 36.00);
+
+-- Pedido 30 (PED030) - Total: 84.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(30, 4, 3, 84.00);
+
+-- Pedido 31 (PED031) - Total: 125.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(31, 2, 2, 76.00),
+(31, 7, 1, 30.00);
+
+-- Pedido 32 (PED032) - Total: 82.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(32, 5, 2, 44.00),
+(32, 1, 1, 35.00);
+
+-- Pedido 33 (PED033) - Total: 96.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(33, 8, 2, 72.00),
+(33, 5, 1, 22.00);
+
+-- Pedido 34 (PED034) - Total: 134.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(34, 3, 2, 84.00),
+(34, 2, 1, 38.00);
+
+-- Pedido 35 (PED035) - Total: 118.00
+INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
+(35, 1, 2, 70.00),
+(35, 4, 2, 48.00);
 
 -- ============================================
--- 11. INSERTAR PAGOS (OneToOne con Pedido)
+-- 11. INSERTAR PAGOS
 -- ============================================
+
+-- PAGOS MAYO 2025
 INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago) VALUES
-(1, 70.00, 'Efectivo', '2025-10-15'),
-(2, 110.00, 'Tarjeta', '2025-10-16'),
-(3, 156.00, 'Yape', '2025-10-17'),
-(5, 84.00, 'Efectivo', '2025-10-16'),
-(7, 82.00, 'Tarjeta', '2025-10-15'),
-(8, 96.00, 'Plin', '2025-10-16'),
-(10, 118.00, 'Efectivo', '2025-10-15');
+(1, 132.00, 'Plin', '2025-05-04'),
+(2, 88.00, 'Efectivo', '2025-05-11'),
+(3, 148.00, 'Tarjeta', '2025-05-17'),
+(4, 102.00, 'Yape', '2025-05-23'),
+(5, 120.00, 'Efectivo', '2025-05-29');
+
+-- PAGOS JUNIO 2025
+INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago) VALUES
+(6, 128.00, 'Tarjeta', '2025-06-05'),
+(7, 104.00, 'Efectivo', '2025-06-12'),
+(8, 116.00, 'Yape', '2025-06-18'),
+(9, 95.00, 'Efectivo', '2025-06-24');
+
+-- PAGOS JULIO 2025
+INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago) VALUES
+(10, 144.00, 'Tarjeta', '2025-07-02'),
+(11, 106.00, 'Efectivo', '2025-07-09'),
+(12, 92.00, 'Yape', '2025-07-15'),
+(13, 138.00, 'Efectivo', '2025-07-21'),
+(14, 110.00, 'Plin', '2025-07-28');
+
+-- PAGOS AGOSTO 2025
+INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago) VALUES
+(15, 112.00, 'Efectivo', '2025-08-03'),
+(16, 150.00, 'Yape', '2025-08-10'),
+(17, 98.00, 'Tarjeta', '2025-08-14'),
+(18, 126.00, 'Efectivo', '2025-08-20'),
+(19, 85.00, 'Plin', '2025-08-25');
+
+-- PAGOS SEPTIEMBRE 2025
+INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago) VALUES
+(20, 105.00, 'Efectivo', '2025-09-05'),
+(21, 88.00, 'Tarjeta', '2025-09-08'),
+(22, 142.00, 'Yape', '2025-09-12'),
+(23, 76.00, 'Efectivo', '2025-09-18'),
+(24, 130.00, 'Plin', '2025-09-22'),
+(25, 94.00, 'Tarjeta', '2025-09-25');
+
+-- PAGOS OCTUBRE 2025
+INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago) VALUES
+(26, 70.00, 'Efectivo', '2025-10-15'),
+(27, 110.00, 'Tarjeta', '2025-10-16'),
+(28, 156.00, 'Yape', '2025-10-17'),
+(30, 84.00, 'Efectivo', '2025-10-16'),
+(32, 82.00, 'Tarjeta', '2025-10-15'),
+(33, 96.00, 'Plin', '2025-10-16'),
+(35, 118.00, 'Efectivo', '2025-10-15');

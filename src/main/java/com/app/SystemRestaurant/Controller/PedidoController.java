@@ -30,14 +30,14 @@ public class PedidoController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<PedidoDTO> crearPedido(@RequestBody PedidoRequestDTO pedidoRequest) {
+    @PostMapping("/nuevoPedido")
+    public ResponseEntity<?> crearPedido(@RequestBody PedidoRequestDTO pedidoRequest) {
         try {
             PedidoDTO nuevoPedido = pedidoService.crearPedido(pedidoRequest);
             return new ResponseEntity<>(nuevoPedido, HttpStatus.CREATED);
         } catch (Exception e) {
-            // Considera un manejo de errores más específico
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al crear pedido: " + e.getMessage());
         }
     }
 

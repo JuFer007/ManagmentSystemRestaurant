@@ -15,12 +15,6 @@ public class Mesa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMesa;
-
-    @OneToOne
-    @JoinColumn(name = "idMesero")
-    private Mesero idMesero;
-
     private int numeroMesa;
     private int capacidad;
-    private String estadoMesa;
 }

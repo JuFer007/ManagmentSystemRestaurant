@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface EmpleadoRepository extends JpaRepository<Empleado, Integer> {
     Optional<Empleado> findByDniEmpleado(String dniEmpleado);
+    long count();
 }

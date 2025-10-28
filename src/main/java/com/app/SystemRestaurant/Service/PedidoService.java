@@ -2,7 +2,8 @@ package com.app.SystemRestaurant.Service;
 import com.app.SystemRestaurant.DTO.PedidoDTO;
 import com.app.SystemRestaurant.DTO.PedidoRequestDTO;
 import com.app.SystemRestaurant.Model.ClasesEmpleados.Cliente;
-import com.app.SystemRestaurant.Model.ClasesEmpleados.Mesero;
+import com.app.SystemRestaurant.Model.ClasesEmpleados.Empleado;
+import com.app.SystemRestaurant.Model.ClasesGestion.Mesa;
 import com.app.SystemRestaurant.Model.ClasesGestion.Pedido;
 import com.app.SystemRestaurant.Model.ClasesGestion.DetallePedido;
 import com.app.SystemRestaurant.Model.ClasesGestion.Plato;
@@ -10,7 +11,6 @@ import com.app.SystemRestaurant.Repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.*;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,9 +22,9 @@ public class PedidoService {
     private final PedidoRepository pedidoRepository;
     private final DetallePedidoRepository detallePedidoRepository;
     private final ClienteRepository clienteRepository;
-    private final MeseroRepository meseroRepository;
-    //private final MesaRepository mesaRepository; // Comentado temporalmente
+    private final EmpleadoRepository empleadoRepository;
     private final PlatoRepository platoRepository;
+    private final MesaRepository mesaRepository;
 
     //Listar los pedidos convertidos
     public List<PedidoDTO> listarPedidosDTO() {
@@ -44,22 +44,24 @@ public class PedidoService {
                 pedido.getIdCliente() != null ? pedido.getIdCliente().getIdCliente() : 0,
                 pedido.getIdCliente() != null ? pedido.getIdCliente().getNombreCliente() : "",
                 pedido.getIdCliente() != null ? pedido.getIdCliente().getApellidosCliente() : "",
-                pedido.getIdMesero() != null ? pedido.getIdMesero().getIdMesero() : 0,
-                pedido.getIdMesero() != null ? pedido.getIdMesero().getEmpleado().getCodigoEmpleado() : "",
-                pedido.getIdMesero() != null ? pedido.getIdMesero().getEmpleado().getNombreEmpleado() : "",
-                pedido.getIdMesero() != null ? pedido.getIdMesero().getEmpleado().getApellidoPaternoEmpleado() : "",
-                pedido.getIdMesero() != null ? pedido.getIdMesero().getEmpleado().getApellidoMaternoEmpleado() : "",
+                pedido.getIdEmpleado() != null ? pedido.getIdEmpleado().getIdEmpleado() : 0,
+                pedido.getIdEmpleado() != null ? pedido.getIdEmpleado().getCodigoEmpleado() : "",
+                pedido.getIdEmpleado() != null ? pedido.getIdEmpleado().getNombreEmpleado() : "",
+                pedido.getIdEmpleado() != null ? pedido.getIdEmpleado().getApellidoPaternoEmpleado() : "",
+                pedido.getIdEmpleado() != null ? pedido.getIdEmpleado().getApellidoMaternoEmpleado() : "",
                 pedido.getIdMesa() != null ? pedido.getIdMesa().getNumeroMesa() : 0,
                 pedido.getFecha()
         );
     }
 
-    //Obtener datos de un pedido por id
+    //Obtener pedido por id
     public PedidoDTO obtenerPedidoPorId(int id) {
-        return pedidoRepository.findById(id).map(this::convertirAPedidoDTO).orElse(null);
+        return pedidoRepository.findById(id)
+                .map(this::convertirAPedidoDTO)
+                .orElse(null);
     }
 
-    //Cambiar estado de pedido
+    //Cambiar estado del pedido
     public boolean actualizarEstado(int idPedido, String nuevoEstado) {
         Optional<Pedido> pedidoOptional = pedidoRepository.findById(idPedido);
 
@@ -75,34 +77,37 @@ public class PedidoService {
     //Crear un nuevo pedido
     @Transactional
     public PedidoDTO crearPedido(PedidoRequestDTO pedidoRequest) {
-        // 1. Validar y obtener entidades relacionadas
-        Cliente cliente = clienteRepository.findById(pedidoRequest.getIdCliente())
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con id: " + pedidoRequest.getIdCliente()));
+        Cliente cliente = clienteRepository.findById(pedidoRequest.getIdCliente()).orElseThrow(() ->
+        new RuntimeException("Cliente no encontrado con id: " + pedidoRequest.getIdCliente()));
 
-        // Asumimos un mesero y mesa por defecto si no se envían. ¡Deberías mejorar esto!
-        Mesero mesero = meseroRepository.findById(pedidoRequest.getIdMesero() != null ? pedidoRequest.getIdMesero() : 1)
-                .orElseThrow(() -> new RuntimeException("Mesero no encontrado"));
+        Empleado empleado = empleadoRepository.findById(pedidoRequest.getIdEmpleado() != null ? pedidoRequest.getIdEmpleado() : 1)
+        .orElseThrow(() -> new RuntimeException("Empleado no encontrado con id: " + pedidoRequest.getIdEmpleado()));
 
-        // Mesa mesa = mesaRepository.findById(pedidoRequest.getIdMesa() != null ? pedidoRequest.getIdMesa() : 1)
-        //         .orElseThrow(() -> new RuntimeException("Mesa no encontrada"));
+        Mesa mesa = null;
+        if (pedidoRequest.getIdMesa() != null) {
+            mesa = mesaRepository.findById(pedidoRequest.getIdMesa()).orElseThrow(() ->
+            new RuntimeException("Mesa no encontrada con id: " + pedidoRequest.getIdMesa()));
+        }
 
-        // 2. Crear y guardar la entidad Pedido
         Pedido pedido = new Pedido();
         pedido.setIdCliente(cliente);
-        pedido.setIdMesero(mesero);
-        // pedido.setIdMesa(mesa); // Comentado temporalmente
+        pedido.setIdEmpleado(empleado);
         pedido.setFecha(new java.sql.Date(new Date().getTime()));
         pedido.setEstadoPedido("En proceso");
-        pedido.setCodigoPedido(UUID.randomUUID().toString().substring(0, 8).toUpperCase()); // Generar código único
-        pedido.setTotalPedido(pedidoRequest.getTotalPedido()); // Confiar en el total del frontend por ahora
+        pedido.setIdMesa(mesa);
+        pedido.setTotalPedido(pedidoRequest.getTotalPedido());
+
+        long totalPedidos = pedidoRepository.count() + 1;
+        String codigoGenerado = String.format("PED%03d", totalPedidos);
+        pedido.setCodigoPedido(codigoGenerado);
 
         Pedido pedidoGuardado = pedidoRepository.save(pedido);
 
-        // 3. Crear y guardar los detalles del pedido
         List<DetallePedido> detalles = new ArrayList<>();
         for (PedidoRequestDTO.DetalleRequestDTO detalleDTO : pedidoRequest.getDetalles()) {
-            Plato plato = platoRepository.findById(detalleDTO.getIdPlato())
-                    .orElseThrow(() -> new RuntimeException("Plato no encontrado con id: " + detalleDTO.getIdPlato()));
+
+            Plato plato = platoRepository.findById(detalleDTO.getIdPlato()).orElseThrow(() ->
+            new RuntimeException("Plato no encontrado con id: " + detalleDTO.getIdPlato()));
 
             DetallePedido detalle = new DetallePedido();
             detalle.setIdPedido(pedidoGuardado);
@@ -112,10 +117,7 @@ public class PedidoService {
             detalles.add(detalle);
         }
         detallePedidoRepository.saveAll(detalles);
-
-        // 4. Asignar detalles al pedido y devolver DTO
         pedidoGuardado.setDetalles(detalles);
-
         return convertirAPedidoDTO(pedidoGuardado);
     }
 }
