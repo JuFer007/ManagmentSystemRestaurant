@@ -1,8 +1,6 @@
 let tablaEmpleadosDT;
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Inicializamos la tabla vacía y se llena cuando se hace click en la pestaña
-    // Es para evitar errores si la #tablaEmpleados no exite.
 });
 
 //CARGAR EMPLEADOS DESDE LA BD
@@ -19,19 +17,19 @@ function cargarEmpleados() {
         columns: [
             { data: 'dniEmpleado', className: 'text-start' },
             { data: 'nombreEmpleado', className: 'text-start' },
-            { 
+            {
                 data: null,
                 render: (data, type, row) => `${row.apellidoPaternoEmpleado} ${row.apellidoMaternoEmpleado}`,
                 className: 'text-start'
             },
             { data: 'cargoEmpleado', className: 'text-start' },
             { data: 'salarioEmpleado', className: 'text-start' },
-            { 
-                data: 'estadoEmpleado', 
-                className: 'text-start', 
-                render: (data) => `<span class="badge ${data === 'Activo' ? 'bg-success' : 'bg-danger'}">${data}</span>` 
+            {
+                data: 'estadoEmpleado',
+                className: 'text-start',
+                render: (data) => `<span class="badge ${data === 'Activo' ? 'bg-success' : 'bg-danger'}">${data}</span>`
             },
-            { 
+            {
                 data: 'idEmpleado',
                 render: (data, type, row) => `
                     <button class="btn btn-warning btn-sm" onclick="editarEmpleado('${data}')"><i class="ri-edit-2-line"></i> Editar</button>
@@ -43,10 +41,11 @@ function cargarEmpleados() {
                 width: '180px'
             }
         ],
-        language: { url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json' } 
+        language: { url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json' }
     });
 
 }
+
 // ABRIR FORMULARIO NUEVO/EDITAR EMPLEADO
 function abrirFormularioEmpleado(idEmpleado = null) {
     const form = document.getElementById("formEmpleado");
@@ -118,8 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 return mostrarToast("El DNI debe contener 8 dígitos numéricos.", "warning");
             }
 
-            if (!/^[a-zA-Z\s]+$/.test(nombreEmpleado) || 
-                !/^[a-zA-Z\s]+$/.test(apellidoPaternoEmpleado) || 
+            if (!/^[a-zA-Z\s]+$/.test(nombreEmpleado) ||
+                !/^[a-zA-Z\s]+$/.test(apellidoPaternoEmpleado) ||
                 !/^[a-zA-Z\s]+$/.test(apellidoMaternoEmpleado)) {
                 return mostrarToast("Los nombres y apellidos solo deben contener letras.", "warning");
             }
