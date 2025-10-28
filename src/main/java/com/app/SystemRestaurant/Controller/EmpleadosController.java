@@ -3,6 +3,7 @@ package com.app.SystemRestaurant.Controller;
 import com.app.SystemRestaurant.Model.ClasesEmpleados.Empleado;
 import com.app.SystemRestaurant.Service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,5 +38,15 @@ public class EmpleadosController {
     @ResponseBody
     public Optional<Empleado> buscarEmpleadoById(@PathVariable int id){
         return empleadoService.buscarPorId(id);
+    }
+
+    @PutMapping("/cambiarEstado/{id}")
+    public ResponseEntity<String> cambiarEstadoEmpleado(@PathVariable Integer id,
+                                                        @RequestParam("estadoEmpleado") String nuevoEstado){
+        boolean actualizado = empleadoService.cambiarEstado(id, nuevoEstado);
+        if (actualizado) {
+            return ResponseEntity.ok("Estado del empleado actualizado correctamente.");
+        }
+        return ResponseEntity.notFound().build();
     }
 }

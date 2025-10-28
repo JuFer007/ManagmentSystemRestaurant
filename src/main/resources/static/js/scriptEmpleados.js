@@ -16,7 +16,7 @@ function cargarEmpleados() {
                         <td>${e.estadoEmpleado}</td>
                         <td>
                             <button class="btn btn-warning btn-sm" onclick="editarEmpleado('${e.idEmpleado}')"><i class="ri-edit-2-line"></i> Editar</button>
-                            <button class="btn btn-danger btn-sm" onclick="estadoEmpleado('${e.idEmpleado}')"><i class="ri-refresh-line"></i> Estado</button>
+                            <button class="btn btn-danger btn-sm" onclick="cambiarEstadoEmpleado('${e.idEmpleado}')"><i class="ri-refresh-line"></i> Estado</button>
                         </td>
                     </tr>`;
             });
@@ -139,4 +139,31 @@ document.addEventListener("DOMContentLoaded", () => {
 // EDITAR EMPLEADO
 function editarEmpleado(id) {
     abrirFormularioEmpleado(id);
+}
+
+//Cambiar estado
+async function cambiarEstadoEmpleado(idEmpleado) {
+    try {
+        const responseEmpleado = await fetch(`/system/empleados/buscar/${idEmpleado}`);
+        if (!responseEmpleado.ok) throw new Error("No se encontró el empleado");
+
+        const empleado = await responseEmpleado.json();
+        const nuevoEstadoEmpleado = empleado.estadoEmpleado === "Activo" ? "Inactivo" : "Activo";
+
+        const response = await fetch(`/system/empleados/cambiarEstado/${idEmpleado}?estadoEmpleado=${encodeURIComponent(nuevoEstadoEmpleado)}`, {
+            method: "PUT"
+        });
+
+        if (response.ok) {
+            await cargarEmpleados();
+            mostrarToast(`Estado cambiado.`, "info");
+
+        } else {
+            const msg = await response.text();
+            mostrarToast(msg || "No se pudo cambiar el estado.", "danger");
+        }
+    } catch (error) {
+        console.error("Error al cambiar estado:", error);
+        mostrarToast("Error al intentar cambiar el estado del empleado.", "danger");
+    }
 }

@@ -52,5 +52,15 @@ public class EmpleadoService {
                     return empleadoRepository.save(Eexistentes);
                 }).orElseThrow(()-> new EntityNotFoundException("Empleado no encontrado con id: " + empleado.getIdEmpleado()));
     }
+    public boolean cambiarEstado(Integer id, String nuevoEstado) {
+        Optional<Empleado> optEmpleado = empleadoRepository.findById(id);
+        if (optEmpleado.isPresent()) {
+            Empleado empleado = optEmpleado.get();
+            empleado.setEstadoEmpleado(nuevoEstado);
+            empleadoRepository.save(empleado);
+            return true;
+        }
+        return false;
+    }
 
 }
