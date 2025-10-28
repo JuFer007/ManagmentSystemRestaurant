@@ -1,7 +1,6 @@
 package com.app.SystemRestaurant.Model.ClasesGestion;
 import com.app.SystemRestaurant.Model.ClasesEmpleados.Cliente;
 import com.app.SystemRestaurant.Model.ClasesEmpleados.Empleado;
-import com.app.SystemRestaurant.Model.ClasesEmpleados.Mesero;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,64 +1,52 @@
-document.addEventListener("DOMContentLoaded", cargarPedidos);
+let tablaPedidosDT;
 
-//Cargar todos los pedidos en la tabla
+document.addEventListener("DOMContentLoaded", () => {
+    
+});
+
 function cargarPedidos() {
-    fetch("http://localhost:8080/pedidos")
-        .then(response => {
-            if (!response.ok) throw new Error("Error al obtener los pedidos");
-            return response.json();
-        })
-        .then(pedidos => {
-            pedidos.sort((a, b) => {
-                const prioridadEstado = {
-                    "En Proceso": 1,
-                    "En proceso": 1,
-                    "Completado": 2
-                };
+    if (tablaPedidosDT) {
+        tablaPedidosDT.ajax.reload();
+        return;
+    }
 
-                const estadoA = prioridadEstado[a.estadoPedido] || 3;
-                const estadoB = prioridadEstado[b.estadoPedido] || 3;
-
-                if (estadoA !== estadoB) return estadoA - estadoB;
-
-                return new Date(b.fecha) - new Date(a.fecha);
-            });
-
-            const tbody = document.querySelector("#tablaPedidos tbody");
-            tbody.innerHTML = "";
-
-            pedidos.forEach(pedido => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${pedido.codigoPedido}</td>
-                        <td>${pedido.nombreCliente} ${pedido.apellidosCliente}</td>
-                        <td>${pedido.fecha}</td>
-                        <td>S/. ${pedido.totalPedido?.toFixed(2) || "0.00"}</td>
-                        <td>
-                            <span class="badge ${pedido.estadoPedido.toLowerCase() === 'en proceso' ? 'bg-warning' : 'bg-success'}">
-                                ${pedido.estadoPedido}
-                            </span>
-                        </td>
-                        <td>
-                            <button class="btn btn-sm btn-danger" onclick="verDetallePedido(${pedido.idPedido})">
-                                <i class="ri-eye-line"></i> Ver Detalle
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            });
-        })
-        .catch(error => console.error("Error al cargar pedidos:", error));
+    tablaPedidosDT = new DataTable('#tablaPedidos', {
+        ajax: {
+            url: "http://localhost:8080/pedidos",
+            dataSrc: ''
+        },
+        columns: [
+            { data: 'codigoPedido' },
+            { data: null, render: (data, type, row) => `${row.nombreCliente} ${row.apellidosCliente}` },
+            { data: 'fecha', className: 'text-start' },
+            {
+                data: 'totalPedido',
+                render: (data) => `S/. ${data?.toFixed(2) || "0.00"}`
+            },
+            {
+                data: 'estadoPedido',
+                className:'text-start',
+                render: (data) => `<span class="badge ${data.toLowerCase().includes('proceso') ? 'bg-warning' : 'bg-success'}">${data}</span>`
+            },
+            {
+                data: 'idPedido',
+                render: (data) => `<button class="btn btn-sm btn-danger" onclick="verDetallePedido(${data})"><i class="ri-eye-line"></i> Ver Detalle</button>`,
+                orderable: false 
+            }
+        ],
+        order: [[4, 'asc'], [2, 'desc']], 
+        language: { url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json' }
+    });
 }
 
 function verDetallePedido(idPedido) {
-    document.getElementById("numeroPedidoModal").innerText = idPedido;
-
     fetch(`http://localhost:8080/pedidos/${idPedido}`)
         .then(response => {
             if (!response.ok) throw new Error("Error obteniendo pedido");
             return response.json();
         })
         .then(pedido => {
+          document.getElementById("numeroPedidoModal").innerText = pedido.codigoPedido;
           document.getElementById("clienteDetalle").innerText = `${pedido.nombreCliente} ${pedido.apellidosCliente}`;
           document.getElementById("fechaDetalle").innerText = pedido.fecha;
 
@@ -71,7 +59,7 @@ function verDetallePedido(idPedido) {
           estado.className = "badge " + (pedido.estadoPedido === "Completado" ? "bg-success" :
           pedido.estadoPedido === "En proceso" ? "bg-warning" : "bg-secondary");
 
-          const btnCambiar = document.getElementById("btnCambiarEstado");
+          const btnCambiar = document.getElementById("btnCambiarEstado");          btnCambiar.onclick = () => cambiarEstado(idPedido); // Asignar el ID al botón
           btnCambiar.style.display = (pedido.estadoPedido === "Completado") ? "none" : "inline-block";
 
           return fetch(`http://localhost:8080/detallesPedido/pedido/${idPedido}`);
@@ -118,10 +106,8 @@ function mostrarDetallePlatos(detalles) {
 
 
 //Cambiar estado
-function cambiarEstado() {
-    const idPedido = document.getElementById("numeroPedidoModal").innerText;
-    const estadoActual = document.getElementById("estadoDetalle").innerText;
-
+function cambiarEstado(idPedido) {
+    const estadoActual = document.getElementById("estadoDetalle").innerText.trim();
     if (estadoActual === "Completado") {
         console.log("Este pedido ya está completado.");
         return;
@@ -140,37 +126,17 @@ function cambiarEstado() {
         document.getElementById("estadoDetalle").className = "badge bg-success";
         document.getElementById("btnCambiarEstado").style.display = "none";
         const modal = bootstrap.Modal.getInstance(document.getElementById("modalDetallePedido"));
-        modal.hide();
-        cargarPedidos();
+        if (modal) modal.hide();
+        tablaPedidosDT.ajax.reload(); 
         mostrarToast("Estado de pedido cambiado a completado","success");
     })
     .catch(err => console.error("Error:", err));
 }
 
-function filtrarPedidos(texto) {
-    const filas = document.querySelectorAll("#tablaPedidos tbody tr");
-    texto = texto.toLowerCase();
-
-    filas.forEach(fila => {
-        const codigo = fila.children[0].innerText.toLowerCase();
-        const cliente = fila.children[1].innerText.toLowerCase();
-        fila.style.display = (codigo.includes(texto) || cliente.includes(texto)) ? "" : "none";
-    });
-}
-
-let ultimoFiltro = "todos";
-
 function filtrarPorEstado(estado) {
-    ultimoFiltro = estado.toLowerCase();
-    const filas = document.querySelectorAll("#tablaPedidos tbody tr");
-    filas.forEach(fila => {
-        const estadoFila = fila.querySelector(".badge")
-            ? fila.querySelector(".badge").innerText.toLowerCase()
-            : fila.children[4].innerText.toLowerCase();
-        if (ultimoFiltro === "todos" || ultimoFiltro === "") {
-            fila.style.display = "";
-        } else {
-            fila.style.display = estadoFila === ultimoFiltro ? "" : "none";
-        }
-    });
+    if (tablaPedidosDT) {
+        // Columna de estado es la 4 (índice 4)
+        const filtro = (estado === 'Todos') ? '' : `^${estado}$`;
+        tablaPedidosDT.column(4).search(filtro, true, false).draw();
+    }
 }

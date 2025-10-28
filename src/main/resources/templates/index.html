@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- Estilos -->
     <link rel="stylesheet" href="/css/styleIndex.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
     <!-- Modal de pedido-->
     <link rel="stylesheet" href="/css/styleModalPedido.css">
     <!-- Link de graficos -->
@@ -268,11 +270,7 @@
             <section id="page-clientes" class="page-content" style="display: none;">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
-                        <div class="d-flex align-items-center flex-grow-1 me-3">
-                            <i class="ri-search-line me-2 text-muted fs-5"></i>
-                            <input type="text" class="form-control" placeholder="Buscar cliente..."
-                                onkeyup="filterTable(this.value, 'tablaClientes')">
-                        </div>
+                        <h5 class="card-title mb-0">Listado de Clientes</h5>
                         <button class="btn btn-primary mt-2 mt-md-0" onclick="abrirFormulario()">
                             <i class="ri-add-line"></i> Nuevo Cliente
                         </button>
@@ -371,11 +369,7 @@
             <section id="page-empleados" class="page-content" style="display: none;">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
-                        <div class="d-flex align-items-center flex-grow-1 me-3">
-                            <i class="ri-search-line me-2 text-muted fs-5"></i>
-                            <input type="text" class="form-control" placeholder="Buscar empleado..."
-                                onkeyup="filterTable(this.value, 'tablaEmpleados')">
-                        </div>
+                        <h5 class="card-title mb-0">Listado de Empleados</h5>
                         <button type="button" class="btn btn-primary" onclick="abrirFormularioEmpleado()">
                             <i class="ri-add-line"></i> Nuevo Empleado
                         </button>
@@ -512,12 +506,8 @@
             <section id="page-pedidos" class="page-content" style="display: none;">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
-                        <div class="d-flex align-items-center flex-grow-1 me-3">
-                            <i class="ri-search-line me-2 text-muted fs-5"></i>
-                            <input type="text" class="form-control" placeholder="Buscar pedido..."
-                                onkeyup="filtrarPedidos(this.value)">
-                        </div>
-                        <div class="d-flex gap-2 mt-2 mt-md-0">
+                        <h5 class="card-title mb-0">Listado de Pedidos</h5>
+                        <div class="d-flex gap-2 mt-2 mt-md-0" style="min-width: 200px;">
                             <select class="form-select" id="filtroEstado" onchange="filtrarPorEstado(this.value)"
                                 style="max-width: 200px;">
                                 <option value="Todos">Todos</option>
@@ -671,12 +661,7 @@
                         <label for="inputNuevoCliente" class="form-label mb-0 fw-bold"><i class="fa-solid fa-user"></i> Nombre del Cliente:</label>
                         <input type="text" class="form-control" id="inputNuevoCliente"
                             placeholder="Ingrese un nuevo cliente" style="flex: 1 1 200px;">
-                        <span class="fw-bold">ó</span>
-                        <select class="form-select" id="selectClientePedido" name="selectClientePedido" required
-                            style="flex: 1 1 200px;">
-                            <option value="" selected disabled>Seleccione un cliente existente</option>
-                            <!-- Clientes se cargarán dinámicamente -->
-                        </select>
+                        <select id="selectClientePedido" style="display: none;"></select>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -724,9 +709,9 @@
                                                 <span id="totalPedido">S/. 0.00</span>
                                             </div>
                                             <div class="d-flex gap-2">
-                                                <button class="btn btn-sm btn-success flex-fill" style="background-color: #d66b27; border: none !important">
+                                                <button class="btn btn-sm btn-success flex-fill" onclick="finalizarPedido()" style="background-color: #d66b27; border: none !important">
                                                     <i class="fa-solid fa-cash-register"></i> Finalizar</button>
-                                                <button class="btn btn-sm btn-warning flex-fill" style="border: none !important;">
+                                                <button class="btn btn-sm btn-warning flex-fill" onclick="limpiarPedido()" style="border: none !important;">
                                                     <i class="fa-solid fa-trash"></i> Limpiar</button>
                                             </div>
                                         </div>
@@ -869,6 +854,10 @@
 
     <!-- Toast -->
     <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3"></div>
+    <!-- JQuery (necesario para DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
 
     <!-- Script bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

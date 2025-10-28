@@ -204,7 +204,7 @@ async function crearNuevoCliente(nombreCompleto) {
     const apellidos = partesNombre.join(' ') || '';
 
     const clienteData = {
-        dniCliente: `TEMP-${Date.now()}`,
+        dniCliente: `TEMP-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
         nombreCliente: nombre,
         apellidosCliente: apellidos
     };

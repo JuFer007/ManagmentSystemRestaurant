@@ -1,5 +1,4 @@
 package com.app.SystemRestaurant.Model.ClasesGestion;
-import com.app.SystemRestaurant.Model.ClasesEmpleados.Mesero;
 import jakarta.persistence.*;
 import lombok.*;
 

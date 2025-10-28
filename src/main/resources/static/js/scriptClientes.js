@@ -1,29 +1,32 @@
+let tablaClientesDT;
+
 // ========== CARGAR CLIENTES ==========
-async function cargarClientes() {
-    const page = document.getElementById('page-clientes');
-    if (page.style.display === 'none') {
+function cargarClientes() {
+    if (tablaClientesDT) {
+        tablaClientesDT.ajax.reload();
         return;
     }
-    fetch("/system/clientes/listar")
-        .then(res => res.json())
-        .then(clientes => {
-            const tbody = document.querySelector("#tablaClientes tbody");
-            tbody.innerHTML = "";
-            clientes.forEach(c => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${c.dniCliente}</td>
-                        <td>${c.nombreCliente}</td>
-                        <td>${c.apellidosCliente}</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" onclick="editarCliente(${c.idCliente})">
-                                <i class="ri-edit-2-line"></i> Editar
-                            </button>
-                        </td>
-                    </tr>`;
-            });
-        })
-        .catch(err => console.error("Error al listar clientes:", err));
+
+    tablaClientesDT = new DataTable('#tablaClientes', {
+        ajax: {
+            url: '/system/clientes/listar',
+            dataSrc: ''
+        },
+        columns: [
+            { data: 'dniCliente', className: 'text-start', width: '20%' },
+            { data: 'nombreCliente', className: 'text-start', width: '30%' },
+            { data: 'apellidosCliente', className: 'text-start', width: '30%' },
+            {
+                data: 'idCliente',
+                render: (data) => `<button class="btn btn-warning btn-sm" onclick="editarCliente(${data})"><i class="ri-edit-2-line"></i> Editar</button>`,
+                orderable: false,
+                searchable: false,
+                className: 'text-center',
+                width: '20%'
+            }
+        ],
+        language: { url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json' }
+    });
 }
 
 // ========== ABRIR MODAL NUEVO CLIENTE ==========
@@ -108,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const mensaje = idCliente ? "Cliente actualizado con éxito." : "Cliente agregado exitosamente.";
                 mostrarToast(mensaje, "success");
                 cerrarFormulario();
-                cargarClientes();
+                tablaClientesDT.ajax.reload();
             })
             .catch(err => {
                 console.error("Error al guardar cliente:", err);
@@ -151,22 +154,4 @@ function editarCliente(id) {
             console.error("Error al cargar datos para editar:", err);
             mostrarToast(err.message || "Error al cargar los datos del cliente.", "danger");
         });
-}
-
-/**
- * @param {string} str
- * @returns {string}
- */
-function removeAccents(str) {
-    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-}
-
-// ========== FILTRO DE TABLA ==========
-function filterTable(value, tableId) {
-    const normalizedValue = removeAccents(value.toLowerCase());
-    const rows = document.querySelectorAll(`#${tableId} tbody tr`);
-    rows.forEach(row => {
-        const rowText = removeAccents(row.textContent.toLowerCase());
-        row.style.display = rowText.includes(normalizedValue) ? "" : "none";
-    });
 }

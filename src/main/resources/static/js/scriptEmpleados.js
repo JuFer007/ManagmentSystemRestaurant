@@ -1,27 +1,50 @@
+let tablaEmpleadosDT;
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Inicializamos la tabla vacía. Se llenará cuando se haga clic en la pestaña.
+    // Esto evita errores si el elemento #tablaEmpleados no existe al cargar la página.
+});
+
 //CARGAR EMPLEADOS DESDE LA BD
 function cargarEmpleados() {
-    fetch('/system/empleados/listar')
-        .then(res => res.json())
-        .then(empleados => {
-            const tbody = document.querySelector('#tablaEmpleados tbody');
-            tbody.innerHTML = '';
-            empleados.forEach(e => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${e.dniEmpleado}</td>
-                        <td>${e.nombreEmpleado}</td>
-                        <td>${e.apellidoPaternoEmpleado} ${e.apellidoMaternoEmpleado}</td>
-                        <td>${e.cargoEmpleado}</td>
-                        <td>${e.salarioEmpleado}</td>
-                        <td>${e.estadoEmpleado}</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" onclick="editarEmpleado('${e.idEmpleado}')"><i class="ri-edit-2-line"></i> Editar</button>
-                            <button class="btn btn-danger btn-sm" onclick="cambiarEstadoEmpleado('${e.idEmpleado}')"><i class="ri-refresh-line"></i> Estado</button>
-                        </td>
-                    </tr>`;
-            });
-        })
-        .catch(err => console.error('Error al listar empleados:', err));
+    if (tablaEmpleadosDT) {
+        tablaEmpleadosDT.ajax.reload();
+        return;
+    }
+    tablaEmpleadosDT = new DataTable('#tablaEmpleados', {
+        ajax: {
+            url: '/system/empleados/listar',
+            dataSrc: ''
+        },
+        columns: [
+            { data: 'dniEmpleado', className: 'text-start' },
+            { data: 'nombreEmpleado', className: 'text-start' },
+            { 
+                data: null,
+                render: (data, type, row) => `${row.apellidoPaternoEmpleado} ${row.apellidoMaternoEmpleado}`,
+                className: 'text-start'
+            },
+            { data: 'cargoEmpleado', className: 'text-start' },
+            { data: 'salarioEmpleado', className: 'text-start' },
+            { 
+                data: 'estadoEmpleado', 
+                className: 'text-start', 
+                render: (data) => `<span class="badge ${data === 'Activo' ? 'bg-success' : 'bg-danger'}">${data}</span>` 
+            },
+            { 
+                data: 'idEmpleado',
+                render: (data, type, row) => `
+                    <button class="btn btn-warning btn-sm" onclick="editarEmpleado('${data}')"><i class="ri-edit-2-line"></i> Editar</button>
+                    <button class="btn btn-secondary btn-sm" onclick="cambiarEstadoEmpleado('${data}')"><i class="ri-refresh-line"></i> Estado</button>`
+                ,
+                orderable: false,
+                searchable: false,
+                className: 'text-center',
+                width: '180px'
+            }
+        ],
+        language: { url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json' } 
+    });
 
 }
 // ABRIR FORMULARIO NUEVO/EDITAR EMPLEADO
@@ -126,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(() => {
                 mostrarToast(idEmpleado ? "Empleado actualizado con éxito." : "Empleado agregado exitosamente.", "success");
                 cerrarFormularioEmpleado();
-                cargarEmpleados();
+                tablaEmpleadosDT.ajax.reload(); // Recargamos la tabla con DataTables
             })
             .catch(err => {
                 console.error("Error al guardar empleado:", err);
@@ -155,7 +178,7 @@ async function cambiarEstadoEmpleado(idEmpleado) {
         });
 
         if (response.ok) {
-            await cargarEmpleados();
+            tablaEmpleadosDT.ajax.reload(); // Recargamos la tabla con DataTables
             mostrarToast(`Estado cambiado.`, "info");
 
         } else {
