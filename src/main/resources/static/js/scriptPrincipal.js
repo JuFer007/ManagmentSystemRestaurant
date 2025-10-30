@@ -59,8 +59,19 @@ function loadPage(page, element) {
 // CARGA INICIAL DE LA PÁGINA
 // =============================
 document.addEventListener("DOMContentLoaded", () => {
-    const savedPage = 'dashboard';
-    const navLink = document.querySelector(`[onclick*="loadPage('${savedPage}'"]`);
-    const navItem = navLink ? navLink.closest('.nav-item') : document.querySelector('.nav-item.active');
-    loadPage(savedPage, navItem);
+    const savedPage = sessionStorage.getItem('currentPage') || 'dashboard';
+    const navItem = document.querySelector(`.nav-item[onclick*="loadPage('${savedPage}'"]`);
+
+    if (navItem) {
+        const parentSubmenu = navItem.closest('.submenu');
+        if (parentSubmenu && !parentSubmenu.classList.contains('open')) {
+            const groupTitle = parentSubmenu.previousElementSibling;
+            if (groupTitle) {
+                groupTitle.click();
+            }
+        }
+        loadPage(savedPage, navItem);
+    } else {
+        loadPage('dashboard', document.querySelector('.nav-item[onclick*="loadPage(\'dashboard\'"]'));
+    }
 });
