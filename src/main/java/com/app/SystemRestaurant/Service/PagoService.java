@@ -48,5 +48,16 @@ public class PagoService {
         }
         return false;
     }
+    public boolean actualizarMetodoYEstado(Integer id, String metodoPago, String estadoPago) {
+    Optional<Pago> optPago = pagoRepository.findById(id);
+    if (optPago.isPresent()) {
+        Pago pago = optPago.get();
+        pago.setMetodoPago(metodoPago);
+        pago.setEstadoPago(estadoPago);
+        pagoRepository.save(pago);
+        return true;
+    }
+    return false;
+}
 
 }

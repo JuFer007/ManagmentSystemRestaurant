@@ -38,13 +38,20 @@ public class PagoController {
 
     @GetMapping("/buscar/{id}")
     @ResponseBody
-    public ResponseEntity<Pago> obtenerPagoPorId(@PathVariable int id) {
+    public ResponseEntity<PagoDTO> obtenerPagoPorId(@PathVariable int id) {
         return pagoService.obtenerPagoPorId(id)
-                .map(ResponseEntity::ok)
+                .map(p -> ResponseEntity.ok(PagoDTO.builder()
+                        .idPago(p.getIdPago())
+                        .codigoPedido(p.getIdPedido() != null ? p.getIdPedido().getCodigoPedido() : "—")
+                        .montoPago(p.getMontoPago())
+                        .metodoPago(p.getMetodoPago())
+                        .fechaPago(p.getFechaPago())
+                        .estadoPago(p.getEstadoPago())
+                        .build()))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/actulizar")
+    @PutMapping("/actualizar/{id}")
     @ResponseBody
     public ResponseEntity<Pago> actualizarPago(@PathVariable int id, @RequestBody Pago pagoActualizado) {
         try {
@@ -64,5 +71,20 @@ public class PagoController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @PutMapping("/actualizarDatos/{id}")
+    public ResponseEntity<String> actualizarMetodoYEstado(
+        @PathVariable Integer id,
+        @RequestParam("metodoPago") String metodoPago,
+        @RequestParam("estadoPago") String estadoPago) {
+
+        boolean actualizado = pagoService.actualizarMetodoYEstado(id, metodoPago, estadoPago);
+
+        if (actualizado) {
+            return ResponseEntity.ok("Método y estado de pago actualizados correctamente");
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 
 }

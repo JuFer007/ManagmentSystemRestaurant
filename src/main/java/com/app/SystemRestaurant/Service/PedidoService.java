@@ -80,8 +80,8 @@ public class PedidoService {
                 nuevoPago.setIdPedido(pedidoActualizado);
                 nuevoPago.setMontoPago(pedidoActualizado.getTotalPedido());
                 nuevoPago.setFechaPago(LocalDate.now()); // Fecha actual
-                nuevoPago.setMetodoPago("No definido"); // Se definirá al momento de pagar
-                nuevoPago.setEstadoPago("Pendiente"); // Estado inicial
+                nuevoPago.setMetodoPago("No definido");
+                nuevoPago.setEstadoPago("Pendiente");
                 pagoRepository.save(nuevoPago);
             }
             return true;
