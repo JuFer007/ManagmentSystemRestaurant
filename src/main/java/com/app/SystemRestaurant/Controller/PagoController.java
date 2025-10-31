@@ -1,6 +1,6 @@
 package com.app.SystemRestaurant.Controller;
 
-
+import com.app.SystemRestaurant.DTO.PagoDTO;
 import com.app.SystemRestaurant.Model.ClasesFInanzas.Pago;
 import com.app.SystemRestaurant.Service.PagoService;
 import lombok.AllArgsConstructor;
@@ -20,8 +20,20 @@ public class PagoController {
 
     @GetMapping("/listar")
     @ResponseBody
-    public List<Pago> listarPagos() {
-        return pagoService.listarPagos();
+    public List<PagoDTO> listarPagos() {
+        return pagoService.listarPagos().stream()
+                .map(p -> PagoDTO.builder()
+                        .idPago(p.getIdPago())
+                        .codigoPedido(
+                                p.getIdPedido() != null
+                                        ? p.getIdPedido().getCodigoPedido()
+                                        : "—")
+                        .montoPago(p.getMontoPago())
+                        .metodoPago(p.getMetodoPago())
+                        .fechaPago(p.getFechaPago())
+                        .estadoPago(p.getEstadoPago())
+                        .build())
+                .toList();
     }
 
     @GetMapping("/buscar/{id}")
@@ -45,12 +57,12 @@ public class PagoController {
 
     @PutMapping("/cambiarEstado/{id}")
     public ResponseEntity<String> cambiarEstadoPago(@PathVariable Integer id,
-                                                    @RequestParam("estadoPago")String nuevoEstado){
-        boolean actualizado = pagoService.cambiarEstado(id,nuevoEstado);
-        if(actualizado){
+            @RequestParam("estadoPago") String nuevoEstado) {
+        boolean actualizado = pagoService.cambiarEstado(id, nuevoEstado);
+        if (actualizado) {
             return ResponseEntity.ok("Estado de pago actulizado correctamente");
         }
-        return  ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build();
     }
 
 }

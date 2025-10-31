@@ -11,7 +11,7 @@ function cargarPagos() {
             dataSrc: ""
         },
         columns: [
-            { "data": "idPago", className: 'text-center', width: '7%'},
+            { "data": "codigoPedido", className: 'text-center', width: '10%'},
             { "data": "fechaPago", className: 'text-center', width: '20%' },
             { "data": "metodoPago", className: 'text-start', width: '15%'},
             {
