@@ -107,31 +107,33 @@ function mostrarDetallePlatos(detalles) {
 
 
 //Cambiar estado
-function cambiarEstado(idPedido) {
+async function cambiarEstado(idPedido) {
     const estadoActual = document.getElementById("estadoDetalle").innerText.trim();
     if (estadoActual === "Completado") {
-        console.log("Este pedido ya está completado.");
+        mostrarToast("Este pedido ya está completado.", "info");
         return;
     }
 
-    fetch(`http://localhost:8080/pedidos/${idPedido}/estado?nuevoEstado=Completado`, {
-        method: "PUT"
-    })
+    try {
+        const response = await fetch(`http://localhost:8080/pedidos/${idPedido}/estado?nuevoEstado=Completado`, {
+            method: "PUT"
+        });
 
-    .then(resp => {
-        if (!resp.ok) throw new Error("Error al actualizar estado");
-        return resp.text();
-    })
-    .then(() => {
+        if (!response.ok) {
+            throw new Error("Error al actualizar el estado del pedido.");
+        }
+
         document.getElementById("estadoDetalle").innerText = "Completado";
         document.getElementById("estadoDetalle").className = "badge bg-success";
         document.getElementById("btnCambiarEstado").style.display = "none";
         const modal = bootstrap.Modal.getInstance(document.getElementById("modalDetallePedido"));
         if (modal) modal.hide();
-        tablaPedidosDT.ajax.reload(); 
-        mostrarToast("Estado de pedido cambiado a completado","success");
-    })
-    .catch(err => console.error("Error:", err));
+        tablaPedidosDT.ajax.reload();
+        mostrarToast("Pedido completado y pago generado.", "success");
+    } catch (err) {
+        console.error("Error al cambiar estado:", err);
+        mostrarToast(err.message, "danger");
+    }
 }
 
 function filtrarPorEstado(estado) {

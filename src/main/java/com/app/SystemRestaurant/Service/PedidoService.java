@@ -3,6 +3,7 @@ import com.app.SystemRestaurant.DTO.PedidoDTO;
 import com.app.SystemRestaurant.DTO.PedidoRequestDTO;
 import com.app.SystemRestaurant.Model.ClasesEmpleados.Cliente;
 import com.app.SystemRestaurant.Model.ClasesEmpleados.Empleado;
+import com.app.SystemRestaurant.Model.ClasesFInanzas.Pago;
 import com.app.SystemRestaurant.Model.ClasesGestion.Mesa;
 import com.app.SystemRestaurant.Model.ClasesGestion.Pedido;
 import com.app.SystemRestaurant.Model.ClasesGestion.DetallePedido;
@@ -11,6 +12,7 @@ import com.app.SystemRestaurant.Repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,6 +27,7 @@ public class PedidoService {
     private final EmpleadoRepository empleadoRepository;
     private final PlatoRepository platoRepository;
     private final MesaRepository mesaRepository;
+    private final PagoRepository pagoRepository;
 
     //Listar los pedidos convertidos
     public List<PedidoDTO> listarPedidosDTO() {
@@ -62,13 +65,25 @@ public class PedidoService {
     }
 
     //Cambiar estado del pedido
+    @Transactional
     public boolean actualizarEstado(int idPedido, String nuevoEstado) {
         Optional<Pedido> pedidoOptional = pedidoRepository.findById(idPedido);
 
         if (pedidoOptional.isPresent()) {
             Pedido pedido = pedidoOptional.get();
             pedido.setEstadoPedido(nuevoEstado);
-            pedidoRepository.save(pedido);
+            Pedido pedidoActualizado = pedidoRepository.save(pedido);
+
+            // LÓGICA AGREGADA: Si el estado es "Completado", creamos el pago.
+            if ("Completado".equalsIgnoreCase(nuevoEstado)) {
+                Pago nuevoPago = new Pago();
+                nuevoPago.setIdPedido(pedidoActualizado);
+                nuevoPago.setMontoPago(pedidoActualizado.getTotalPedido());
+                nuevoPago.setFechaPago(LocalDate.now()); // Fecha actual
+                nuevoPago.setMetodoPago("No definido"); // Se definirá al momento de pagar
+                nuevoPago.setEstadoPago("Pendiente"); // Estado inicial
+                pagoRepository.save(nuevoPago);
+            }
             return true;
         }
         return false;
@@ -120,4 +135,5 @@ public class PedidoService {
         pedidoGuardado.setDetalles(detalles);
         return convertirAPedidoDTO(pedidoGuardado);
     }
+    
 }

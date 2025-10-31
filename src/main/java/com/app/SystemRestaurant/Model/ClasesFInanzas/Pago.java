@@ -1,8 +1,9 @@
 package com.app.SystemRestaurant.Model.ClasesFInanzas;
 import com.app.SystemRestaurant.Model.ClasesGestion.Pedido;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @AllArgsConstructor
@@ -19,8 +20,10 @@ public class Pago {
 
     @OneToOne
     @JoinColumn(name = "idPedido")
+    @JsonIgnore
     private Pedido idPedido;
     private double montoPago;
     private String metodoPago;
-    private Date fechaPago;
+    private LocalDate fechaPago;
+    private String estadoPago;
 }

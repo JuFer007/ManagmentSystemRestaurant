@@ -343,51 +343,51 @@ INSERT INTO detalle_pedido (id_pedido, id_plato, cantidad, sub_total) VALUES
 -- ============================================
 
 -- PAGOS MAYO 2025
-INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago) VALUES
-(1, 132.00, 'Plin', '2025-05-04'),
-(2, 88.00, 'Efectivo', '2025-05-11'),
-(3, 148.00, 'Tarjeta', '2025-05-17'),
-(4, 102.00, 'Yape', '2025-05-23'),
-(5, 120.00, 'Efectivo', '2025-05-29');
+INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago,estado_pago) VALUES
+(1, 132.00, 'Plin', '2025-05-04','Pagado'),
+(2, 88.00, 'Efectivo', '2025-05-11','Pagado'),
+(3, 148.00, 'Tarjeta', '2025-05-17','Pagado'),
+(4, 102.00, 'Yape', '2025-05-23','Pagado'),
+(5, 120.00, 'Efectivo', '2025-05-29','Pagado');
 
 -- PAGOS JUNIO 2025
-INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago) VALUES
-(6, 128.00, 'Tarjeta', '2025-06-05'),
-(7, 104.00, 'Efectivo', '2025-06-12'),
-(8, 116.00, 'Yape', '2025-06-18'),
-(9, 95.00, 'Efectivo', '2025-06-24');
+INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago,estado_pago) VALUES
+(6, 128.00, 'Tarjeta', '2025-06-05','Pagado'),
+(7, 104.00, 'Efectivo', '2025-06-12','Pagado'),
+(8, 116.00, 'Yape', '2025-06-18','Pagado'),
+(9, 95.00, 'Efectivo', '2025-06-24','Pagado');
 
 -- PAGOS JULIO 2025
-INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago) VALUES
-(10, 144.00, 'Tarjeta', '2025-07-02'),
-(11, 106.00, 'Efectivo', '2025-07-09'),
-(12, 92.00, 'Yape', '2025-07-15'),
-(13, 138.00, 'Efectivo', '2025-07-21'),
-(14, 110.00, 'Plin', '2025-07-28');
+INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago,estado_pago) VALUES
+(10, 144.00, 'Tarjeta', '2025-07-02','Pagado'),
+(11, 106.00, 'Efectivo', '2025-07-09','Pagado'),
+(12, 92.00, 'Yape', '2025-07-15','Pagado'),
+(13, 138.00, 'Efectivo', '2025-07-21','Pagado'),
+(14, 110.00, 'Plin', '2025-07-28','Pagado');
 
 -- PAGOS AGOSTO 2025
-INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago) VALUES
-(15, 112.00, 'Efectivo', '2025-08-03'),
-(16, 150.00, 'Yape', '2025-08-10'),
-(17, 98.00, 'Tarjeta', '2025-08-14'),
-(18, 126.00, 'Efectivo', '2025-08-20'),
-(19, 85.00, 'Plin', '2025-08-25');
+INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago,estado_pago) VALUES
+(15, 112.00, 'Efectivo', '2025-08-03','Pagado'),
+(16, 150.00, 'Yape', '2025-08-10','Pagado'),
+(17, 98.00, 'Tarjeta', '2025-08-14','Pagado'),
+(18, 126.00, 'Efectivo', '2025-08-20','Pagado'),
+(19, 85.00, 'Plin', '2025-08-25','Pagado');
 
 -- PAGOS SEPTIEMBRE 2025
-INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago) VALUES
-(20, 105.00, 'Efectivo', '2025-09-05'),
-(21, 88.00, 'Tarjeta', '2025-09-08'),
-(22, 142.00, 'Yape', '2025-09-12'),
-(23, 76.00, 'Efectivo', '2025-09-18'),
-(24, 130.00, 'Plin', '2025-09-22'),
-(25, 94.00, 'Tarjeta', '2025-09-25');
+INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago,estado_pago) VALUES
+(20, 105.00, 'Efectivo', '2025-09-05','Pagado'),
+(21, 88.00, 'Tarjeta', '2025-09-08','Pagado'),
+(22, 142.00, 'Yape', '2025-09-12','Pagado'),
+(23, 76.00, 'Efectivo', '2025-09-18','Pagado'),
+(24, 130.00, 'Plin', '2025-09-22','Pagado'),
+(25, 94.00, 'Tarjeta', '2025-09-25','Pagado');
 
 -- PAGOS OCTUBRE 2025
-INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago) VALUES
-(26, 70.00, 'Efectivo', '2025-10-15'),
-(27, 110.00, 'Tarjeta', '2025-10-16'),
-(28, 156.00, 'Yape', '2025-10-17'),
-(30, 84.00, 'Efectivo', '2025-10-16'),
-(32, 82.00, 'Tarjeta', '2025-10-15'),
-(33, 96.00, 'Plin', '2025-10-16'),
-(35, 118.00, 'Efectivo', '2025-10-15');
+INSERT INTO pago (id_pedido, monto_pago, metodo_pago, fecha_pago, estado_pago) VALUES
+(26, 70.00, 'Efectivo', '2025-10-15','Pagado'),
+(27, 110.00, 'Tarjeta', '2025-10-16','Pagado'),
+(28, 156.00, 'Yape', '2025-10-17','Pagado'),
+(30, 84.00, 'Efectivo', '2025-10-16','Pagado'),
+(32, 82.00, 'Tarjeta', '2025-10-15','Pagado'),
+(33, 96.00, 'Plin', '2025-10-16','Pagado'),
+(35, 118.00, 'Efectivo', '2025-10-15','Pagado');

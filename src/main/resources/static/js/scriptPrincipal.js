@@ -53,6 +53,7 @@ function loadPage(page, element) {
     if (page === "clientes" && typeof cargarClientes === "function") cargarClientes();
     if (page === "empleados" && typeof cargarEmpleados === "function") cargarEmpleados();
     if (page === "pedidos" && typeof cargarPedidos === "function") cargarPedidos();
+    if (page === "pagos" && typeof cargarPagos === "function") cargarPagos();
 }
 
 // =============================

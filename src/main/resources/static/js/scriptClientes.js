@@ -13,16 +13,16 @@ function cargarClientes() {
             dataSrc: ''
         },
         columns: [
-            { data: 'dniCliente', className: 'text-start', width: '20%' },
-            { data: 'nombreCliente', className: 'text-start', width: '30%' },
-            { data: 'apellidosCliente', className: 'text-start', width: '30%' },
+            { data: 'dniCliente', className: 'text-start', width: '4%' },
+            { data: 'nombreCliente', className: 'text-start', width: '6%' },
+            { data: 'apellidosCliente', className: 'text-start', width: '12%' },
             {
                 data: 'idCliente',
                 render: (data) => `<button class="btn btn-warning btn-sm" onclick="editarCliente(${data})"><i class="ri-edit-2-line"></i> Editar</button>`,
                 orderable: false,
                 searchable: false,
                 className: 'text-center',
-                width: '20%'
+                width: '1%'
             }
         ],
         language: { url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json' }
