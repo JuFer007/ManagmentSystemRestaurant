@@ -36,50 +36,24 @@
             <div class="nav-item active" onclick="loadPage('dashboard', this)">
                 <i class="ri-dashboard-line"></i> <span>Dashboard</span>
             </div>
-
-            <div class="nav-group">
-                <div class="nav-group-title" onclick="toggleSubmenu(this)">
-                    <span><i class="fa-solid fa-clipboard-list"></i> Gestión</span>
-                    <span class="arrow">▶</span>
-                </div>
-                <div class="submenu">
-                    <div class="nav-item" onclick="loadPage('empleados', this)">
-                        <i class="ri-user-2-line"></i> <span>Empleados</span>
-                    </div>
-                    <div class="nav-item" onclick="loadPage('clientes', this)">
-                        <i class="ri-user-heart-line"></i> <span>Clientes</span>
-                    </div>
-                </div>
+            <div class="nav-item" onclick="loadPage('pagos', this)">
+                <i class="ri-wallet-3-line"></i> <span>Pagos</span>
+            </div>
+            <div class="nav-item" onclick="loadPage('empleados', this)">
+                <i class="ri-user-2-line"></i> <span>Empleados</span>
+            </div>
+            <div class="nav-item" onclick="loadPage('clientes', this)">
+                <i class="ri-user-heart-line"></i> <span>Clientes</span>
             </div>
 
-            <div class="nav-group">
-                <div class="nav-group-title" onclick="toggleSubmenu(this)">
-                    <span><i class="fa-solid fa-receipt"></i> Pedidos</span>
-                    <span class="arrow">▶</span>
-                </div>
-                <div class="submenu">
-                    <div class="nav-item" onclick="loadPage('nuevo-pedido', this)">
-                        <i class="ri-restaurant-2-line"></i> <span>Nuevo Pedido</span>
-                    </div>
-                    <div class="nav-item" onclick="loadPage('pedidos', this)">
-                        <i class="ri-file-list-3-line"></i> <span>Ver Pedidos</span>
-                    </div>
-                    <div class="nav-item" onclick="loadPage('platos', this)">
-                        <i class="ri-bowl-fill"></i> <span>Platos</span>
-                    </div>
-                </div>
+            <div class="nav-item" onclick="loadPage('nuevo-pedido', this)">
+                <i class="ri-restaurant-2-line"></i> <span>Nuevo Pedido</span>
             </div>
-
-            <div class="nav-group">
-                <div class="nav-group-title" onclick="toggleSubmenu(this)">
-                    <span><i class="fa-solid fa-coins"></i> Finanzas</span>
-                    <span class="arrow">▶</span>
-                </div>
-                <div class="submenu">
-                    <div class="nav-item" onclick="loadPage('pagos', this)">
-                        <i class="ri-wallet-3-line"></i> <span>Pagos</span>
-                    </div>
-                </div>
+            <div class="nav-item" onclick="loadPage('pedidos', this)">
+                <i class="ri-file-list-3-line"></i> <span>Ver Pedidos</span>
+            </div>
+            <div class="nav-item" onclick="loadPage('platos', this)">
+                <i class="ri-bowl-fill"></i> <span>Platos</span>
             </div>
         </nav>
 
