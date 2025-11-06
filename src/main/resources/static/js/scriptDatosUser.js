@@ -80,4 +80,5 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function logout() {
     window.location.href = '/logout';
+    localStorage.clear();
 }
