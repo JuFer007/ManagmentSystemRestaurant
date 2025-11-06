@@ -2,27 +2,6 @@
 // NAVEGACIÓN ENTRE SECCIONES
 // =============================
 
-// Mostrar u ocultar módulos del sidebar
-function toggleSubmenu(element) {
-    const submenu = element.nextElementSibling;
-    const arrow = element.querySelector('.arrow');
-
-    document.querySelectorAll('.submenu').forEach(s => {
-        if (s !== submenu) s.classList.remove('open');
-    });
-
-    document.querySelectorAll('.nav-group-title').forEach(g => {
-        if (g !== element) {
-            g.classList.remove('open');
-            g.querySelector('.arrow').style.transform = 'rotate(0deg)';
-        }
-    });
-
-    submenu.classList.toggle('open');
-    element.classList.toggle('open');
-    arrow.style.transform = submenu.classList.contains('open') ? 'rotate(90deg)' : 'rotate(0deg)';
-}
-
 // Cambiar entre páginas del sistema
 function loadPage(page, element) {
     if (page) sessionStorage.setItem('currentPage', page);
@@ -42,7 +21,8 @@ function loadPage(page, element) {
         pedidos: ["Gestión de Pedidos", "Visualiza y administra los pedidos"],
         "nuevo-pedido": ["Nuevo Pedido", "Registra un nuevo pedido"],
         platos: ["Gestión de Menú", "Administra los platos del restaurante"],
-        pagos: ["Gestión de Pagos", "Administra los pagos y comprobantes"]
+        pagos: ["Gestión de Pagos", "Administra los pagos y comprobantes"],
+        delivey: ["Gestión Delivey", "Entrega de Delivery"]
     };
 
     if (titles[page]) {

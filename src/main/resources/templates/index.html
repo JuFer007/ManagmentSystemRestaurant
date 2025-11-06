@@ -42,20 +42,20 @@
             <div id="nav-clientes" class="nav-item" onclick="loadPage('clientes', this)">
                 <i class="ri-user-heart-line"></i> <span>Clientes</span>
             </div>
-            <div id="nav-verPedidos" class="nav-item" onclick="loadPage('pedidos', this)">
-                <i class="ri-file-list-3-line"></i> <span>Ver Pedidos</span>
-            </div>
             <div id="nav-nuevoPedido" class="nav-item" onclick="loadPage('nuevo-pedido', this)">
                 <i class="ri-restaurant-2-line"></i> <span>Nuevo Pedido</span>
+            </div>
+            <div id="nav-verPedidos" class="nav-item" onclick="loadPage('pedidos', this)">
+                <i class="ri-file-list-3-line"></i> <span>Ver Pedidos</span>
             </div>
             <div id="nav-platos" class="nav-item" onclick="loadPage('platos', this)">
                 <i class="ri-bowl-fill"></i> <span>Platos</span>
             </div>
-            <div id="nav-delivery" class="nav-item" onclick="loadPage('delivery', this)">
-                <i class="ri-takeaway-fill"></i> <span>Delivery</span>
-            </div>
             <div id="nav-pagos" class="nav-item" onclick="loadPage('pagos', this)">
                 <i class="ri-wallet-3-line"></i> <span>Pagos</span>
+            </div>
+            <div id="nav-delivery" class="nav-item" onclick="loadPage('delivery', this)">
+                <i class="ri-takeaway-fill"></i> <span>Delivery</span>
             </div>
         </nav>
 
@@ -163,7 +163,7 @@
                         </button>
                     </div>
                     <div class="card-body">
-                        <div class="table-container">
+                        <div class="table-responsive">
                             <table class="table" id="tablaClientes">
                                 <thead>
                                     <tr>
@@ -262,7 +262,7 @@
                         </button>
                     </div>
                     <div class="card-body">
-                        <div class="table-container">
+                        <div class="table-responsive">
                             <table class="table" id="tablaEmpleados">
                                 <thead>
                                     <tr>
@@ -404,7 +404,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="table-container">
+                        <div class="table-responsive">
                             <table class="table table-hover" id="tablaPedidos">
                                 <thead>
                                     <tr>
@@ -746,7 +746,7 @@
                         <h5 class="card-title mb-0">Listado de Pagos</h5>
                     </div>
                     <div class="card-body">
-                        <div class="table-container">
+                        <div class="table-responsive">
                             <table class="table" id="tablaPagos">
                                 <thead>
                                     <tr>
