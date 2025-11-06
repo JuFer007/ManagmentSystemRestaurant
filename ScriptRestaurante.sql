@@ -86,7 +86,7 @@ INSERT INTO plato (nombre_plato, precio_plato, disponibilidad, imagenurl) VALUES
 -- 8. INSERTAR CLIENTES
 -- ============================================
 INSERT INTO cliente (dni_cliente, nombre_cliente, apellidos_cliente) VALUES
-('78901234', 'Marcelo', 'Zumaeta Chapoñan'),
+('78901234', 'Marcelo', 'Alarcon Manay'),
 ('78901235', 'Carmen', 'Vega Cruz'),
 ('78901236', 'Diego', 'Silva Rojas'),
 ('78901237', 'Patricia', 'Ramos Campos'),
@@ -97,7 +97,7 @@ INSERT INTO cliente (dni_cliente, nombre_cliente, apellidos_cliente) VALUES
 ('78901242', 'Ricardo', 'Mendoza Torres'),
 ('78901243', 'Daniela', 'Castro Flores'),
 ('78901244', 'Alberto', 'Ruiz Gómez'),
-('78901245', 'Mónica', 'Salazar Díaz');
+('76296919', 'Esmeralda', 'Vasquez');
 
 -- ============================================
 -- 9. INSERTAR PEDIDOS (TODOS LOS MESES)

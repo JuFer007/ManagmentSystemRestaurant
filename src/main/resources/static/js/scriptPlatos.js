@@ -37,7 +37,7 @@ async function guardarPlato() {
         } else {
             const errorText = await response.text();
             console.log(`Error al guardar el plato: ${errorText}`, "danger");
-            mostrarToast(`Error al guardar el plato`, "danger");
+            mostrarToast(`Error al guardar el plato`, "warning");
         }
     } catch (error) {
         console.error("Error:", error);
