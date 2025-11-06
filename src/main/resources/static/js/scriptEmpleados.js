@@ -15,19 +15,18 @@ function cargarEmpleados() {
             dataSrc: ''
         },
         columns: [
-            { data: 'dniEmpleado', className: 'text-start', width: '4%'},
-            { data: 'nombreEmpleado', className: 'text-start', width: '10%'},
+            { data: 'dniEmpleado', className: 'text-start'},
+            { data: 'nombreEmpleado', className: 'text-start'},
             {
                 data: null,
                 render: (data, type, row) => `${row.apellidoPaternoEmpleado} ${row.apellidoMaternoEmpleado}`,
                 className: 'text-start',width: '20%'
             },
-            { data: 'cargoEmpleado', className: 'text-start', width: '10%' },
-            { data: 'salarioEmpleado', className: 'text-start' , width: '15%' },
+            { data: 'cargoEmpleado', className: 'text-start' },
+            { data: 'salarioEmpleado', className: 'text-start'},
             {
                 data: 'estadoEmpleado',
                 className: 'text-start',
-                width: '15%',
                 render: (data) => `<span class="badge ${data === 'Activo' ? 'bg-success' : 'bg-danger'}">${data}</span>`
             },
             {

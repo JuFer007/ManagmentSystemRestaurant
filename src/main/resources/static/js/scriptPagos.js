@@ -11,14 +11,14 @@ function cargarPagos() {
             dataSrc: ""
         },
         columns: [
-            { "data": "codigoPedido", className: 'text-center', width: '10%'},
-            { "data": "fechaPago", className: 'text-center', width: '20%' },
-            { "data": "metodoPago", className: 'text-start', width: '15%'},
+            { "data": "codigoPedido", className: 'text-center'},
+            { "data": "fechaPago", className: 'text-center' },
+            { "data": "metodoPago", className: 'text-start'},
             {
                 "data": "montoPago",
                 "render": function (data) {
                     return `S/. ${data.toFixed(2)}`;
-                }, className: 'text-start', width: '15%'
+                }, className: 'text-start'
             },
             {
                 "data": "estadoPago",
