@@ -32,9 +32,9 @@
         <h2 class="welcome-text">¡Bienvenido!</h2>
 
         <!-- Formulario Thymeleaf -->
-        <form th:action="@{/login}" th:object="${loginDTO}" method="post">
+        <form th:action="@{/login}" th:object="${loginDTO}" method="post" id="loginForm">
             <div class="form-group">
-                <input type="text" th:field="*{nombreUsuario}" class="form-input" placeholder="Nombre de Usuario">
+                <input type="text" th:field="*{nombreUsuario}" class="form-input" placeholder="Nombre de Usuario" id="nombreUsuario">
             </div>
 
             <div class="form-group">
@@ -53,5 +53,17 @@
         <div th:if="${error}" class="error-message" th:text="${error}"></div>
     </div>
 </div>
+
+<script>
+    document.getElementById("loginForm").addEventListener("submit", () => {
+        const nombre = document.getElementById("nombreUsuario").value.trim();
+        if (nombre) {
+            localStorage.setItem("usuario", nombre);
+            console.log("Usuario guardado:", nombre);
+        }
+    });
+</script>
+
+
 </body>
 </html>

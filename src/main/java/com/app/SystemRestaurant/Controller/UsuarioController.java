@@ -1,5 +1,6 @@
 package com.app.SystemRestaurant.Controller;
 import com.app.SystemRestaurant.DTO.LoginDTO;
+import com.app.SystemRestaurant.Model.ClasesEmpleados.Usuario;
 import com.app.SystemRestaurant.Service.UsuarioService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,6 @@ import org.springframework.web.bind.annotation.*;
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
-
-    @GetMapping("/login")
-    public String mostrarLogin(Model model) {
-        model.addAttribute("loginDTO", new LoginDTO());
-        return "login";
-    }
 
     @PostMapping("/login")
     public String login(@ModelAttribute("loginDTO") LoginDTO loginDTO, HttpSession session, Model model) {
@@ -36,5 +31,11 @@ public class UsuarioController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/login";
+    }
+
+    @GetMapping("/buscar/{nombre}")
+    @ResponseBody
+    public Usuario buscarUsuario(@PathVariable String nombre) {
+        return usuarioService.getUserByNombre(nombre);
     }
 }

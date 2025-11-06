@@ -3,6 +3,8 @@ import com.app.SystemRestaurant.Model.ClasesEmpleados.Cliente;
 import com.app.SystemRestaurant.Service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 import java.util.Optional;
 import java.util.List;
 
@@ -33,5 +35,16 @@ public class ClienteController {
     @GetMapping("/buscar/{id}")
     public Optional<Cliente> buscarPorId(@PathVariable int id) {
         return clienteService.buscarPorId(id);
+    }
+
+    @GetMapping("/buscar")
+    public List<Cliente> buscarClientes(@RequestParam String termino) {
+        return clienteService.buscarClientePorNombre(termino);
+    }
+
+    @PostMapping("/crear-desde-texto")
+    public Cliente crearClienteDesdeTexto(@RequestBody Map<String, String> datos) {
+        String texto = datos.get("texto");
+        return clienteService.crearClienteDesdeTexto(texto);
     }
 }

@@ -1,15 +1,89 @@
 document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById('page-nuevo-pedido')) {
         listarPlatosParaPedido();
-        cargarClientesEnSelect();
         cargarMesasEnSelect();
+        inicializarBuscadorClientes();
     }
 });
 
 let resumenPedido = [];
+let timeoutBusqueda;
+let clienteSeleccionadoManualmente = false;
 
 // ======================
-// 📦 CARGAR PLATOS
+// 🆕 INICIALIZAR BUSCADOR DE CLIENTES
+// ======================
+function inicializarBuscadorClientes() {
+    const inputCliente = document.getElementById('inputNuevoCliente');
+    const listaClientes = document.getElementById('listaClientes');
+    const idClienteSeleccionado = document.getElementById('idClienteSeleccionado');
+
+    inputCliente.addEventListener('input', function() {
+        const termino = this.value.trim();
+
+        // Resetear cuando el usuario escribe de nuevo
+        idClienteSeleccionado.value = '';
+        clienteSeleccionadoManualmente = false;
+
+        clearTimeout(timeoutBusqueda);
+
+        if (termino.length < 2) {
+            listaClientes.style.display = 'none';
+            return;
+        }
+
+        timeoutBusqueda = setTimeout(async () => {
+            try {
+                const response = await fetch(`/system/clientes/buscar?termino=${encodeURIComponent(termino)}`);
+                const clientes = await response.json();
+
+                listaClientes.innerHTML = '';
+
+                if (clientes.length > 0) {
+                    clientes.forEach(cliente => {
+                        const li = document.createElement('li');
+                        li.className = 'list-group-item list-group-item-action';
+                        li.style.cursor = 'pointer';
+                        li.innerHTML = `
+                            <strong>${cliente.nombreCliente} ${cliente.apellidosCliente}</strong>
+                            <small class="text-muted d-block">DNI: ${cliente.dniCliente || 'N/A'}</small>
+                        `;
+                        li.onclick = () => seleccionarCliente(cliente, inputCliente, idClienteSeleccionado, listaClientes);
+                        listaClientes.appendChild(li);
+                    });
+
+                    listaClientes.style.display = 'block';
+                } else {
+                    listaClientes.style.display = 'none';
+                }
+
+            } catch (error) {
+                console.error('Error al buscar clientes:', error);
+            }
+        }, 300);
+    });
+
+    // Ocultar lista al hacer clic fuera
+    document.addEventListener('click', function(e) {
+        if (!inputCliente.contains(e.target) && !listaClientes.contains(e.target)) {
+            listaClientes.style.display = 'none';
+        }
+    });
+}
+
+// ======================
+// 🆕 SELECCIONAR CLIENTE DE LA LISTA
+// ======================
+function seleccionarCliente(cliente, inputCliente, idClienteSeleccionado, listaClientes) {
+    inputCliente.value = `${cliente.nombreCliente} ${cliente.apellidosCliente}`;
+    idClienteSeleccionado.value = cliente.idCliente;
+    clienteSeleccionadoManualmente = true;
+    listaClientes.style.display = 'none';
+    console.log('✅ Cliente existente seleccionado, ID:', cliente.idCliente);
+}
+
+// ======================
+// CARGAR PLATOS
 // ======================
 async function listarPlatosParaPedido() {
     const contenedor = document.getElementById("contenedorListaPlatos");
@@ -45,53 +119,33 @@ async function listarPlatosParaPedido() {
     }
 }
 
-// ======================
-// 👤 CARGAR CLIENTES
-// ======================
-async function cargarClientesEnSelect() {
-    const select = document.getElementById("selectClientePedido");
-    if (!select) return;
-    try {
-        const response = await fetch("/system/clientes/listar");
-        const clientes = await response.json();
-        clientes.forEach(cliente => {
-            select.innerHTML += `<option value="${cliente.idCliente}">
-                ${cliente.nombreCliente} ${cliente.apellidosCliente}
-            </option>`;
-        });
-    } catch (error) {
-        console.error("Error al cargar clientes:", error);
-    }
-}
-
 // ===============
 // CARGAR MESAS
 // ===============
 async function cargarMesasEnSelect() {
-  const selectMesa = document.getElementById("numeroMesa");
-  if (!selectMesa) return;
+    const selectMesa = document.getElementById("numeroMesa");
+    if (!selectMesa) return;
 
-  try {
-    const response = await fetch("/mesa/numMesas");
-    if (!response.ok) throw new Error("Error al cargar las mesas");
+    try {
+        const response = await fetch("/mesa/numMesas");
+        if (!response.ok) throw new Error("Error al cargar las mesas");
 
-    const mesas = await response.json();
+        const mesas = await response.json();
 
-    selectMesa.innerHTML = `<option value="">Seleccione una mesa</option>`;
+        selectMesa.innerHTML = `<option value="">Seleccione una mesa</option>`;
 
-    mesas.forEach(mesa => {
-      const option = document.createElement("option");
-      option.value = mesa.idMesa;
-      option.textContent = `Mesa ${mesa.numeroMesa}`;
-      selectMesa.appendChild(option);
-    });
+        mesas.forEach(mesa => {
+            const option = document.createElement("option");
+            option.value = mesa.idMesa;
+            option.textContent = `Mesa ${mesa.numeroMesa}`;
+            selectMesa.appendChild(option);
+        });
 
-  } catch (error) {
-    console.error("Error al cargar mesas:", error);
-    selectMesa.innerHTML = `<option value="">Error al cargar mesas</option>`;
-  }
+    } catch (error) {
+        console.error("Error al cargar mesas:", error);
+        selectMesa.innerHTML = `<option value="">Error al cargar mesas</option>`;
+    }
 }
-
 
 // ======================
 // AGREGAR PLATO AL PEDIDO
@@ -155,11 +209,11 @@ function eliminarDelPedido(index) {
 }
 
 // ======================
-// FINALIZAR PEDIDO
+// 🔄 FINALIZAR PEDIDO (ACTUALIZADO)
 // ======================
 async function finalizarPedido() {
-    const nombreNuevoCliente = document.getElementById("inputNuevoCliente").value.trim();
-    const idClienteExistente = document.getElementById("selectClientePedido").value;
+    const textoCliente = document.getElementById("inputNuevoCliente").value.trim();
+    const idClienteSeleccionado = document.getElementById("idClienteSeleccionado").value;
     const idMesaSeleccionada = document.getElementById("numeroMesa").value;
     const totalTexto = document.getElementById("totalPedido").textContent;
     const totalPedido = parseFloat(totalTexto.replace('S/. ', ''));
@@ -174,49 +228,40 @@ async function finalizarPedido() {
         return;
     }
 
-    let idClienteFinal;
+    if (!textoCliente) {
+        mostrarToast("Ingrese un nombre de cliente.", "warning");
+        return;
+    }
+
+    let idClienteFinal = idClienteSeleccionado;
 
     try {
-        if (nombreNuevoCliente) {
-            const nuevoCliente = await crearNuevoCliente(nombreNuevoCliente);
+        // Si NO seleccionó ninguno de la lista, crear nuevo cliente
+        if (!clienteSeleccionadoManualmente || !idClienteFinal) {
+            console.log('🆕 No seleccionó cliente existente, creando nuevo...');
+
+            const response = await fetch('/system/clientes/crear-desde-texto', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ texto: textoCliente })
+            });
+
+            if (!response.ok) throw new Error('Error al crear el cliente');
+
+            const nuevoCliente = await response.json();
             idClienteFinal = nuevoCliente.idCliente;
-        } else if (idClienteExistente) {
-            idClienteFinal = parseInt(idClienteExistente);
+            console.log('✅ Nuevo cliente creado con ID:', idClienteFinal);
         } else {
-            mostrarToast("Seleccione o ingrese un cliente.", "warning");
-            return;
+            console.log('✅ Usando cliente existente con ID:', idClienteFinal);
         }
 
+        // Crear el pedido
         await crearPedido(idClienteFinal, totalPedido, parseInt(idMesaSeleccionada));
 
     } catch (error) {
-        console.error('Error en el proceso de finalizar pedido:', error);
+        console.error('❌ Error en el proceso de finalizar pedido:', error);
         mostrarToast(error.message || "Ocurrió un error inesperado.", "error");
     }
-}
-
-// ======================
-// CREAR CLIENTE NUEVO
-// ======================
-async function crearNuevoCliente(nombreCompleto) {
-    const partesNombre = nombreCompleto.split(' ');
-    const nombre = partesNombre.shift() || '';
-    const apellidos = partesNombre.join(' ') || '';
-
-    const clienteData = {
-        dniCliente: `TEMP-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-        nombreCliente: nombre,
-        apellidosCliente: apellidos
-    };
-
-    const response = await fetch('/system/clientes/guardar', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(clienteData)
-    });
-
-    if (!response.ok) throw new Error('Error al crear el nuevo cliente.');
-    return await response.json();
 }
 
 // ==============
@@ -259,7 +304,8 @@ function limpiarPedido() {
     resumenPedido = [];
     actualizarResumenTabla();
     document.getElementById("inputNuevoCliente").value = "";
-    document.getElementById("selectClientePedido").selectedIndex = 0;
+    document.getElementById("idClienteSeleccionado").value = "";
     document.getElementById("numeroMesa").selectedIndex = 0;
+    clienteSeleccionadoManualmente = false;
     mostrarToast("Pedido limpiado.", "info");
 }

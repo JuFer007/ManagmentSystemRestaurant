@@ -35,11 +35,33 @@ public class ClienteService {
     //Actualizar cliente
     public Cliente actualizarCliente(Cliente cliente) {
         return clienteRepository.findById(cliente.getIdCliente())
-                .map(clienteExistente -> {
-                    clienteExistente.setDniCliente(cliente.getDniCliente());
-                    clienteExistente.setNombreCliente(cliente.getNombreCliente());
-                    clienteExistente.setApellidosCliente(cliente.getApellidosCliente());
-                    return clienteRepository.save(clienteExistente);
-                }).orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado con id: " + cliente.getIdCliente()));
+        .map(clienteExistente -> {
+            clienteExistente.setDniCliente(cliente.getDniCliente());
+            clienteExistente.setNombreCliente(cliente.getNombreCliente());
+            clienteExistente.setApellidosCliente(cliente.getApellidosCliente());
+            return clienteRepository.save(clienteExistente);
+        }).orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado con id: " + cliente.getIdCliente()));
+    }
+
+    //Buscar cliente por nombre
+    public List<Cliente> buscarClientePorNombre(String termino) {
+        return clienteRepository.findByNombreClienteContainingIgnoreCaseOrApellidosClienteContainingIgnoreCase(termino, termino);
+    }
+
+    //Crear cliente con nombre completo
+    public Cliente crearClienteDesdeTexto(String textoCompleto) {
+        String[] palabras = textoCompleto.trim().split("\\s+");
+
+        Cliente nuevoCliente = new Cliente();
+
+        if (palabras.length == 1) {
+            nuevoCliente.setNombreCliente(palabras[0]);
+            nuevoCliente.setApellidosCliente("");
+        } else {
+            nuevoCliente.setNombreCliente(palabras[0]);
+            nuevoCliente.setApellidosCliente(String.join(" ",
+            java.util.Arrays.copyOfRange(palabras, 1, palabras.length)));
+        }
+        return clienteRepository.save(nuevoCliente);
     }
 }
