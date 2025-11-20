@@ -9,6 +9,7 @@ import com.app.SystemRestaurant.Model.ClasesGestion.Pedido;
 import com.app.SystemRestaurant.Model.ClasesGestion.DetallePedido;
 import com.app.SystemRestaurant.Model.ClasesGestion.Plato;
 import com.app.SystemRestaurant.Repository.*;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -135,5 +136,8 @@ public class PedidoService {
         pedidoGuardado.setDetalles(detalles);
         return convertirAPedidoDTO(pedidoGuardado);
     }
-    
+
+    public Pedido buscarPorCodigoPedido(String codigo) {
+        return pedidoRepository.findByCodigoPedido(codigo);
+    }
 }

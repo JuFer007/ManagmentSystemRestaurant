@@ -36,16 +36,27 @@ function cargarPagos() {
             },
             {
                 "data": null,
-                render: (data, type, row) => `
-                    <button class="btn btn-info btn-sm btn-ver" title="Descargar">
-                        <i class="ri-download-line"></i>
-                    </button>
-                    <button class="btn btn-warning btn-sm" onclick="abrirModalCambiarEstado(${row.idPago})">
-                        <i class="ri-pencil-line"></i> Editar
-                    </button>`,
+                render: (data, type, row) => {
+                    let btnDescargar = `
+                        <button class="btn btn-info btn-sm btn-ver" title="Descargar">
+                            <i class="ri-download-line"></i> Descargar
+                        </button>`;
+
+                    // Ocultar el botón Editar si el estado es Pagado
+                    let btnEditar = "";
+                    if (row.estadoPago !== "Pagado") {
+                        btnEditar = `
+                            <button class="btn btn-warning btn-sm" onclick="abrirModalCambiarEstado(${row.idPago})">
+                                <i class="ri-pencil-line"></i> Editar
+                            </button>`;
+                    }
+
+                    return btnDescargar + btnEditar;
+                },
                 orderable: false,
                 searchable: false
             }
+
         ],
         language: { url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json' }
     });
@@ -54,25 +65,30 @@ function cargarPagos() {
 async function abrirModalCambiarEstado(idPago) {
     try {
         const response = await fetch(`/system/pagos/buscar/${idPago}`);
-        if (!response.ok) {
-            throw new Error('No se pudo obtener los datos del pago.');
-        }
+        if (!response.ok) throw new Error('No se pudo obtener los datos del pago.');
         const pago = await response.json();
 
         document.getElementById('idPagoEditar').value = pago.idPago;
         document.getElementById('codigoPedidoPago').value = pago.codigoPedido;
         document.getElementById('fechaPagoEditar').value = pago.fechaPago;
         document.getElementById('montoPagoEditar').value = pago.montoPago.toFixed(2);
-
         document.getElementById('metodoPagoEditar').value = pago.metodoPago;
         document.getElementById('estadoPagoEditar').value = pago.estadoPago;
 
+        const pedidoResp = await fetch(`/pedidos/buscar-por-codigo/${pago.codigoPedido}`);
+        if (!pedidoResp.ok) throw new Error("No se pudo obtener el pedido.");
+
+        const pedido = await pedidoResp.json();
+
+        if (pedido.idCliente && pedido.idCliente.dniCliente && pedido.idCliente.dniCliente.trim() !== "") {
+            document.getElementById("containerDni").style.display = "none";
+        } else {
+            document.getElementById("containerDni").style.display = "block";
+        }
+
         const modal = new bootstrap.Modal(document.getElementById('modalEditarPago'));
         modal.show();
-
-        // Asignar el evento de click al botón de actualizar
         document.getElementById('btnActualizarPago').onclick = () => actualizarPago();
-
     } catch (error) {
         console.error('Error al abrir modal de edición:', error);
         mostrarToast(error.message, 'danger');
@@ -83,15 +99,38 @@ async function actualizarPago() {
     const idPago = document.getElementById('idPagoEditar').value;
     const metodoPago = document.getElementById('metodoPagoEditar').value;
     const estadoPago = document.getElementById('estadoPagoEditar').value;
-
-    const url = `/system/pagos/actualizarDatos/${idPago}?metodoPago=${encodeURIComponent(metodoPago)}&estadoPago=${encodeURIComponent(estadoPago)}`;
+    const nuevoDni = document.getElementById('dniClientePago').value.trim();
+    const codigoPedido = document.getElementById('codigoPedidoPago').value.trim();
 
     try {
-        const response = await fetch(url, { method: 'PUT' });
+        const pedidoResp = await fetch(`/pedidos/buscar-por-codigo/${codigoPedido}`);
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(errorText || 'Error al actualizar el pago.');
+        if (!pedidoResp.ok) {
+            throw new Error(`No se encontró el pedido con el código: ${codigoPedido}`);
+        }
+
+        const pedido = await pedidoResp.json();
+
+        if (nuevoDni !== "") {
+            const dniResp = await fetch(`/system/clientes/actualizar-dni`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    idPedido: pedido.idPedido,
+                    nuevoDni: nuevoDni
+                })
+            });
+
+            if (!dniResp.ok) {
+                throw new Error("Error al actualizar el DNI.");
+            }
+        }
+
+        const url = `/system/pagos/actualizarDatos/${idPago}?metodoPago=${encodeURIComponent(metodoPago)}&estadoPago=${encodeURIComponent(estadoPago)}`;
+        const pagoResp = await fetch(url, { method: 'PUT' });
+
+        if (!pagoResp.ok) {
+            throw new Error("Error al actualizar el pago.");
         }
 
         const modalInstance = bootstrap.Modal.getInstance(document.getElementById('modalEditarPago'));
@@ -101,14 +140,12 @@ async function actualizarPago() {
         mostrarToast('Pago actualizado correctamente.', 'success');
 
     } catch (error) {
-        console.error('Error al actualizar el pago:', error);
+        console.error("Error:", error);
         mostrarToast(error.message, 'danger');
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Este listener es para asegurar que el evento onclick del botón de actualizar
-    // se remueva si el modal se cierra sin guardar, para evitar múltiples listeners.
     const modalEl = document.getElementById('modalEditarPago');
     if (modalEl) {
         modalEl.addEventListener('hidden.bs.modal', () => {

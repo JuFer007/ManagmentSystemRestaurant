@@ -1,6 +1,7 @@
 package com.app.SystemRestaurant.Controller;
 import com.app.SystemRestaurant.DTO.PedidoDTO;
 import com.app.SystemRestaurant.DTO.PedidoRequestDTO;
+import com.app.SystemRestaurant.Model.ClasesGestion.Pedido;
 import com.app.SystemRestaurant.Service.PedidoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -49,5 +50,10 @@ public class PedidoController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido con id: " + id  + " no encontrador");
         }
+    }
+
+    @GetMapping("/buscar-por-codigo/{codigo}")
+    public Pedido buscarPorCodigo(@PathVariable String codigo) {
+        return pedidoService.buscarPorCodigoPedido(codigo);
     }
 }

@@ -1,6 +1,8 @@
 package com.app.SystemRestaurant.Service;
 import com.app.SystemRestaurant.Model.ClasesEmpleados.Cliente;
+import com.app.SystemRestaurant.Model.ClasesGestion.Pedido;
 import com.app.SystemRestaurant.Repository.ClienteRepository;
+import com.app.SystemRestaurant.Repository.PedidoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,9 @@ import java.util.Optional;
 public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
 
     //Agregar cliente
     public Cliente agregarCliente(Cliente cliente) {
@@ -63,5 +68,18 @@ public class ClienteService {
             java.util.Arrays.copyOfRange(palabras, 1, palabras.length)));
         }
         return clienteRepository.save(nuevoCliente);
+    }
+
+    public Cliente actualizarDniPorPedido(int idPedido, String nuevoDni) {
+        Pedido pedido = pedidoRepository.findById(idPedido).orElseThrow(() -> new EntityNotFoundException("Pedido no encontrado"));
+
+        Cliente cliente = pedido.getIdCliente();
+
+        if (cliente == null) {
+            throw new EntityNotFoundException("El pedido no tiene cliente asociado");
+        }
+
+        cliente.setDniCliente(nuevoDni);
+        return clienteRepository.save(cliente);
     }
 }

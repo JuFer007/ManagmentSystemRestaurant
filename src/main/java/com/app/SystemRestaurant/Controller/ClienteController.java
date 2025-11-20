@@ -47,4 +47,11 @@ public class ClienteController {
         String texto = datos.get("texto");
         return clienteService.crearClienteDesdeTexto(texto);
     }
+
+    @PostMapping("/actualizar-dni")
+    public Cliente actualizarDniPorPedido(@RequestBody Map<String, String> datos) {
+        int idPedido = Integer.parseInt(datos.get("idPedido"));
+        String nuevoDni = datos.get("nuevoDni");
+        return clienteService.actualizarDniPorPedido(idPedido, nuevoDni);
+    }
 }

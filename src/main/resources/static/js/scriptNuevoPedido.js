@@ -11,7 +11,7 @@ let timeoutBusqueda;
 let clienteSeleccionadoManualmente = false;
 
 // ======================
-// 🆕 INICIALIZAR BUSCADOR DE CLIENTES
+// INICIALIZAR BUSCADOR DE CLIENTES
 // ======================
 function inicializarBuscadorClientes() {
     const inputCliente = document.getElementById('inputNuevoCliente');
@@ -72,14 +72,14 @@ function inicializarBuscadorClientes() {
 }
 
 // ======================
-// 🆕 SELECCIONAR CLIENTE DE LA LISTA
+// SELECCIONAR CLIENTE DE LA LISTA
 // ======================
 function seleccionarCliente(cliente, inputCliente, idClienteSeleccionado, listaClientes) {
     inputCliente.value = `${cliente.nombreCliente} ${cliente.apellidosCliente}`;
     idClienteSeleccionado.value = cliente.idCliente;
     clienteSeleccionadoManualmente = true;
     listaClientes.style.display = 'none';
-    console.log('✅ Cliente existente seleccionado, ID:', cliente.idCliente);
+    console.log('Cliente existente seleccionado, ID:', cliente.idCliente);
 }
 
 // ======================

@@ -524,11 +524,6 @@
 
                             <!-- Footer del Modal -->
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger text-dark" data-bs-dismiss="modal"
-                                    style="background-color: #b9b9b9 !important; border:none !important;">
-                                    <i class="ri-close-line"></i>
-                                    <span>Cerrar</span>
-                                </button>
                                 <button type="button" class="btn btn-danger" onclick="cambiarEstado()"
                                     style="background-color: #d66c27 !important; border:none !important;"
                                     id="btnCambiarEstado">
@@ -765,41 +760,65 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- MODAL PARA EDITAR PAGO(SELECCIONAR METODO Y EL ESTADO) -->
                 <div class="modal fade" id="modalEditarPago" tabindex="-1" aria-labelledby="modalEditarPagoLabel"
-                    aria-hidden="true">
+                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
+
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalEditarPagoLabel"><i
-                                        class="ri-pencil-line me-2"></i>Finalizar Pago</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <h5 class="modal-title" id="modalEditarPagoLabel">
+                                    <i class="fa-solid fa-pen-to-square me-2"></i>Finalizar Pago
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
+
                             <div class="modal-body">
                                 <form id="formEditarPago">
                                     <input type="hidden" id="idPagoEditar">
+
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            <label for="codigoPedidoPago" class="form-label">Código Pedido</label>
+                                            <label for="codigoPedidoPago" class="form-label">
+                                                <i class="fa-solid fa-barcode me-1"></i>Código Pedido
+                                            </label>
                                             <input type="text" style="background-color: #ebe9e9;" id="codigoPedidoPago" class="form-control" readonly>
                                         </div>
+
                                         <div class="col-md-6 mb-3">
-                                            <label for="montoPagoEditar" class="form-label">Monto</label>
+                                            <label for="montoPagoEditar" class="form-label">
+                                                <i class="fa-solid fa-money-bill me-1"></i>Monto
+                                            </label>
                                             <div class="input-group">
                                                 <span class="input-group-text">S/.</span>
                                                 <input type="text" style="background-color: #ebe9e9;" id="montoPagoEditar" class="form-control" readonly>
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="mb-3">
-                                        <label for="fechaPagoEditar" class="form-label">Fecha de Pago</label>
+                                        <label for="fechaPagoEditar" class="form-label">
+                                            <i class="fa-solid fa-calendar-days me-1"></i>Fecha de Pago
+                                        </label>
                                         <input type="text" style="background-color: #ebe9e9;" id="fechaPagoEditar" class="form-control" readonly>
                                     </div>
+
+                                    <div class="mb-3" id="containerDni">
+                                        <label for="dniClientePago" class="form-label">
+                                            <i class="fa-solid fa-id-card me-1"></i>DNI del Cliente
+                                        </label>
+                                        <input type="text" id="dniClientePago" class="form-control">
+                                    </div>
+
                                     <hr>
+
                                     <div class="row">
+
                                         <div class="col-md-6 mb-3">
-                                            <label for="metodoPagoEditar" class="form-label">Método de Pago</label>
+                                            <label for="metodoPagoEditar" class="form-label">
+                                                <i class="fa-solid fa-credit-card me-1"></i>Método de Pago
+                                            </label>
                                             <select id="metodoPagoEditar" class="form-select">
                                                 <option value="Efectivo">Efectivo</option>
                                                 <option value="Tarjeta">Tarjeta</option>
@@ -807,24 +826,33 @@
                                                 <option value="Plin">Plin</option>
                                             </select>
                                         </div>
+
                                         <div class="col-md-6 mb-3">
-                                            <label for="estadoPagoEditar" class="form-label">Estado del Pago</label>
+                                            <label for="estadoPagoEditar" class="form-label">
+                                                <i class="fa-solid fa-circle-check me-1"></i>Estado del Pago
+                                            </label>
                                             <select id="estadoPagoEditar" class="form-select">
                                                 <option value="Pagado">Pagado</option>
                                                 <option value="Pendiente">Pendiente</option>
                                                 <option value="Anulado">Anulado</option>
                                             </select>
                                         </div>
+
                                     </div>
 
                                 </form>
                             </div>
+
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"
-                                    data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-primary" id="btnActualizarPago"><i
-                                        class="ri-save-line me-1"></i>Actualizar Pago</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    <i class="fa-solid fa-ban me-1"></i>Cancelar
+                                </button>
+
+                                <button type="button" class="btn btn-primary" id="btnActualizarPago">
+                                    <i class="fa-solid fa-floppy-disk me-1"></i>Registrar Pago
+                                </button>
                             </div>
+
                         </div>
                     </div>
                 </div>

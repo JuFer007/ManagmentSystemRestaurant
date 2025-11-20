@@ -1,5 +1,4 @@
 package com.app.SystemRestaurant.ArchUnit;
-
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
 
