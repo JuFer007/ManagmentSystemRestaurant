@@ -189,8 +189,8 @@ function actualizarResumenTabla() {
                 <td>${item.nombrePlato}</td>
                 <td>${item.cantidad}</td>
                 <td>S/. ${subtotal.toFixed(2)}</td>
-                <td>
-                    <button class="btn btn-danger btn-sm" onclick="eliminarDelPedido(${index})">
+                <td class="text-center">
+                    <button class="btn-action btn-delete" onclick="eliminarDelPedido(${index})" title="Eliminar del Pedido">
                         <i class="ri-delete-bin-line"></i>
                     </button>
                 </td>

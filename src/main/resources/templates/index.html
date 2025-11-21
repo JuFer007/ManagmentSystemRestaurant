@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- Estilos -->
     <link rel="stylesheet" href="/css/styleIndex.css">
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
     <!-- Modal de pedido-->
     <link rel="stylesheet" href="/css/styleModalPedido.css">
     <!-- Link de graficos -->
@@ -167,16 +165,24 @@
                             <table class="table" id="tablaClientes">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: #cf7235; color:black">DNI</th>
-                                        <th style="background-color: #cf7235; color:black">Nombre</th>
-                                        <th style="background-color: #cf7235; color:black">Apellidos</th>
-                                        <th style="background-color: #cf7235; color:black">Acciones</th>
+                                        <th style="background-color: #d9641c; color:black">DNI</th>
+                                        <th style="background-color: #d9641c; color:black">Nombre</th>
+                                        <th style="background-color: #d9641c; color:black">Apellidos</th>
+                                        <th style="background-color: #d9641c; color:black">Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tablaClientesBody">
                                     <!-- Los datos se cargarán dinamicamente -->
                                 </tbody>
                             </table>
+                        </div>
+                        <div id="paginacionClientes" class="d-flex justify-content-between align-items-center mt-3">
+                            <div>
+                                <span id="infoClientes">Mostrando 0 de 0 clientes</span>
+                            </div>
+                            <nav>
+                                <ul id="paginacionClientesNav" class="pagination mb-0"></ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
@@ -266,19 +272,27 @@
                             <table class="table" id="tablaEmpleados">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: #cf7235; color:black">DNI</th>
-                                        <th style="background-color: #cf7235; color:black">Nombre</th>
-                                        <th style="background-color: #cf7235; color:black">Apellidos</th>
-                                        <th style="background-color: #cf7235; color:black">Cargo</th>
-                                        <th style="background-color: #cf7235; color:black">Salario</th>
-                                        <th style="background-color: #cf7235; color:black">Estado</th>
-                                        <th style="background-color: #cf7235; color:black">Acciones</th>
+                                        <th style="background-color: #d9641c; color:black">DNI</th>
+                                        <th style="background-color: #d9641c; color:black">Nombre</th>
+                                        <th style="background-color: #d9641c; color:black">Apellidos</th>
+                                        <th style="background-color: #d9641c; color:black">Cargo</th>
+                                        <th style="background-color: #d9641c; color:black">Salario</th>
+                                        <th style="background-color: #d9641c; color:black">Estado</th>
+                                        <th style="background-color: #d9641c; color:black">Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tablaEmpleadosBody">
                                     <!-- Los datos se cargarán aquí con JavaScript -->
                                 </tbody>
                             </table>
+                        </div>
+                        <div id="paginacionEmpleados" class="d-flex justify-content-between align-items-center mt-3">
+                            <div>
+                                <span id="infoEmpleados">Mostrando 0 de 0 empleados</span>
+                            </div>
+                            <nav>
+                                <ul id="paginacionEmpleadosNav" class="pagination mb-0"></ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
@@ -408,18 +422,26 @@
                             <table class="table table-hover" id="tablaPedidos">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: #cf7235; color:black">Código</th>
-                                        <th style="background-color: #cf7235; color:black">Cliente</th>
-                                        <th style="background-color: #cf7235; color:black">Fecha y Hora</th>
-                                        <th style="background-color: #cf7235; color:black">Total</th>
-                                        <th style="background-color: #cf7235; color:black">Estado</th>
-                                        <th style="background-color: #cf7235; color:black">Acciones</th>
+                                        <th style="background-color: #d9641c; color:black">Código</th>
+                                        <th style="background-color: #d9641c; color:black">Cliente</th>
+                                        <th style="background-color: #d9641c; color:black">Fecha y Hora</th>
+                                        <th style="background-color: #d9641c; color:black">Total</th>
+                                        <th style="background-color: #d9641c; color:black">Estado</th>
+                                        <th style="background-color: #d9641c; color:black">Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tablaPedidosBody">
                                     <!-- Cargar pedidos con js -->
                                 </tbody>
                             </table>
+                        </div>
+                        <div id="paginacionPedidos" class="d-flex justify-content-between align-items-center mt-3">
+                            <div>
+                                <span id="infoPedidos">Mostrando 0 de 0 pedidos</span>
+                            </div>
+                            <nav>
+                                <ul id="paginacionPedidosNav" class="pagination mb-0"></ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
@@ -745,18 +767,26 @@
                             <table class="table" id="tablaPagos">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: #cf7235; color:black">Código</th>
-                                        <th style="background-color: #cf7235; color:black">Fecha de Pago</th>
-                                        <th style="background-color: #cf7235; color:black">Método</th>
-                                        <th style="background-color: #cf7235; color:black">Monto</th>
-                                        <th style="background-color: #cf7235; color:black">Estado</th>
-                                        <th style="background-color: #cf7235; color:black">Acciones</th>
+                                        <th style="background-color: #d9641c; color:black">Código</th>
+                                        <th style="background-color: #d9641c; color:black">Fecha de Pago</th>
+                                        <th style="background-color: #d9641c; color:black">Método</th>
+                                        <th style="background-color: #d9641c; color:black">Monto</th>
+                                        <th style="background-color: #d9641c; color:black">Estado</th>
+                                        <th style="background-color: #d9641c; color:black">Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tablaPagosBody">
                                     <!-- Los datos se cargarán aquí con JavaScript -->
                                 </tbody>
                             </table>
+                        </div>
+                        <div id="paginacionPagos" class="d-flex justify-content-between align-items-center mt-3">
+                            <div>
+                                <span id="infoPagos">Mostrando 0 de 0 pagos</span>
+                            </div>
+                            <nav>
+                                <ul id="paginacionPagosNav" class="pagination mb-0"></ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
@@ -866,10 +896,6 @@
 
     <!-- Toast -->
     <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3"></div>
-    <!-- JQuery (necesario para DataTables) -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
     <!-- Link chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Script bootstrap -->

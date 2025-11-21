@@ -1,0 +1,224 @@
+/* Estilos personalizados para Tabulator con paleta de colores del restaurante */
+.tabulator .tabulator-header {
+    background: #cf7235 !important;
+    border-bottom: 2px solid #b8612a;
+}
+
+.tabulator .tabulator-header .tabulator-col {
+    background: #cf7235 !important;
+    border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+.tabulator .tabulator-header .tabulator-col .tabulator-col-content {
+    color: black !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px 12px !important;
+}
+
+.tabulator .tabulator-header .tabulator-col:hover {
+    background: #b8612a !important;
+}
+
+/* Filas de la tabla */
+.tabulator .tabulator-tableHolder .tabulator-table {
+    background: white;
+}
+
+.tabulator .tabulator-row {
+    min-height: 50px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: all 0.2s ease;
+}
+
+.tabulator .tabulator-row:hover {
+    background-color: #fff5ef !important;
+    transform: scale(1.005);
+    box-shadow: 0 2px 8px rgba(217, 99, 26, 0.1);
+    z-index: 1;
+}
+
+.tabulator .tabulator-row.tabulator-row-even {
+    background-color: white;
+}
+
+.tabulator .tabulator-row.tabulator-row-odd {
+    background-color: #fafafa;
+}
+
+.tabulator .tabulator-cell {
+    padding: 14px 12px !important;
+    border-right: 1px solid #f0f0f0;
+    vertical-align: middle;
+    color: #2e2e2e;
+    font-size: 14px;
+}
+
+/* Botones de acción */
+.btn-action {
+    border: none;
+    background: transparent;
+    padding: 8px 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    margin: 0 2px;
+}
+
+.btn-action i {
+    font-size: 18px;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-action.btn-edit {
+    color: #f59e0b;
+    background-color: rgba(245, 158, 11, 0.1);
+}
+
+.btn-action.btn-edit:hover {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: #d97706;
+}
+
+.btn-action.btn-delete {
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.btn-action.btn-delete:hover {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #dc2626;
+}
+
+.btn-action.btn-view {
+    color: #3b82f6;
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+.btn-action.btn-view:hover {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: #2563eb;
+}
+
+.btn-action.btn-status {
+    color: #6b7280;
+    background-color: rgba(107, 114, 128, 0.1);
+}
+
+.btn-action.btn-status:hover {
+    background-color: rgba(107, 114, 128, 0.2);
+    color: #4b5563;
+}
+
+.btn-action.btn-primary-icon {
+    color: #d9631a;
+    background-color: rgba(217, 99, 26, 0.1);
+}
+
+.btn-action.btn-primary-icon:hover {
+    background-color: rgba(217, 99, 26, 0.2);
+    color: #c25a17;
+}
+
+.btn-action.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Paginación y controles */
+.tabulator-footer {
+    background: white;
+    border-top: 2px solid #f0f0f0;
+    padding: 12px 15px;
+}
+
+.tabulator-footer .tabulator-page-size {
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+.tabulator-footer .tabulator-paginator {
+    color: #2e2e2e;
+}
+
+.tabulator-footer .tabulator-page {
+    padding: 8px 12px;
+    margin: 0 2px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    color: #2e2e2e;
+    transition: all 0.3s ease;
+}
+
+.tabulator-footer .tabulator-page:hover {
+    background: linear-gradient(135deg, #d9631a, #d17e42);
+    color: white;
+    border-color: #d9631a;
+}
+
+.tabulator-footer .tabulator-page.active {
+    background: linear-gradient(135deg, #d9631a, #d17e42);
+    color: white;
+    border-color: #d9631a;
+}
+
+/* Búsqueda */
+.tabulator-print-fullscreen {
+    background: white;
+}
+
+/* Contenedor de tabla */
+.tabulator {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+}
+
+.badge-success {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.badge-warning {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.badge-danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.badge-secondary {
+    background-color: #e5e7eb;
+    color: #374151;
+}
+

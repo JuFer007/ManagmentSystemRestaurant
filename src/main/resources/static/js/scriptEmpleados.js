@@ -1,49 +1,158 @@
-let tablaEmpleadosDT;
+// Variables globales para paginación
+let todosLosEmpleados = [];
+let empleadosPaginaActual = 1;
+const empleadosPorPagina = 10;
 
 document.addEventListener('DOMContentLoaded', function () {
 });
 
 //CARGAR EMPLEADOS DESDE LA BD
-function cargarEmpleados() {
-    if (tablaEmpleadosDT) {
-        tablaEmpleadosDT.ajax.reload();
+async function cargarEmpleados() {
+    const tablaBody = document.querySelector("#tablaEmpleadosBody");
+    
+    try {
+        const response = await fetch('/system/empleados/listar');
+        if (!response.ok) throw new Error("Error al obtener los empleados");
+        
+        let empleados = await response.json();
+        
+        // Ordenar por prioridad de estado: Activo primero, luego Inactivo
+        empleados.sort((a, b) => {
+            const prioridadEstado = {
+                "Activo": 1,
+                "Inactivo": 2
+            };
+            
+            const prioridadA = prioridadEstado[a.estadoEmpleado] || 3;
+            const prioridadB = prioridadEstado[b.estadoEmpleado] || 3;
+            
+            if (prioridadA !== prioridadB) {
+                return prioridadA - prioridadB;
+            }
+            
+            // Si tienen el mismo estado, ordenar alfabéticamente por nombre
+            return a.nombreEmpleado.localeCompare(b.nombreEmpleado);
+        });
+        
+        todosLosEmpleados = empleados;
+        empleadosPaginaActual = 1;
+        renderizarEmpleados(todosLosEmpleados);
+        actualizarPaginacionEmpleados();
+    } catch (error) {
+        console.error("Error:", error);
+        if (tablaBody) {
+            tablaBody.innerHTML = `<tr><td colspan='7' class='text-center text-danger'>Error al cargar empleados</td></tr>`;
+        }
+        mostrarToast('Error al cargar los empleados', "danger");
+    }
+}
+
+// ========== RENDERIZAR EMPLEADOS ==========
+function renderizarEmpleados(empleados) {
+    const tablaBody = document.querySelector("#tablaEmpleadosBody");
+    if (!tablaBody) return;
+    
+    tablaBody.innerHTML = "";
+    
+    if (empleados.length === 0) {
+        tablaBody.innerHTML = "<tr><td colspan='7' class='text-center'>No se encontraron empleados</td></tr>";
+        actualizarInfoEmpleados(0, 0);
         return;
     }
-    tablaEmpleadosDT = new DataTable('#tablaEmpleados', {
-        ajax: {
-            url: '/system/empleados/listar',
-            dataSrc: ''
-        },
-        columns: [
-            { data: 'dniEmpleado', className: 'text-start'},
-            { data: 'nombreEmpleado', className: 'text-start'},
-            {
-                data: null,
-                render: (data, type, row) => `${row.apellidoPaternoEmpleado} ${row.apellidoMaternoEmpleado}`,
-                className: 'text-start',width: '20%'
-            },
-            { data: 'cargoEmpleado', className: 'text-start' },
-            { data: 'salarioEmpleado', className: 'text-start'},
-            {
-                data: 'estadoEmpleado',
-                className: 'text-start',
-                render: (data) => `<span class="badge ${data === 'Activo' ? 'bg-success' : 'bg-danger'}">${data}</span>`
-            },
-            {
-                data: 'idEmpleado',
-                render: (data, type, row) => `
-                    <button class="btn btn-warning btn-sm" onclick="editarEmpleado('${data}')"><i class="ri-edit-2-line"></i> Editar</button>
-                    <button class="btn btn-secondary btn-sm" onclick="cambiarEstadoEmpleado('${data}')"><i class="ri-refresh-line"></i> Estado</button>`
-                ,
-                orderable: false,
-                searchable: false,
-                className: 'text-start',
-                width: '15%'
-            }
-        ],
-        language: { url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json' }
+    
+    // Calcular paginación
+    const inicio = (empleadosPaginaActual - 1) * empleadosPorPagina;
+    const fin = inicio + empleadosPorPagina;
+    const empleadosPaginados = empleados.slice(inicio, fin);
+    
+    empleadosPaginados.forEach(empleado => {
+        const estadoBadge = empleado.estadoEmpleado === 'Activo' ? 'bg-success' : 'bg-danger';
+        const row = `
+            <tr>
+                <td>${empleado.dniEmpleado}</td>
+                <td>${empleado.nombreEmpleado}</td>
+                <td>${empleado.apellidoPaternoEmpleado} ${empleado.apellidoMaternoEmpleado}</td>
+                <td>${empleado.cargoEmpleado}</td>
+                <td>S/. ${empleado.salarioEmpleado.toFixed(2)}</td>
+                <td><span class="badge ${estadoBadge}">${empleado.estadoEmpleado}</span></td>
+                <td style="text-align: center;">
+                    <button class="btn-action btn-edit" onclick="editarEmpleado('${empleado.idEmpleado}')" title="Editar Empleado">
+                        <i class="ri-edit-2-line"></i> Editar
+                    </button>
+                    <button class="btn-action btn-status" onclick="cambiarEstadoEmpleado('${empleado.idEmpleado}')" title="Cambiar Estado">
+                        <i class="ri-refresh-line"></i> Estado
+                    </button>
+                </td>
+            </tr>
+        `;
+        tablaBody.insertAdjacentHTML("beforeend", row);
     });
+    
+    actualizarInfoEmpleados(empleadosPaginados.length, empleados.length);
+}
 
+// ========== ACTUALIZAR INFORMACIÓN DE PAGINACIÓN ==========
+function actualizarInfoEmpleados(mostrados, total) {
+    const infoElement = document.getElementById("infoEmpleados");
+    if (infoElement) {
+        const inicio = (empleadosPaginaActual - 1) * empleadosPorPagina + 1;
+        const fin = Math.min(inicio + mostrados - 1, total);
+        infoElement.textContent = `Mostrando ${inicio} a ${fin} de ${total} empleados`;
+    }
+}
+
+// ========== CREAR PAGINACIÓN ==========
+function actualizarPaginacionEmpleados() {
+    const paginacionNav = document.getElementById("paginacionEmpleadosNav");
+    if (!paginacionNav) return;
+    
+    const totalPaginas = Math.ceil(todosLosEmpleados.length / empleadosPorPagina);
+    
+    if (totalPaginas <= 1) {
+        paginacionNav.innerHTML = "";
+        return;
+    }
+    
+    let html = "";
+    
+    // Botón anterior
+    html += `
+        <li class="page-item ${empleadosPaginaActual === 1 ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="cambiarPaginaEmpleados(${empleadosPaginaActual - 1}); return false;">Anterior</a>
+        </li>
+    `;
+    
+    // Números de página
+    for (let i = 1; i <= totalPaginas; i++) {
+        if (i === 1 || i === totalPaginas || (i >= empleadosPaginaActual - 1 && i <= empleadosPaginaActual + 1)) {
+            html += `
+                <li class="page-item ${i === empleadosPaginaActual ? 'active' : ''}">
+                    <a class="page-link" href="#" onclick="cambiarPaginaEmpleados(${i}); return false;">${i}</a>
+                </li>
+            `;
+        } else if (i === empleadosPaginaActual - 2 || i === empleadosPaginaActual + 2) {
+            html += `<li class="page-item disabled"><a class="page-link" href="#">...</a></li>`;
+        }
+    }
+    
+    // Botón siguiente
+    html += `
+        <li class="page-item ${empleadosPaginaActual === totalPaginas ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="cambiarPaginaEmpleados(${empleadosPaginaActual + 1}); return false;">Siguiente</a>
+        </li>
+    `;
+    
+    paginacionNav.innerHTML = html;
+}
+
+// ========== CAMBIAR PÁGINA ==========
+function cambiarPaginaEmpleados(pagina) {
+    const totalPaginas = Math.ceil(todosLosEmpleados.length / empleadosPorPagina);
+    if (pagina < 1 || pagina > totalPaginas) return;
+    
+    empleadosPaginaActual = pagina;
+    renderizarEmpleados(todosLosEmpleados);
+    actualizarPaginacionEmpleados();
 }
 
 // ABRIR FORMULARIO NUEVO/EDITAR EMPLEADO
@@ -148,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(() => {
                 mostrarToast(idEmpleado ? "Empleado actualizado con éxito." : "Empleado agregado exitosamente.", "success");
                 cerrarFormularioEmpleado();
-                tablaEmpleadosDT.ajax.reload(); // Recargamos la tabla con DataTables
+                cargarEmpleados();
             })
             .catch(err => {
                 console.error("Error al guardar empleado:", err);
@@ -177,9 +286,8 @@ async function cambiarEstadoEmpleado(idEmpleado) {
         });
 
         if (response.ok) {
-            tablaEmpleadosDT.ajax.reload();
+            cargarEmpleados();
             mostrarToast(`Estado cambiado.`, "info");
-
         } else {
             const msg = await response.text();
             mostrarToast(msg || "No se pudo cambiar el estado.", "danger");

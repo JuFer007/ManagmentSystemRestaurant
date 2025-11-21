@@ -1,7 +1,7 @@
 async function visualizarTicket(idPedido) {
     try {
-        mostrarCargando('Cargando ticket...');
-
+        mostrarToast("Generando ticket...", "info");
+        
         const response = await fetch(`http://localhost:8080/api/tickets/pedido/${idPedido}`);
         if (!response.ok) throw new Error('Error al generar el ticket');
 
@@ -11,17 +11,9 @@ async function visualizarTicket(idPedido) {
 
         const nuevaPestaña = window.open(url, '_blank');
 
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `ticket_pedido_${idPedido}.pdf`;
-        document.body.appendChild(a);
-
-        nuevaPestaña.onload = () => {
-            nuevaPestaña.document.title = `ticket_pedido_${idPedido}.pdf`;
-        };
-
-        ocultarCargando();
-
+        if (!nuevaPestaña) {
+            alert('El navegador bloqueó la apertura de la ventana. Por favor, permite pop-ups.');
+        }
     } catch (error) {
         console.error('Error al visualizar ticket:', error);
         mostrarError(error.message);

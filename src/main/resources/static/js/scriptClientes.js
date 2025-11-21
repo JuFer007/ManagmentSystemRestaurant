@@ -1,31 +1,124 @@
-let tablaClientesDT;
+// Variables globales para paginación
+let todosLosClientes = [];
+let clientesPaginaActual = 1;
+const clientesPorPagina = 10;
 
 // ========== CARGAR CLIENTES ==========
-function cargarClientes() {
-    if (tablaClientesDT) {
-        tablaClientesDT.ajax.reload();
+async function cargarClientes() {
+    const tablaBody = document.querySelector("#tablaClientesBody");
+    
+    try {
+        const response = await fetch('/system/clientes/listar');
+        if (!response.ok) throw new Error("Error al obtener los clientes");
+        
+        todosLosClientes = await response.json();
+        clientesPaginaActual = 1;
+        renderizarClientes(todosLosClientes);
+        actualizarPaginacionClientes();
+    } catch (error) {
+        console.error("Error:", error);
+        tablaBody.innerHTML = `<tr><td colspan='4' class='text-center text-danger'>Error al cargar clientes</td></tr>`;
+        mostrarToast('Error al cargar los clientes', "danger");
+    }
+}
+
+// ========== RENDERIZAR CLIENTES ==========
+function renderizarClientes(clientes) {
+    const tablaBody = document.querySelector("#tablaClientesBody");
+    tablaBody.innerHTML = "";
+    
+    if (clientes.length === 0) {
+        tablaBody.innerHTML = "<tr><td colspan='4' class='text-center'>No se encontraron clientes</td></tr>";
+        actualizarInfoClientes(0, 0);
         return;
     }
-
-    tablaClientesDT = new DataTable('#tablaClientes', {
-        ajax: {
-            url: '/system/clientes/listar',
-            dataSrc: ''
-        },
-        columns: [
-            { data: 'dniCliente', className: 'text-start'},
-            { data: 'nombreCliente', className: 'text-start'},
-            { data: 'apellidosCliente', className: 'text-start'},
-            {
-                data: 'idCliente',
-                render: (data) => `<button class="btn btn-warning btn-sm" onclick="editarCliente(${data})"><i class="ri-edit-2-line"></i> Editar</button>`,
-                orderable: false,
-                searchable: false,
-                className: 'text-center',
-            }
-        ],
-        language: { url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json' }
+    
+    // Calcular paginación
+    const inicio = (clientesPaginaActual - 1) * clientesPorPagina;
+    const fin = inicio + clientesPorPagina;
+    const clientesPaginados = clientes.slice(inicio, fin);
+    
+    clientesPaginados.forEach(cliente => {
+        const row = `
+            <tr>
+                <td>${cliente.dniCliente}</td>
+                <td>${cliente.nombreCliente}</td>
+                <td>${cliente.apellidosCliente}</td>
+                <td style="text-align: center;">
+                    <button class="btn-action btn-edit" onclick="editarCliente(${cliente.idCliente})" title="Editar Cliente">
+                        <i class="ri-edit-2-line"></i> Editar
+                    </button>
+                </td>
+            </tr>
+        `;
+        tablaBody.insertAdjacentHTML("beforeend", row);
     });
+    
+    actualizarInfoClientes(clientesPaginados.length, clientes.length);
+}
+
+// ========== ACTUALIZAR INFORMACIÓN DE PAGINACIÓN ==========
+function actualizarInfoClientes(mostrados, total) {
+    const infoElement = document.getElementById("infoClientes");
+    if (infoElement) {
+        const inicio = (clientesPaginaActual - 1) * clientesPorPagina + 1;
+        const fin = Math.min(inicio + mostrados - 1, total);
+        infoElement.textContent = `Mostrando ${inicio} a ${fin} de ${total} clientes`;
+    }
+}
+
+// ========== CREAR PAGINACIÓN ==========
+function actualizarPaginacionClientes() {
+    const paginacionNav = document.getElementById("paginacionClientesNav");
+    if (!paginacionNav) return;
+    
+    const totalPaginas = Math.ceil(todosLosClientes.length / clientesPorPagina);
+    
+    if (totalPaginas <= 1) {
+        paginacionNav.innerHTML = "";
+        return;
+    }
+    
+    let html = "";
+    
+    // Botón anterior
+    html += `
+        <li class="page-item ${clientesPaginaActual === 1 ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="cambiarPaginaClientes(${clientesPaginaActual - 1}); return false;">Anterior</a>
+        </li>
+    `;
+    
+    // Números de página
+    for (let i = 1; i <= totalPaginas; i++) {
+        if (i === 1 || i === totalPaginas || (i >= clientesPaginaActual - 1 && i <= clientesPaginaActual + 1)) {
+            html += `
+                <li class="page-item ${i === clientesPaginaActual ? 'active' : ''}">
+                    <a class="page-link" href="#" onclick="cambiarPaginaClientes(${i}); return false;">${i}</a>
+                </li>
+            `;
+        } else if (i === clientesPaginaActual - 2 || i === clientesPaginaActual + 2) {
+            html += `<li class="page-item disabled"><a class="page-link" href="#">...</a></li>`;
+        }
+    }
+    
+    // Botón siguiente
+    html += `
+        <li class="page-item ${clientesPaginaActual === totalPaginas ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="cambiarPaginaClientes(${clientesPaginaActual + 1}); return false;">Siguiente</a>
+        </li>
+    `;
+    
+    paginacionNav.innerHTML = html;
+}
+
+// ========== CAMBIAR PÁGINA ==========
+function cambiarPaginaClientes(pagina) {
+    const totalPaginas = Math.ceil(todosLosClientes.length / clientesPorPagina);
+    if (pagina < 1 || pagina > totalPaginas) return;
+    
+    clientesPaginaActual = pagina;
+    renderizarClientes(todosLosClientes);
+    actualizarPaginacionClientes();
 }
 
 // ========== ABRIR MODAL NUEVO CLIENTE ==========
@@ -93,10 +186,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 ? "/system/clientes/actualizar"
                 : "/system/clientes/guardar";
 
-            const method = idCliente ? "POST" : "POST";
-
             fetch(url, {
-                method: method,
+                method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(cliente)
             })
@@ -110,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const mensaje = idCliente ? "Cliente actualizado con éxito." : "Cliente agregado exitosamente.";
                 mostrarToast(mensaje, "success");
                 cerrarFormulario();
-                tablaClientesDT.ajax.reload();
+                cargarClientes();
             })
             .catch(err => {
                 console.error("Error al guardar cliente:", err);

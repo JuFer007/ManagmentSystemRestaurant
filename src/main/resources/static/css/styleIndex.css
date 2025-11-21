@@ -1,5 +1,5 @@
 
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 * {
     margin: 0;
@@ -279,15 +279,216 @@ body {
     box-shadow: 0 4px 10px var(--shadow);
 }
 
-/* Tablas */
+/* Tablas Mejoradas */
 .table-container {
     overflow-x: auto;
 }
 
-.table thead th {
-    color: var(--text-light);
-    font-weight: 700;
+/* Paginación personalizada */
+.pagination .page-link {
+    color: var(--primary);
+    border-color: #e5e7eb;
 }
+
+.pagination .page-item.active .page-link {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-color: var(--primary);
+    color: white;
+}
+
+.pagination .page-link:hover {
+    background-color: var(--bg-light);
+    border-color: var(--primary);
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+/* Estilo mejorado para tablas */
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin-bottom: 0;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table thead {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+}
+
+.table thead th {
+    color: black !important;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 16px 12px;
+    border: none;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table tbody tr {
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: center;
+}
+
+.table tbody tr:hover {
+    background-color: var(--bg-light);
+    box-shadow: 0 2px 8px rgba(217, 99, 26, 0.1);
+}
+
+.table tbody td {
+    padding: 14px 12px;
+    vertical-align: middle;
+    color: var(--text-dark);
+    font-size: 16px;
+    border: none;
+}
+
+.table tbody tr:last-child {
+    border-bottom: none;
+}
+
+/* Botones de acción con iconos y texto */
+.btn-action {
+    border: none;
+    background: transparent;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 0 3px;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.btn-action i {
+    font-size: 16px;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-action.btn-edit {
+    color: black !important;
+    background-color: rgba(37, 99, 235, 0.1);
+}
+
+.btn-action.btn-edit:hover {
+    background-color: rgba(37, 99, 235, 0.2);
+    color: black !important;
+}
+
+.btn-action.btn-delete {
+    color: black !important;
+    background-color: rgba(220, 38, 38, 0.1);
+}
+
+.btn-action.btn-delete:hover {
+    background-color: rgba(220, 38, 38, 0.2);
+    color: black !important;
+}
+
+.btn-action.btn-view {
+    color: black !important;
+    background-color: rgba(5, 150, 105, 0.1);
+}
+
+.btn-action.btn-view:hover {
+    background-color: rgba(5, 150, 105, 0.2);
+    color: black !important;
+}
+
+.btn-action.btn-status {
+    color: black !important;
+    background-color: rgba(124, 58, 237, 0.1);
+}
+
+.btn-action.btn-status:hover {
+    background-color: rgba(124, 58, 237, 0.2);
+    color: black !important;
+}
+
+.btn-action.btn-primary-icon {
+    color: black !important;
+    background-color: rgba(234, 88, 12, 0.1);
+}
+
+.btn-action.btn-primary-icon:hover {
+    background-color: rgba(234, 88, 12, 0.2);
+    color: black !important;
+}
+
+/* DataTables personalizado */
+.dataTables_wrapper {
+    padding: 0;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(217, 99, 26, 0.1);
+}
+
+.dataTables_wrapper .dataTables_length select {
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 8px 12px;
+    margin: 0 2px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    color: var(--text-dark) !important;
+    transition: all 0.3s ease;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+    color: white !important;
+    border-color: var(--primary);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+    color: white !important;
+    border-color: var(--primary);
+}
+
+.dataTables_wrapper .dataTables_info {
+    color: var(--text-light);
+    font-size: 14px;
+    padding-top: 12px;
+}
+
 
 .badge-success {
     background: #d1fae5;
@@ -397,3 +598,11 @@ body {
 #listaClientes .list-group-item {
     padding: 10px 15px;
 }
+
+/* Botones deshabilitados */
+.btn-action.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+

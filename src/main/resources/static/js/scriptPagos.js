@@ -1,56 +1,175 @@
-let tablaPagosDT;
+// Variables globales para paginación
+let todosLosPagos = [];
+let pagosPaginaActual = 1;
+const pagosPorPagina = 10;
 
 function cargarPagos() {
-    if (tablaPagosDT) {
-        tablaPagosDT.ajax.reload();
+    const tablaBody = document.querySelector("#tablaPagosBody");
+    
+    try {
+        fetch("/system/pagos/listar")
+            .then(response => {
+                if (!response.ok) throw new Error("Error al obtener los pagos");
+                return response.json();
+            })
+            .then(pagos => {
+                // Ordenar por prioridad de estado y luego por fecha
+                pagos.sort((a, b) => {
+                    // Prioridad: Pendiente primero, luego Pagado, luego Anulado
+                    const prioridadEstado = {
+                        "Pendiente": 1,
+                        "Pagado": 2,
+                        "Anulado": 3
+                    };
+                    
+                    const prioridadA = prioridadEstado[a.estadoPago] || 4;
+                    const prioridadB = prioridadEstado[b.estadoPago] || 4;
+                    
+                    if (prioridadA !== prioridadB) {
+                        return prioridadA - prioridadB;
+                    }
+                    
+                    // Si tienen el mismo estado, ordenar por fecha ascendentemente
+                    return new Date(a.fechaPago) - new Date(b.fechaPago);
+                });
+                
+                todosLosPagos = pagos;
+                pagosPaginaActual = 1;
+                renderizarPagos(todosLosPagos);
+                actualizarPaginacionPagos();
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                if (tablaBody) {
+                    tablaBody.innerHTML = `<tr><td colspan='6' class='text-center text-danger'>Error al cargar pagos</td></tr>`;
+                }
+                mostrarToast('Error al cargar los pagos', "danger");
+            });
+    } catch (error) {
+        console.error("Error:", error);
+        mostrarToast('Error al cargar los pagos', "danger");
+    }
+}
+
+// ========== RENDERIZAR PAGOS ==========
+function renderizarPagos(pagos) {
+    const tablaBody = document.querySelector("#tablaPagosBody");
+    if (!tablaBody) return;
+    
+    tablaBody.innerHTML = "";
+    
+    if (pagos.length === 0) {
+        tablaBody.innerHTML = "<tr><td colspan='6' class='text-center'>No se encontraron pagos</td></tr>";
+        actualizarInfoPagos(0, 0);
         return;
     }
-
-    tablaPagosDT = new DataTable('#tablaPagos', {
-        ajax: { url: "/system/pagos/listar", dataSrc: "" },
-        columns: [
-            { "data": "codigoPedido", className: 'text-center' },
-            { "data": "fechaPago", className: 'text-center' },
-            { "data": "metodoPago", className: 'text-start' },
-            { "data": "montoPago", render: data => `S/. ${data.toFixed(2)}`, className: 'text-start' },
-            {
-                "data": "estadoPago",
-                render: data => {
-                    let badgeClass = 'badge-secondary';
-                    if (data === 'Pagado') badgeClass = 'badge-success';
-                    else if (data === 'Pendiente') badgeClass = 'badge-warning';
-                    else if (data === 'Anulado') badgeClass = 'badge-danger';
-                    return `<span class="badge ${badgeClass}">${data}</span>`;
-                }
-            },
-            {
-                "data": null,
-                render: (data, type, row) => {
-                    const disabled = row.estadoPago !== "Pagado" ? "disabled" : "";
-
-                    const btnVisualizar = `
-                        <button class="btn btn-primary btn-sm" title="Ver Ticket"
-                            onclick="visualizarTicket(${row.idPago})" ${disabled}>
-                            <i class="ri-file-text-line"></i> Ver Ticket
-                        </button>
-                    `;
-
-                    let btnEditar = "";
-                    if (row.estadoPago !== "Pagado") {
-                        btnEditar = `
-                            <button class="btn btn-warning btn-sm" onclick="abrirModalCambiarEstado(${row.idPago})">
-                                <i class="ri-pencil-line"></i> Editar
-                            </button>`;
-                    }
-
-                    return btnVisualizar + " " + btnEditar;
-                },
-                orderable: false,
-                searchable: false
-            }
-        ],
-        language: { url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json' }
+    
+    // Calcular paginación
+    const inicio = (pagosPaginaActual - 1) * pagosPorPagina;
+    const fin = inicio + pagosPorPagina;
+    const pagosPaginados = pagos.slice(inicio, fin);
+    
+    pagosPaginados.forEach(pago => {
+        let badgeClass = 'badge-secondary';
+        if (pago.estadoPago === 'Pagado') badgeClass = 'badge-success';
+        else if (pago.estadoPago === 'Pendiente') badgeClass = 'badge-warning';
+        else if (pago.estadoPago === 'Anulado') badgeClass = 'badge-danger';
+        
+        const disabled = pago.estadoPago !== "Pagado" ? "disabled" : "";
+        const disabledClass = disabled ? "disabled" : "";
+        
+        let btnEditar = "";
+        if (pago.estadoPago !== "Pagado") {
+            btnEditar = `
+                <button class="btn-action btn-edit" onclick="abrirModalCambiarEstado(${pago.idPago})" title="Editar Pago">
+                    <i class="ri-pencil-line"></i> Editar
+                </button>`;
+        }
+        
+        const row = `
+            <tr>
+                <td class="text-center">${pago.codigoPedido}</td>
+                <td class="text-center">${pago.fechaPago}</td>
+                <td>${pago.metodoPago}</td>
+                <td>S/. ${pago.montoPago.toFixed(2)}</td>
+                <td><span class="badge ${badgeClass}">${pago.estadoPago}</span></td>
+                <td style="text-align: center;">
+                    <button class="btn-action btn-primary-icon ${disabledClass}" title="Ver Ticket"
+                        onclick="visualizarTicket(${pago.idPago})" ${disabled}>
+                        <i class="ri-file-text-line"></i> Ticket
+                    </button>
+                    ${btnEditar}
+                </td>
+            </tr>
+        `;
+        tablaBody.insertAdjacentHTML("beforeend", row);
     });
+    
+    actualizarInfoPagos(pagosPaginados.length, pagos.length);
+}
+
+// ========== ACTUALIZAR INFORMACIÓN DE PAGINACIÓN ==========
+function actualizarInfoPagos(mostrados, total) {
+    const infoElement = document.getElementById("infoPagos");
+    if (infoElement) {
+        const inicio = (pagosPaginaActual - 1) * pagosPorPagina + 1;
+        const fin = Math.min(inicio + mostrados - 1, total);
+        infoElement.textContent = `Mostrando ${inicio} a ${fin} de ${total} pagos`;
+    }
+}
+
+// ========== CREAR PAGINACIÓN ==========
+function actualizarPaginacionPagos() {
+    const paginacionNav = document.getElementById("paginacionPagosNav");
+    if (!paginacionNav) return;
+    
+    const totalPaginas = Math.ceil(todosLosPagos.length / pagosPorPagina);
+    
+    if (totalPaginas <= 1) {
+        paginacionNav.innerHTML = "";
+        return;
+    }
+    
+    let html = "";
+    
+    // Botón anterior
+    html += `
+        <li class="page-item ${pagosPaginaActual === 1 ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="cambiarPaginaPagos(${pagosPaginaActual - 1}); return false;">Anterior</a>
+        </li>
+    `;
+    
+    // Números de página
+    for (let i = 1; i <= totalPaginas; i++) {
+        if (i === 1 || i === totalPaginas || (i >= pagosPaginaActual - 1 && i <= pagosPaginaActual + 1)) {
+            html += `
+                <li class="page-item ${i === pagosPaginaActual ? 'active' : ''}">
+                    <a class="page-link" href="#" onclick="cambiarPaginaPagos(${i}); return false;">${i}</a>
+                </li>
+            `;
+        } else if (i === pagosPaginaActual - 2 || i === pagosPaginaActual + 2) {
+            html += `<li class="page-item disabled"><a class="page-link" href="#">...</a></li>`;
+        }
+    }
+    
+    // Botón siguiente
+    html += `
+        <li class="page-item ${pagosPaginaActual === totalPaginas ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="cambiarPaginaPagos(${pagosPaginaActual + 1}); return false;">Siguiente</a>
+        </li>
+    `;
+    
+    paginacionNav.innerHTML = html;
+}
+
+// ========== CAMBIAR PÁGINA ==========
+function cambiarPaginaPagos(pagina) {
+    const totalPaginas = Math.ceil(todosLosPagos.length / pagosPorPagina);
+    if (pagina < 1 || pagina > totalPaginas) return;
+    
+    pagosPaginaActual = pagina;
+    renderizarPagos(todosLosPagos);
+    actualizarPaginacionPagos();
 }
 
 async function abrirModalCambiarEstado(idPago) {
@@ -127,7 +246,7 @@ async function actualizarPago() {
         const modalInstance = bootstrap.Modal.getInstance(document.getElementById('modalEditarPago'));
         if (modalInstance) modalInstance.hide();
 
-        tablaPagosDT.ajax.reload();
+        cargarPagos();
         mostrarToast('Pago actualizado correctamente.', 'success');
 
     } catch (error) {
