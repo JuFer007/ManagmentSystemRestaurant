@@ -140,4 +140,15 @@ public class PedidoService {
     public Pedido buscarPorCodigoPedido(String codigo) {
         return pedidoRepository.findByCodigoPedido(codigo);
     }
+
+    public Pedido buscarPedidoPorId(int idPedido) {
+        Optional<Pedido> pedidoOptional = pedidoRepository.findById(idPedido);
+
+        if (pedidoOptional.isPresent()) {
+            Pedido pedido = pedidoOptional.get();
+            pedido.getDetalles().size();
+            return pedido;
+        }
+        return null;
+    }
 }

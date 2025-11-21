@@ -5,44 +5,36 @@ function cargarPagos() {
         tablaPagosDT.ajax.reload();
         return;
     }
+
     tablaPagosDT = new DataTable('#tablaPagos', {
-        ajax: {
-            url: "/system/pagos/listar",
-            dataSrc: ""
-        },
+        ajax: { url: "/system/pagos/listar", dataSrc: "" },
         columns: [
-            { "data": "codigoPedido", className: 'text-center'},
+            { "data": "codigoPedido", className: 'text-center' },
             { "data": "fechaPago", className: 'text-center' },
-            { "data": "metodoPago", className: 'text-start'},
-            {
-                "data": "montoPago",
-                "render": function (data) {
-                    return `S/. ${data.toFixed(2)}`;
-                }, className: 'text-start'
-            },
+            { "data": "metodoPago", className: 'text-start' },
+            { "data": "montoPago", render: data => `S/. ${data.toFixed(2)}`, className: 'text-start' },
             {
                 "data": "estadoPago",
-                "render": function (data) {
+                render: data => {
                     let badgeClass = 'badge-secondary';
-                    if (data === 'Pagado') {
-                        badgeClass = 'badge-success';
-                    } else if (data === 'Pendiente') {
-                        badgeClass = 'badge-warning';
-                    } else if (data === 'Anulado') {
-                        badgeClass = 'badge-danger';
-                    }
+                    if (data === 'Pagado') badgeClass = 'badge-success';
+                    else if (data === 'Pendiente') badgeClass = 'badge-warning';
+                    else if (data === 'Anulado') badgeClass = 'badge-danger';
                     return `<span class="badge ${badgeClass}">${data}</span>`;
                 }
             },
             {
                 "data": null,
                 render: (data, type, row) => {
-                    let btnDescargar = `
-                        <button class="btn btn-info btn-sm btn-ver" title="Descargar">
-                            <i class="ri-download-line"></i> Descargar
-                        </button>`;
+                    const disabled = row.estadoPago !== "Pagado" ? "disabled" : "";
 
-                    // Ocultar el botón Editar si el estado es Pagado
+                    const btnVisualizar = `
+                        <button class="btn btn-primary btn-sm" title="Ver Ticket"
+                            onclick="visualizarTicket(${row.idPago})" ${disabled}>
+                            <i class="ri-file-text-line"></i> Ver Ticket
+                        </button>
+                    `;
+
                     let btnEditar = "";
                     if (row.estadoPago !== "Pagado") {
                         btnEditar = `
@@ -51,12 +43,11 @@ function cargarPagos() {
                             </button>`;
                     }
 
-                    return btnDescargar + btnEditar;
+                    return btnVisualizar + " " + btnEditar;
                 },
                 orderable: false,
                 searchable: false
             }
-
         ],
         language: { url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json' }
     });
@@ -157,7 +148,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Estilos para los badges de estado (puedes agregarlos a tu CSS principal)
+async function imprimirTicketDesdeCodigo(codigoPedido) {
+    try {
+        const resp = await fetch(`/pedidos/buscar-por-codigo/${codigoPedido}`);
+
+        if (!resp.ok) {
+            throw new Error(`No se encontró el pedido con código ${codigoPedido}`);
+        }
+
+        const pedido = await resp.json();
+        const idPedido = pedido.idPedido;
+
+        imprimirTicketPedido(idPedido);
+
+    } catch (error) {
+        console.error("Error:", error);
+        mostrarError(error.message);
+    }
+}
+
 const style = document.createElement('style');
 style.innerHTML = `
     .badge {

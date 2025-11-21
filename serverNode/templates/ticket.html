@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Restaurante</title>
+    <link rel="stylesheet" href="http://localhost:3000/styleTicket.css">
+</head>
+<body>
+<div class="ticket">
+
+    <!-- CABECERA -->
+    <div class="cabecera">
+        <div class="logo">
+            <img class="img" src="http://localhost:3000/recursos/logoRestaurante.png">
+        </div>
+        <div class="negocio">THE GRILL HOUSE RESTAURANT</div>
+        <div class="info-negocio">Av. José Balta 456 - Chiclayo</div>
+        <div class="info-negocio">Celular: 988285844</div>
+        <div class="info-negocio">RUC: 20123456789</div>
+    </div>
+
+    <!-- INFO TICKET -->
+    <div class="info-ticket"><strong>PEDIDO:</strong> {{ticketNumero}}</div>
+    <div class="info-ticket"><strong>MESA:</strong> {{numeroMesa}}</div>
+    <div class="info-ticket"><strong>FECHA:</strong> {{fecha}}</div>
+    <div class="info-ticket"><strong>HORA:</strong> {{hora}}</div>
+    <div class="info-ticket"><strong>CLIENTE:</strong> {{cliente}}</div>
+    <div class="info-ticket"><strong>DNI:</strong> {{dni}}</div>
+    <div class="info-ticket"><strong>MESERO(A):</strong> {{mesero}}</div>
+
+    <hr class="separador">
+
+    <!-- PLATOS/SERVICIOS -->
+    <div class="tabla-servicios">
+        <div class="tabla-header">
+            <div class="col-desc">PLATO</div>
+            <div class="col-cant">CANT.</div>
+            <div class="col-precio">PRECIO</div>
+        </div>
+
+        <div id="servicios">
+            {{servicios}}
+        </div>
+    </div>
+
+    <div class="totales">
+        <div class="fila-total">
+            <div class="desc-total">SubTotal:</div>
+            <div class="precio-total"><span class="moneda">S/.</span>{{subtotal}}</div>
+        </div>
+        <div class="fila-total">
+            <div class="desc-total">Descuento:</div>
+            <div class="precio-total"><span class="moneda">S/.</span>{{descuento}}</div>
+        </div>
+        <div class="fila-total final">
+            <div class="desc-total">TOTAL:</div>
+            <div class="precio-total"><span class="moneda">S/.</span>{{total}}</div>
+        </div>
+    </div>
+
+    <hr class="separador-doble">
+
+    <!-- PIE DE PÁGINA -->
+    <div class="pie">
+        <div class="mensaje">¡GRACIAS POR SU VISITA!</div>
+        <div class="contacto">Vuelva pronto...</div>
+        <div class="contacto">@TheGrillHouseRestaurant</div>
+        <div style="margin-top: 8px;">━━━━━━━━━━━━━━━━━━━━━━</div>
+    </div>
+</div>
+</body>
+</html>
