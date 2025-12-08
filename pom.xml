@@ -107,6 +107,26 @@
             <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
+<<<<<<< HEAD
+=======
+        <!-- SpringBoot Acuator-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- Spring Mail-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+<!--        PROMETHEUS-->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+
+
+>>>>>>> 3ee98503baed453d47074af3594875fcb2ac56a1
     </dependencies>
 
 	<build>
