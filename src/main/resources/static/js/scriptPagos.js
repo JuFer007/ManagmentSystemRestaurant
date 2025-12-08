@@ -87,20 +87,21 @@ function renderizarPagos(pagos) {
         }
         
         const row = `
-            <tr>
-                <td class="text-center">${pago.codigoPedido}</td>
-                <td class="text-center">${pago.fechaPago}</td>
-                <td>${pago.metodoPago}</td>
-                <td>S/. ${pago.montoPago.toFixed(2)}</td>
-                <td><span class="badge ${badgeClass}">${pago.estadoPago}</span></td>
-                <td style="text-align: center;">
-                    <button class="btn-action btn-primary-icon ${disabledClass}" title="Ver Ticket"
-                        onclick="visualizarTicket(${pago.idPago})" ${disabled}>
-                        <i class="ri-file-text-line"></i> Ticket
-                    </button>
-                    ${btnEditar}
-                </td>
-            </tr>
+        <tr>
+            <td class="text-center">${pago.codigoPedido}</td>
+            <td class="text-center">${pago.fechaPago}</td>
+            <td>${pago.metodoPago}</td>
+            <td>S/. ${pago.montoPago.toFixed(2)}</td>
+            <td><span class="badge ${badgeClass}">${pago.estadoPago}</span></td>
+            <td style="text-align: center;">
+                <button class="btn-action btn-primary-icon ${disabledClass}"
+                        title="Ver Ticket"
+                        onclick="visualizarTicketPorCodigo('${pago.codigoPedido}')">
+                    <i class="ri-file-text-line"></i> Ticket
+                </button>
+                ${btnEditar}
+            </td>
+        </tr>
         `;
         tablaBody.insertAdjacentHTML("beforeend", row);
     });
@@ -227,6 +228,7 @@ async function actualizarPago() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     idPedido: pedido.idPedido,
+                    idPedido: pedido.idPedido,
                     nuevoDni: nuevoDni
                 })
             });
@@ -306,3 +308,17 @@ style.innerHTML = `
     .badge-secondary { background-color: #6c757d; }
 `;
 document.head.appendChild(style);
+
+async function visualizarTicketPorCodigo(codigoPedido) {
+    try {
+        const resp = await fetch(`/pedidos/buscar-por-codigo/${codigoPedido}`);
+        if (!resp.ok) throw new Error(`No se encontró el pedido con código ${codigoPedido}`);
+        const pedido = await resp.json();
+        const idPedido = pedido.idPedido;
+        await visualizarTicket(idPedido);
+
+    } catch (error) {
+        console.error("Error al generar ticket:", error);
+        mostrarError(error.message);
+    }
+}
