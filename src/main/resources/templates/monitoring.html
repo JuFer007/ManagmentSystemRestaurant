@@ -1,49 +1,196 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Dashboard de Monitoreo</title>
+    <title>Dashboard de Monitoreo - The Grill House</title>
     <meta http-equiv="refresh" content="30">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .dashboard-header {
+            background: linear-gradient(135deg, #d66a24 0%, #e07635 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #d66a24;
+        }
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .badge-status {
+            font-size: 0.9rem;
+            padding: 8px 16px;
+        }
+        .progress-custom {
+            height: 25px;
+            border-radius: 10px;
+        }
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #d66a24 0%, #e07635 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .icon-box i {
+            font-size: 30px;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
-    <h1>📊 Dashboard de Monitoreo</h1>
-    <p class="text-muted">Actualización automática cada 30 segundos</p>
+<div class="container mt-5 mb-5">
+    <!-- Header -->
+    <div class="dashboard-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1><i class="ri-dashboard-line"></i> Dashboard de Monitoreo</h1>
+                <p class="mb-0">Actualización automática cada 30 segundos</p>
+                <small>Tiempo de actividad: <span th:text="${uptime}">0 días, 0 horas</span></small>
+            </div>
+            <div>
+                <a href="/index" class="btn btn-light">
+                    <i class="ri-arrow-left-line"></i> Volver al Sistema
+                </a>
+            </div>
+        </div>
+    </div>
 
-    <div class="row mt-4">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Estado de Servicios</h5>
-                    <p>App Spring Boot: <span class="badge bg-success">ACTIVO</span></p>
-                    <p>Servidor Node: <span class="badge bg-success">ACTIVO</span></p>
-                    <p>MySQL: <span class="badge bg-success">ACTIVO</span></p>
+    <!-- Estado de Servicios -->
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="stat-card">
+                <h4 class="mb-4"><i class="ri-server-line"></i> Estado de Servicios</h4>
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <div class="icon-box mx-auto">
+                            <i class="ri-cup-line"></i>
+                        </div>
+                        <h5>Spring Boot</h5>
+                        <span class="badge bg-success badge-status" th:text="${springBootStatus}">ACTIVO</span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="icon-box mx-auto">
+                            <i class="ri-nodejs-line"></i>
+                        </div>
+                        <h5>Servidor Node.js</h5>
+                        <span class="badge badge-status"
+                              th:classappend="${nodeStatus == 'ACTIVO'} ? 'bg-success' : 'bg-danger'"
+                              th:text="${nodeStatus}">INACTIVO</span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="icon-box mx-auto">
+                            <i class="ri-database-2-line"></i>
+                        </div>
+                        <h5>MySQL</h5>
+                        <span class="badge bg-success badge-status" th:text="${mysqlStatus}">ACTIVO</span>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 
+    <!-- Recursos del Sistema -->
+    <div class="row">
         <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Recursos del Sistema</h5>
-                    <p>CPU: <span th:text="${cpuUsage}">45%</span></p>
-                    <p>Memoria: <span th:text="${memoryUsage}">60%</span></p>
-                    <p>Disco: <span th:text="${diskUsage}">35%</span></p>
+            <div class="stat-card">
+                <h5 class="mb-3"><i class="ri-cpu-line"></i> Uso de CPU</h5>
+                <div class="stat-value" th:text="${cpuUsage}">0%</div>
+                <div class="progress progress-custom mt-3">
+                    <div class="progress-bar bg-warning" role="progressbar"
+                         th:style="'width: ' + ${cpuUsage}"
+                         th:aria-valuenow="${cpuUsage}">
+                    </div>
                 </div>
             </div>
         </div>
-
         <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5>Actividad (24h)</h5>
-                    <p>Pedidos: <span th:text="${pedidosHoy}">25</span></p>
-                    <p>Tickets: <span th:text="${ticketsHoy}">20</span></p>
-                    <p>Errores: <span th:text="${erroresHoy}">0</span></p>
+            <div class="stat-card">
+                <h5 class="mb-3"><i class="ri-hard-drive-2-line"></i> Uso de Memoria</h5>
+                <div class="stat-value" th:text="${memoryUsage}">0%</div>
+                <div class="progress progress-custom mt-3">
+                    <div class="progress-bar bg-info" role="progressbar"
+                         th:style="'width: ' + ${memoryUsage}"
+                         th:aria-valuenow="${memoryUsage}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stat-card">
+                <h5 class="mb-3"><i class="ri-save-line"></i> Uso de Disco</h5>
+                <div class="stat-value" th:text="${diskUsage}">0%</div>
+                <div class="progress progress-custom mt-3">
+                    <div class="progress-bar bg-success" role="progressbar"
+                         th:style="'width: ' + ${diskUsage}"
+                         th:aria-valuenow="${diskUsage}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actividad del Sistema -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="stat-card">
+                <h4 class="mb-4"><i class="ri-line-chart-line"></i> Actividad del Sistema (24h)</h4>
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <div class="icon-box mx-auto">
+                            <i class="ri-shopping-cart-line"></i>
+                        </div>
+                        <div class="stat-value" th:text="${pedidosHoy}">0</div>
+                        <div class="stat-label">Pedidos Procesados</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="icon-box mx-auto">
+                            <i class="ri-file-text-line"></i>
+                        </div>
+                        <div class="stat-value" th:text="${ticketsHoy}">0</div>
+                        <div class="stat-label">Tickets Generados</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="icon-box mx-auto">
+                            <i class="ri-error-warning-line"></i>
+                        </div>
+                        <div class="stat-value text-danger" th:text="${erroresHoy}">0</div>
+                        <div class="stat-label">Errores Registrados</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

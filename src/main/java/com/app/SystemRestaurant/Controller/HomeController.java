@@ -21,4 +21,14 @@ public class HomeController {
     public String systemPage() {
         return "index";
     }
+
+    @GetMapping("/monitoreo")
+    public String monitoreo() {
+        return "redirect:/monitoring";
+    }
+
+    @GetMapping("/mantenimiento")
+    public String mantenimiento() {
+        return "maintenance";
+    }
 }
