@@ -107,8 +107,6 @@
             <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
-<<<<<<< HEAD
-=======
         <!-- SpringBoot Acuator-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -119,15 +117,32 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-<!--        PROMETHEUS-->
+        <!--  PROMETHEUS-->
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
 
+        <!-- Otros -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
->>>>>>> 3ee98503baed453d47074af3594875fcb2ac56a1
-    </dependencies>
+        <dependency>
+            <groupId>org.owasp</groupId>
+            <artifactId>dependency-check-maven</artifactId>
+            <version>8.4.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+</dependencies>
 
 	<build>
 		<plugins>
