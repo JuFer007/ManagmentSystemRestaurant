@@ -5,64 +5,54 @@ const pedidosPorPagina = 10;
 let filtroEstadoActual = "Todos";
 
 document.addEventListener("DOMContentLoaded", () => {
+    cargarPedidos();
 });
 
+// ========== CARGAR PEDIDOS ==========
 function cargarPedidos() {
     const tablaBody = document.querySelector("#tablaPedidosBody");
-    
-    try {
-        fetch("http://localhost:8080/pedidos")
-            .then(response => {
-                if (!response.ok) throw new Error("Error al obtener los pedidos");
-                return response.json();
-            })
-            .then(pedidos => {
-                // Ordenar por prioridad de estado y luego por fecha
-                pedidos.sort((a, b) => {
-                    // Prioridad: "En proceso" primero, luego "Completado"
-                    const prioridadEstado = {
-                        "En proceso": 1,
-                        "En Proceso": 1,
-                        "Completado": 2
-                    };
-                    
-                    const prioridadA = prioridadEstado[a.estadoPedido] || 3;
-                    const prioridadB = prioridadEstado[b.estadoPedido] || 3;
-                    
-                    if (prioridadA !== prioridadB) {
-                        return prioridadA - prioridadB;
-                    }
-                    
-                    // Si tienen el mismo estado, ordenar por fecha ascendentemente
-                    return new Date(a.fecha) - new Date(b.fecha);
-                });
-                
-                todosLosPedidos = pedidos;
-                pedidosPaginaActual = 1;
-                aplicarFiltroYRenderizar();
-                actualizarPaginacionPedidos();
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                if (tablaBody) {
-                    tablaBody.innerHTML = `<tr><td colspan='6' class='text-center text-danger'>Error al cargar pedidos</td></tr>`;
-                }
-                mostrarToast('Error al cargar los pedidos', "danger");
+
+    fetch("/pedidos")
+        .then(response => {
+            if (!response.ok) throw new Error("Error al obtener los pedidos");
+            return response.json();
+        })
+        .then(pedidos => {
+            // Ordenar por prioridad de estado y fecha
+            pedidos.sort((a, b) => {
+                const prioridadEstado = {
+                    "En proceso": 1,
+                    "En Proceso": 1,
+                    "Completado": 2
+                };
+
+                const prioridadA = prioridadEstado[a.estadoPedido] || 3;
+                const prioridadB = prioridadEstado[b.estadoPedido] || 3;
+
+                if (prioridadA !== prioridadB) return prioridadA - prioridadB;
+                return new Date(a.fecha) - new Date(b.fecha);
             });
-    } catch (error) {
-        console.error("Error:", error);
-        mostrarToast('Error al cargar los pedidos', "danger");
-    }
+
+            todosLosPedidos = pedidos;
+            pedidosPaginaActual = 1;
+            aplicarFiltroYRenderizar();
+            actualizarPaginacionPedidos();
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            if (tablaBody) {
+                tablaBody.innerHTML = `<tr><td colspan='6' class='text-center text-danger'>Error al cargar pedidos</td></tr>`;
+            }
+            mostrarToast('Error al cargar los pedidos', "danger");
+        });
 }
 
 // ========== APLICAR FILTRO Y RENDERIZAR ==========
 function aplicarFiltroYRenderizar() {
     let pedidosFiltrados = [...todosLosPedidos];
-    
     if (filtroEstadoActual !== "Todos") {
         pedidosFiltrados = pedidosFiltrados.filter(p => p.estadoPedido === filtroEstadoActual);
     }
-    
     renderizarPedidos(pedidosFiltrados);
 }
 
@@ -70,20 +60,19 @@ function aplicarFiltroYRenderizar() {
 function renderizarPedidos(pedidos) {
     const tablaBody = document.querySelector("#tablaPedidosBody");
     if (!tablaBody) return;
-    
+
     tablaBody.innerHTML = "";
-    
+
     if (pedidos.length === 0) {
         tablaBody.innerHTML = "<tr><td colspan='6' class='text-center'>No se encontraron pedidos</td></tr>";
         actualizarInfoPedidos(0, 0);
         return;
     }
-    
-    // Calcular paginación
+
     const inicio = (pedidosPaginaActual - 1) * pedidosPorPagina;
     const fin = inicio + pedidosPorPagina;
     const pedidosPaginados = pedidos.slice(inicio, fin);
-    
+
     pedidosPaginados.forEach(pedido => {
         const estadoBadge = pedido.estadoPedido?.toLowerCase().includes('proceso') ? 'badge-warning' : 'badge-success';
         const row = `
@@ -102,9 +91,8 @@ function renderizarPedidos(pedidos) {
         `;
         tablaBody.insertAdjacentHTML("beforeend", row);
     });
-    
-    const totalFiltrados = pedidos.length;
-    actualizarInfoPedidos(pedidosPaginados.length, totalFiltrados);
+
+    actualizarInfoPedidos(pedidosPaginados.length, pedidos.length);
 }
 
 // ========== ACTUALIZAR INFORMACIÓN DE PAGINACIÓN ==========
@@ -121,28 +109,28 @@ function actualizarInfoPedidos(mostrados, total) {
 function actualizarPaginacionPedidos() {
     const paginacionNav = document.getElementById("paginacionPedidosNav");
     if (!paginacionNav) return;
-    
+
     let pedidosFiltrados = [...todosLosPedidos];
     if (filtroEstadoActual !== "Todos") {
         pedidosFiltrados = pedidosFiltrados.filter(p => p.estadoPedido === filtroEstadoActual);
     }
-    
+
     const totalPaginas = Math.ceil(pedidosFiltrados.length / pedidosPorPagina);
-    
+
     if (totalPaginas <= 1) {
         paginacionNav.innerHTML = "";
         return;
     }
-    
+
     let html = "";
-    
+
     // Botón anterior
     html += `
         <li class="page-item ${pedidosPaginaActual === 1 ? 'disabled' : ''}">
             <a class="page-link" href="#" onclick="cambiarPaginaPedidos(${pedidosPaginaActual - 1}); return false;">Anterior</a>
         </li>
     `;
-    
+
     // Números de página
     for (let i = 1; i <= totalPaginas; i++) {
         if (i === 1 || i === totalPaginas || (i >= pedidosPaginaActual - 1 && i <= pedidosPaginaActual + 1)) {
@@ -155,14 +143,14 @@ function actualizarPaginacionPedidos() {
             html += `<li class="page-item disabled"><a class="page-link" href="#">...</a></li>`;
         }
     }
-    
+
     // Botón siguiente
     html += `
         <li class="page-item ${pedidosPaginaActual === totalPaginas ? 'disabled' : ''}">
             <a class="page-link" href="#" onclick="cambiarPaginaPedidos(${pedidosPaginaActual + 1}); return false;">Siguiente</a>
         </li>
     `;
-    
+
     paginacionNav.innerHTML = html;
 }
 
@@ -172,40 +160,42 @@ function cambiarPaginaPedidos(pagina) {
     if (filtroEstadoActual !== "Todos") {
         pedidosFiltrados = pedidosFiltrados.filter(p => p.estadoPedido === filtroEstadoActual);
     }
-    
+
     const totalPaginas = Math.ceil(pedidosFiltrados.length / pedidosPorPagina);
     if (pagina < 1 || pagina > totalPaginas) return;
-    
+
     pedidosPaginaActual = pagina;
     aplicarFiltroYRenderizar();
     actualizarPaginacionPedidos();
 }
 
+// ========== VER DETALLE PEDIDO ==========
 function verDetallePedido(idPedido) {
-    fetch(`http://localhost:8080/pedidos/${idPedido}`)
+    fetch(`/pedidos/${idPedido}`)
         .then(response => {
             if (!response.ok) throw new Error("Error obteniendo pedido");
             return response.json();
         })
         .then(pedido => {
-          document.getElementById("numeroPedidoModal").innerText = pedido.codigoPedido;
-          document.getElementById("clienteDetalle").innerText = `${pedido.nombreCliente} ${pedido.apellidosCliente}`;
-          document.getElementById("fechaDetalle").innerText = pedido.fecha;
+            document.getElementById("numeroPedidoModal").innerText = pedido.codigoPedido;
+            document.getElementById("clienteDetalle").innerText = `${pedido.nombreCliente} ${pedido.apellidosCliente}`;
+            document.getElementById("fechaDetalle").innerText = pedido.fecha;
 
-          const empleadoNombre = pedido.nombreEmpleado ?
+            const empleadoNombre = pedido.nombreEmpleado ?
                 `${pedido.nombreEmpleado} ${pedido.apellidoPaternoEmpleado || ''} ${pedido.apellidoMaternoEmpleado || ''}`.trim() :
                 "No asignado";
-          document.getElementById("empleadoDetalle").innerText = empleadoNombre;
-          const estado = document.getElementById("estadoDetalle");
-          estado.innerText = pedido.estadoPedido;
-          estado.className = "badge " + (pedido.estadoPedido === "Completado" ? "bg-success" :
-          pedido.estadoPedido === "En proceso" ? "bg-warning" : "bg-secondary");
+            document.getElementById("empleadoDetalle").innerText = empleadoNombre;
 
-          const btnCambiar = document.getElementById("btnCambiarEstado");
-          btnCambiar.onclick = () => cambiarEstado(idPedido);
-          btnCambiar.style.display = (pedido.estadoPedido === "Completado") ? "none" : "inline-block";
+            const estado = document.getElementById("estadoDetalle");
+            estado.innerText = pedido.estadoPedido;
+            estado.className = "badge " + (pedido.estadoPedido === "Completado" ? "bg-success" :
+                pedido.estadoPedido === "En proceso" ? "bg-warning" : "bg-secondary");
 
-          return fetch(`http://localhost:8080/detallesPedido/pedido/${idPedido}`);
+            const btnCambiar = document.getElementById("btnCambiarEstado");
+            btnCambiar.onclick = () => cambiarEstado(idPedido);
+            btnCambiar.style.display = (pedido.estadoPedido === "Completado") ? "none" : "inline-block";
+
+            return fetch(`/detallesPedido/pedido/${idPedido}`);
         })
         .then(response => {
             if (!response.ok) throw new Error("Error obteniendo detalles");
@@ -217,9 +207,11 @@ function verDetallePedido(idPedido) {
         })
         .catch(error => {
             console.error("Error al abrir el modal:", error);
+            mostrarToast("No se pudo cargar el detalle del pedido.", "danger");
         });
 }
 
+// ========== MOSTRAR DETALLE DE PLATOS ==========
 function mostrarDetallePlatos(detalles) {
     const tbody = document.getElementById("listaPlatosDetalle");
     tbody.innerHTML = "";
@@ -246,7 +238,7 @@ function mostrarDetallePlatos(detalles) {
     document.getElementById("totalDetalle").innerText = "S/. " + total.toFixed(2);
 }
 
-//Cambiar estado
+// ========== CAMBIAR ESTADO PEDIDO ==========
 async function cambiarEstado(idPedido) {
     const estadoActual = document.getElementById("estadoDetalle").innerText.trim();
     if (estadoActual === "Completado") {
@@ -255,19 +247,19 @@ async function cambiarEstado(idPedido) {
     }
 
     try {
-        const response = await fetch(`http://localhost:8080/pedidos/${idPedido}/estado?nuevoEstado=Completado`, {
+        const response = await fetch(`/pedidos/${idPedido}/estado?nuevoEstado=Completado`, {
             method: "PUT"
         });
 
-        if (!response.ok) {
-            throw new Error("Error al actualizar el estado del pedido.");
-        }
+        if (!response.ok) throw new Error("Error al actualizar el estado del pedido.");
 
         document.getElementById("estadoDetalle").innerText = "Completado";
         document.getElementById("estadoDetalle").className = "badge bg-success";
         document.getElementById("btnCambiarEstado").style.display = "none";
+
         const modal = bootstrap.Modal.getInstance(document.getElementById("modalDetallePedido"));
         if (modal) modal.hide();
+
         cargarPedidos();
         mostrarToast("Pedido completado y pago generado.", "success");
     } catch (err) {
@@ -276,6 +268,7 @@ async function cambiarEstado(idPedido) {
     }
 }
 
+// ========== FILTRAR POR ESTADO ==========
 function filtrarPorEstado(estado) {
     filtroEstadoActual = estado;
     pedidosPaginaActual = 1;

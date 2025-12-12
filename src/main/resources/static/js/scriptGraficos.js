@@ -4,11 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("/dashboard/stats")
         .then(res => res.json())
         .then(data => {
-            document.getElementById("cantidadEmpleados").textContent = data.cantidadEmpleados;
-            document.getElementById("numeroClientes").textContent = data.numeroClientes;
-            document.getElementById("cantidadPedidos").textContent = data.cantidadPedidos;
-            const simbolo = "S/. "
-            document.getElementById("ingresosTotales").textContent = simbolo.concat(data.ingresosTotales.toFixed(2));
+            document.getElementById("cantidadEmpleados").textContent = data.cantidadEmpleados || 0;
+            document.getElementById("numeroClientes").textContent = data.numeroClientes || 0;
+            document.getElementById("cantidadPedidos").textContent = data.cantidadPedidos || 0;
+            const simbolo = "S/. ";
+            document.getElementById("ingresosTotales").textContent = simbolo + ((data.ingresosTotales || 0).toFixed(2));
         })
         .catch(err => console.error("Error al cargar estadísticas:", err));
 
@@ -16,8 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("/dashboard/ingresos-mes")
         .then(res => res.json())
         .then(data => {
-            const labels = data.map(d => `Mes ${d[0]}`);
-            const valores = data.map(d => d[1]);
+            if (!Array.isArray(data)) throw new Error("Datos inválidos de ingresos por mes");
+            const labels = data.map(d => `Mes ${d.mes}`);
+            const valores = data.map(d => d.ingreso);
 
             const ctx = document.getElementById("ingresosMes").getContext("2d");
             new Chart(ctx, {
@@ -35,9 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 },
                 options: {
                     responsive: true,
-                    plugins: {
-                        legend: { display: true }
-                    },
+                    plugins: { legend: { display: true } },
                     scales: { y: { beginAtZero: true } }
                 }
             });
@@ -48,8 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("/dashboard/platos-mas-vendidos")
         .then(res => res.json())
         .then(data => {
-            const labels = data.map(d => d[0]);
-            const valores = data.map(d => d[1]);
+            if (!Array.isArray(data)) throw new Error("Datos inválidos de platos más vendidos");
+            const labels = data.map(d => d.plato);
+            const valores = data.map(d => d.cantidad);
 
             const ctx = document.getElementById("platosVendidos").getContext("2d");
             new Chart(ctx, {
@@ -59,7 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     datasets: [{
                         label: "Cantidad Vendida",
                         data: valores,
-
                         backgroundColor: [
                             "rgba(217, 101, 29, 0.7)",
                             "rgba(255, 140, 50, 0.7)",
