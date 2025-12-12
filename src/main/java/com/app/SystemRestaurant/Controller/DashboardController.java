@@ -23,15 +23,8 @@ public class DashboardController {
     }
 
     @GetMapping("/ingresos-mes")
-    public ResponseEntity<List<Map<String, Object>>> getIngresosPorMes() {
-        List<Object[]> ingresos = dashboardService.getIngresosPorMes();
-        List<Map<String, Object>> resultado = ingresos.stream()
-                .map(o -> Map.of(
-                        "mes", o[0],
-                        "ingreso", o[1]
-                ))
-                .toList();
-        return ResponseEntity.ok(resultado);
+    public ResponseEntity<List<Object[]>> getIngresosPorMes() {
+        return ResponseEntity.ok(dashboardService.getIngresosPorMes());
     }
 
     @GetMapping("/platos-mas-vendidos")
