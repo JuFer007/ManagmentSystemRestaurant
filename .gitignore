@@ -35,5 +35,4 @@ build/
 # Archivos locales
 backups/
 logs/
-imagenesPlatos/
 serverNode/
